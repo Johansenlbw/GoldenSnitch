@@ -369,7 +369,7 @@ article blockquote footer{
     background-color: #808080;
     background-attachment: scroll;
     background-size: cover;
-    height: 300px;
+    height: 375px;
     display: table;
     width: 100%;
     margin-bottom: 20px;
@@ -454,7 +454,7 @@ article blockquote footer{
     }
 
     .intro-header {
-        height: 370px;
+        height: 375px;
     }
 }
 
