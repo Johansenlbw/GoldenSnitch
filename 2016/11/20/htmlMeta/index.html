@@ -13,16 +13,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
     <link rel="shortcut icon" href="http://tva1.sinaimg.cn/crop.0.0.199.199.180/005AsuCnjw1eiw60g34h1j305k05kjrm.jpg">
-    <link rel="alternate" type="application/atom+xml" title="johansen" href="/atom.xml">
+    <link rel="alternate" type="application/atom+xml" title="Golden Snitch" href="/atom.xml">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        Hello World｜johansenlbw&#39;s blog
+        你所不知道的 Meta 标签的实现｜Golden Snitch
         
     </title>
 
-    <link rel="canonical" href="http://Johansen_lbw.github.io/2016/11/14/hello-world/">
+    <link rel="canonical" href="http://Johansen_lbw.github.io/2016/11/20/htmlMeta/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -56,7 +56,7 @@
             </button>
             <a class="navbar-brand animated pulse" href="/">
                 <span class="brand-logo">
-                    johansen
+                    Golden Snitch
                 </span>
                 's Blog
             </a>
@@ -76,6 +76,14 @@
                         <a href="/">Home</a>
                     </li>
 					
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
                     
 					
 					
@@ -137,15 +145,18 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>Hello World</h1>
+                    <h1>你所不知道的 Meta 标签的实现</h1>
                     
                     <span class="meta">
                          作者 johansen
                         <span>
-                          日期 2016-11-14
+                          日期 2016-11-20
                          </span>
                     </span>
                     <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#技术小记"
+                           title="技术小记">技术小记</a>
                         
                     </div>
                 </div>
@@ -154,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            Hello World
+            你所不知道的 Meta 标签的实现
         </span>
     </div>
 </header>
@@ -165,26 +176,65 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+                <h3 id="meta也可以做到自动刷新page"><a href="#meta也可以做到自动刷新page" class="headerlink" title="meta也可以做到自动刷新page"></a>meta也可以做到自动刷新page</h3><pre><code>前段时间，看了一些技术文章关于缓存相关的，其中涉及到关于meta 标签 对于缓存的设置。进而了解到关于meta标签的  
+一些比较有用的实现。
+</code></pre><p>首先介绍一下meta的http-equiv属性，http-equiv属性为名称/值对,它指示服务器在发送实际的文档之前先在要传送给浏览器的 MIME 文档头部包含名称/值对，<br>通过设置该属性来改变服务器与用户代理。</p>
+<blockquote>
+<p><strong>定义方法:</strong><br><code>&lt;meta http-equiv=&quot;参数&quot; content=&quot;具体的描述&quot;&gt;</code></p>
+</blockquote>
+<p>了解了相关语法结构，接下来我们介绍几个与它相关的键值对。</p>
+<p>1.key : X-UA-Compatible</p>
+<p>说明：用于告知浏览器以何种版本来渲染页面。</p>
+<blockquote>
+<p>举例:  <code>&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot;/&gt; //指定IE和Chrome使用最新版本渲染当前页面</code></p>
+</blockquote>
+<p>2.key : cache-control</p>
+<p>说明：指定请求和响应遵循的缓存机制，下面介绍几种用法：</p>
+<ul>
+<li>no-cache: 发送请求给服务器，与服务器确认该资源是否被更改，如果未被更改，则使用缓存。</li>
+<li>no-store: 不允许缓存，每次都要去服务器上，下载完整的响应。</li>
+<li>public : 如果响应被标记为public，即使有关联的 HTTP 认证，甚至响应状态码无法正常缓存，响应也可以被缓存。大多数情况下，public不是必须的，因为明确的缓存信息（例如max-age）已表示 响应可以被缓存。</li>
+<li>private : 只为单个用户缓存，因此不允许任何中继进行缓存。（比如说CDN就不允许缓存private的响应）</li>
+<li>maxage : 表示当前请求开始，该响应在多久内能被缓存和重用，而不去服务器重新请求。例如：max-age=60表示响应可以再缓存和重用 60 秒。</li>
+<li>no-siteapp : 避免wap页被百度自动转码</li>
+</ul>
+<blockquote>
+<p>举例:  <code>&lt;meta http-equiv=&quot;cache-control&quot; content=&quot;no-cache&quot;&gt;</code></p>
+</blockquote>
+<p>tip: <a href="http://www.alloyteam.com/2012/03/web-cache-2-browser-cache/" target="_blank" rel="external">关于缓存相关的知识点</a></p>
+<p>3.key : expires</p>
+<p>说明:用于设定网页的到期时间，过期后网页必须到服务器上重新传输。</p>
+<blockquote>
+<p>举例:<br><code>&lt;meta http-equiv=&quot;expires&quot; content=&quot;Saturday 1 October 2016 01:00 GMT&quot; /&gt;</code></p>
+</blockquote>
+<p>4.key : fresh</p>
+<p>说明：网页将在设定的时间内，自动刷新或转向设定的网址。使用 <code>&lt;meta http-equiv=&quot;refresh&quot;&gt;</code>标记进行重定向可能会降低您的搜索引擎排名。</p>
+<blockquote>
+<p> 举例:  </p>
+<ol>
+<li><code>&lt;meta http-equiv=&quot;refresh&quot; content=&quot;5&quot;&gt; //当前页面5s后刷新</code>  </li>
+<li><code>&lt;meta http-equiv=&quot;refresh&quot; content=&quot;2; url=&#39;/&#39;&quot;&gt; //可以作为404页面跳转</code></li>
+<li><code>&lt;meta http-equiv=&quot;refresh&quot; content=&quot;0; url=&#39;http://www.babytree.com/&#39;&quot;&gt; //自动跳转到宝宝树首页</code></li>
+</ol>
+<hr>
+<p><strong>总结：</strong>  </p>
+</blockquote>
+<p>关于meta标签的用处还有很多，由于篇幅的原因这里就不一一介绍，送资源给大家参考吧：  </p>
+<ol>
+<li><a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching?hl=zh-cn#cache-control" target="_blank" rel="external">缓存</a>  </li>
+<li><a href="http://blog.sina.com.cn/s/blog_6d48e77101015kqr.html" target="_blank" rel="external">更多的meta功能</a></li>
+</ol>
 
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2016/11/15/Start-my-blog-s-life/" data-toggle="tooltip" data-placement="top"
-                           title="开场白--开始用文字记录的小时光">&larr; Previous Post</a>
-                    </li>
                     
+                    <li class="next">
+                        <a href="/2016/11/15/Start-my-blog-s-life/" data-toggle="tooltip" data-placement="top"
+                           title="开场白--开始用文字记录的小时光">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -192,9 +242,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2016/11/14/hello-world/"
-                         data-title="Hello World"
-                         data-url="http://Johansen_lbw.github.io/2016/11/14/hello-world/">
+                         data-thread-key="2016/11/20/htmlMeta/"
+                         data-title="你所不知道的 Meta 标签的实现"
+                         data-url="http://Johansen_lbw.github.io/2016/11/20/htmlMeta/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -206,7 +256,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#meta也可以做到自动刷新page"><span class="toc-text">meta也可以做到自动刷新page</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -227,6 +277,9 @@
                         <a href="/tags/">FEATURED TAGS</a>
                     </h5>
                     <div class="tags">
+                        
+                        <a class="tag" href="/tags/#技术小记"
+                           title="技术小记">技术小记</a>
                         
                     </div>
                 </section>
@@ -278,7 +331,7 @@
 
                 
                     <li>
-                        <a target="_blank" href="http://weibo.com/Johansen_lbw">
+                        <a target="_blank" href="http://weibo.com/5119403139">
                             <span class="fa-stack fa-lg">
                                 <i class="fa fa-circle fa-stack-2x"></i>
                                 <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
@@ -295,7 +348,7 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; johansen 2016
+                    Copyright &copy; Golden Snitch 2016
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
@@ -370,7 +423,7 @@
 <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
 <!--wechat title img-->
-<img class="wechat-title-img" src="http://ogodoej04.bkt.clouddn.com/IMG_1258.JPG">
+<img class="wechat-title-img" src="http://ogodoej04.bkt.clouddn.com/timg.jpeg">
 </body>
 
 </html>
