@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        你所不知道的 Meta 标签的实现｜Golden Snitch
+        css3 渲染逼真的新海诚画风｜Golden Snitch
         
     </title>
 
-    <link rel="canonical" href="http://Johansen_lbw.github.io/2016/11/20/htmlMeta/">
+    <link rel="canonical" href="http://Johansen_lbw.github.io/2016/11/24/filterCss/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -145,12 +145,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>你所不知道的 Meta 标签的实现</h1>
+                    <h1>css3 渲染逼真的新海诚画风</h1>
                     
                     <span class="meta">
                          作者 johansen
                         <span>
-                          日期 2016-11-20
+                          日期 2016-11-24
                          </span>
                     </span>
                     <div class="tags text-center">
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            你所不知道的 Meta 标签的实现
+            css3 渲染逼真的新海诚画风
         </span>
     </div>
 </header>
@@ -176,69 +176,98 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h3 id="meta也可以做到自动刷新page-…"><a href="#meta也可以做到自动刷新page-…" class="headerlink" title="meta也可以做到自动刷新page …"></a>meta也可以做到自动刷新page …</h3><pre><code>前段时间，看了一些技术文章关于缓存相关的，其中涉及到关于meta 标签 对于缓存的设置。
-进而了解到关于meta标签的  一些比较有用的实现。
-</code></pre><p>首先介绍一下meta的http-equiv属性，http-equiv属性为名称/值对,它指示服务器在发送实际的文档之前先在要传送给浏览器的 MIME 文档头部包含名称/值对，通过设置该属性来改变服务器与用户代理。</p>
+                <h2 id="利用css3实现新海诚画风"><a href="#利用css3实现新海诚画风" class="headerlink" title="利用css3实现新海诚画风"></a>利用css3实现新海诚画风</h2><p>&emsp;&emsp;距离诚哥的新作《 你的名字 》即将上映的时间还有一周多。新海诚迷们在当今各种美图软件盛行的时期，开始了新的PS探索。作为一个直男单身码农，如何凭借代码撩妹，因此结合最近关于css3的滤镜应用，我颇有体会，用在这里就是感同<br>身受。</p>
+<p>&emsp;&emsp;在介绍滤镜之前，首先需要了解关于HSL色彩模型。</p>
 <blockquote>
-<p><strong>定义方法:</strong><br><code>&lt;meta http-equiv=&quot;参数&quot; content=&quot;具体的描述&quot;&gt;</code></p>
+<p>HSL色彩模型：<br>HSL使用色相、饱和度、亮度三个分量描述色彩。<br>色相（Hue）：在实际应用中，我们需要记住色相环上的六大主色，用作基本参照：360°/0°红、60°黄、120°绿、180°青、240°蓝、300°洋红，它们在色相环上按照60°圆心角的间隔排列。<br>饱和度（saturation）：指的是色彩的饱和度，它用0%至100%的值描述了相同色相、明度下色彩纯度的变化。数值越大，颜色中的灰色越少，颜色越鲜艳，呈现一种从理性(灰度)到感性(纯色)的变化。<br>亮度（lightness）：指的是色彩的明度，作用是控制色彩的明暗变化。它同样使用了0%至100%的取值范围。数值越小，色彩越暗，越接近于黑色；数值越大，色彩越亮，越接近于白色。</p>
 </blockquote>
-<p>了解了相关语法结构，接下来我们介绍几个与它相关的键值对。</p>
-<p>1.key : X-UA-Compatible</p>
-<p>说明：用于告知浏览器以何种版本来渲染页面。</p>
+<p>下面提供一个资源，里面有详细介绍:<a href="http://www.baike.com/wiki/HSL" target="_blank" rel="external">HSL色彩模型</a></p>
+<p>我们刚才对于HSL有了大致的了解，现在就步入正题，介绍一个css3的新属性–filter。就是它能让你get新海诚的画风。</p>
 <blockquote>
-<p>举例:  <code>&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot;/&gt; //指定IE和Chrome使用最新版本渲染当前页面</code></p>
+<p>语法结构：<br>filter: <code>&lt;filter-function&gt; [&lt;filter-function&gt;]* | none</code></p>
 </blockquote>
-<p>2.key : cache-control</p>
-<p>说明：指定请求和响应遵循的缓存机制，下面介绍几种用法：</p>
+<p>看了语法结构我们就会知道，关键的招数就是filter函数。接下来就隆重请出我们10个基本方法。</p>
 <ul>
-<li>no-cache: 发送请求给服务器，与服务器确认该资源是否被更改，如果未被更改，则使用缓存。</li>
-<li>no-store: 不允许缓存，每次都要去服务器上，下载完整的响应。</li>
-<li>public : 如果响应被标记为public，即使有关联的 HTTP 认证，甚至响应状态码无法正常缓存，响应也可以被缓存。大多数情况下，public不是必须的，因为明确的缓存信息（例如max-age）已表示 响应可以被缓存。</li>
-<li>private : 只为单个用户缓存，因此不允许任何中继进行缓存。（比如说CDN就不允许缓存private的响应）</li>
-<li>maxage : 表示当前请求开始，该响应在多久内能被缓存和重用，而不去服务器重新请求。例如：max-age=60表示响应可以再缓存和重用 60 秒。</li>
-<li>no-siteapp : 避免wap页被百度自动转码</li>
+<li>1.blur(): 增加图像的模糊度。单位px,数值越大，模糊程度越高。</li>
 </ul>
-<blockquote>
-<p>举例:  <code>&lt;meta http-equiv=&quot;cache-control&quot; content=&quot;no-cache&quot;&gt;</code></p>
-</blockquote>
-<p>tip: <a href="http://www.alloyteam.com/2012/03/web-cache-2-browser-cache/" target="_blank" rel="external">关于缓存相关的知识点</a></p>
-<p>3.key : expires</p>
-<p>说明:用于设定网页的到期时间，过期后网页必须到服务器上重新传输。</p>
-<blockquote>
-<p>举例:<br><code>&lt;meta http-equiv=&quot;expires&quot; content=&quot;Saturday 1 October 2016 01:00 GMT&quot; /&gt;</code></p>
-</blockquote>
-<p>4.key : fresh</p>
-<p>说明：网页将在设定的时间内，自动刷新或转向设定的网址。使用 <code>&lt;meta http-equiv=&quot;refresh&quot;&gt;</code>标记进行重定向可能会降低您的搜索引擎排名。</p>
-<blockquote>
-<p> 举例:  </p>
-<ol>
-<li><code>&lt;meta http-equiv=&quot;refresh&quot; content=&quot;5&quot;&gt; //当前页面5s后刷新</code>  </li>
-<li><code>&lt;meta http-equiv=&quot;refresh&quot; content=&quot;2; url=&#39;/&#39;&quot;&gt; //可以作为404页面跳转</code></li>
-<li><code>&lt;meta http-equiv=&quot;refresh&quot; content=&quot;0; url=&#39;http://www.babytree.com/&#39;&quot;&gt; //自动跳转到宝宝树首页</code></li>
-</ol>
-</blockquote>
+<p>举例：filter:blur(2px);</p>
+<p>效果：</p>
+<p><img src="http://ogodoej04.bkt.clouddn.com/blurImg.png" alt="blur img"></p>
+<ul>
+<li>2.opactiy(): 改变图像的透明程度。值为0%则是完全透明，值为100%则图像无变化。值在0%和100%之间， 若值未设置，值默认是1。该函数与已有的opacity属性很相似，不同之处在于通过filter，一些浏览器为了提升性能会提供硬件加速。</li>
+</ul>
+<p>举例：filter:opacity(70%);</p>
+<p>效果：</p>
+<p><img src="http://ogodoej04.bkt.clouddn.com/opacity_filter.png" alt="blur img"></p>
+<ul>
+<li>3.drop-shadow(): 给图像设置一个阴影效果。阴影是合成在图像下面，可以有模糊度的，可以以特定颜色画出的遮罩图的偏移版本。函数接受<code>&lt;shadow&gt;</code>（在CSS3背景中定义）类型的值，除了“inset”关键字是不允许的。该函数与已有的box-shadow box-shadow属性很相似；不同之处在于，通过滤镜，一些浏览器为了更好的性能会提供硬件加速。</li>
+</ul>
+<p>举例：filter:drop-shadow(2px 2px 2px grey);</p>
+<p>效果：</p>
+<p><img src="http://ogodoej04.bkt.clouddn.com/dropshadowfilter.png" alt="blur img"></p>
+<ul>
+<li>4.grayscale():将图片转化为灰度图片。默认图片灰度为0，图像变化范围为0%-100%。</li>
+</ul>
+<p>举例：filter:grayscale(20%);</p>
+<p>效果：</p>
+<p><img src="http://ogodoej04.bkt.clouddn.com/grayscale.png" alt="blur img"></p>
+<ul>
+<li>5.invert():反转图像，效果就如照片底板。取值范围（0%-100%）。</li>
+</ul>
+<p>举例：filter:invert(70%);</p>
+<p>效果：</p>
+<p><img src="http://ogodoej04.bkt.clouddn.com/invert.png" alt="blur img"></p>
+<ul>
+<li>6.brightness():调节图片的亮度，值越小图片越黑，值越大图片偏白。默认值为1。</li>
+</ul>
+<p>举例：filter:brightness(2);</p>
+<p>效果：</p>
+<p><img src="http://ogodoej04.bkt.clouddn.com/brightness.png" alt="blur img"></p>
+<ul>
+<li>7.contrast():调整图像的对比度。值是0%的话，图像会全黑。值是100%，图像不变。值可以超过100%，意味着会运用更低的对比。若没有设置值，默认是1。</li>
+</ul>
+<p>举例：filter：contrast(2.6);</p>
+<p>效果：</p>
+<p><img src="http://ogodoej04.bkt.clouddn.com/contrast.png" alt="blur img"></p>
+<ul>
+<li>8.hue-rotate():旋转色相，改变图像色彩。单位deg,所得值是相对当前值旋转色相环得到新的色相值。</li>
+</ul>
+<p>举例：filter：hue-rotate(-55deg);</p>
+<p>效果：</p>
+<p><img src="http://ogodoej04.bkt.clouddn.com/hueRotate.png" alt="blur img"></p>
+<ul>
+<li>9.saturate():转换图像饱和度。值定义转换的比例。值为0%则是完全不饱和，值为100%则图像无变化。其他值，则是效果的线性乘子。超过100%的值是允许的，则有更高的饱和度。 若值未设置，值默认是1。</li>
+</ul>
+<p>举例：filter：saturate(200%);</p>
+<p>效果：</p>
+<p><img src="http://ogodoej04.bkt.clouddn.com/saturate.png" alt="blur img"></p>
+<ul>
+<li>10.sepia():将图片转化为深褐色。值为100%则完全是深褐色的，值为0%图像无变化。值在0%到100%之间，则是效果的线性乘子。若未设置，值默认是0。</li>
+</ul>
+<p>举例：filter：sepia(95%);</p>
+<p>效果:</p>
+<p><img src="http://ogodoej04.bkt.clouddn.com/sepia.png" alt="blur img"></p>
+<ul>
+<li>11.介绍完这十种方法，小伙伴应该大致有一个了解，最后来一个混合效果完成诚哥画风。</li>
+</ul>
+<p>filter:hue-rotate(19deg) saturate(156%) contrast(218%) brightness(1.6)</p>
+<p>效果：</p>
+<p><img src="http://ogodoej04.bkt.clouddn.com/end.png" alt="blur img"></p>
 <hr>
-<p><strong>总结：</strong>  </p>
-<p>关于meta标签的用处还有很多，由于篇幅的原因这里就不一一介绍，送资源给大家参考吧：  </p>
-<ol>
-<li><a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching?hl=zh-cn#cache-control" target="_blank" rel="external">缓存</a>  </li>
-<li><a href="http://blog.sina.com.cn/s/blog_6d48e77101015kqr.html" target="_blank" rel="external">更多的meta功能</a></li>
-</ol>
+<p>filter就介绍这些，大家下去可以试试了。</p>
+<blockquote>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/filter" target="_blank" rel="external">MDN filter</a></p>
+</blockquote>
 
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2016/11/24/filterCss/" data-toggle="tooltip" data-placement="top"
-                           title="css3 渲染逼真的新海诚画风">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2016/11/15/Start-my-blog-s-life/" data-toggle="tooltip" data-placement="top"
-                           title="开场白--开始用文字记录的小时光">Next Post &rarr;</a>
+                        <a href="/2016/11/20/htmlMeta/" data-toggle="tooltip" data-placement="top"
+                           title="你所不知道的 Meta 标签的实现">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -247,9 +276,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2016/11/20/htmlMeta/"
-                         data-title="你所不知道的 Meta 标签的实现"
-                         data-url="http://Johansen_lbw.github.io/2016/11/20/htmlMeta/">
+                         data-thread-key="2016/11/24/filterCss/"
+                         data-title="css3 渲染逼真的新海诚画风"
+                         data-url="http://Johansen_lbw.github.io/2016/11/24/filterCss/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -261,7 +290,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#meta也可以做到自动刷新page-…"><span class="toc-text">meta也可以做到自动刷新page …</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#利用css3实现新海诚画风"><span class="toc-text">利用css3实现新海诚画风</span></a></li></ol>
                 </div>
             </div>
         </div>
