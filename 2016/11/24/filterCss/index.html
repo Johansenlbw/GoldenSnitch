@@ -188,70 +188,81 @@
 </blockquote>
 <p>看了语法结构我们就会知道，关键的招数就是filter函数。接下来就隆重请出我们10个基本方法。</p>
 <ul>
-<li>1.blur(): 增加图像的模糊度。单位px,数值越大，模糊程度越高。</li>
+<li><p>1.blur(): 增加图像的模糊度。单位px,数值越大，模糊程度越高。</p>
+<pre><code>举例：filter:blur(2px);
+</code></pre><p>效果：</p>
+</li>
 </ul>
-<p>举例：filter:blur(2px);</p>
-<p>效果：</p>
 <p><img src="http://ogodoej04.bkt.clouddn.com/blurImg.png" alt="blur img"></p>
 <ul>
-<li>2.opactiy(): 改变图像的透明程度。值为0%则是完全透明，值为100%则图像无变化。值在0%和100%之间， 若值未设置，值默认是1。该函数与已有的opacity属性很相似，不同之处在于通过filter，一些浏览器为了提升性能会提供硬件加速。</li>
+<li><p>2.opactiy(): 改变图像的透明程度。值为0%则是完全透明，值为100%则图像无变化。值在0%和100%之间， 若值未设置，值默认是1。该函数与已有的opacity属性很相似，不同之处在于通过filter，一些浏览器为了提升性能会提供硬件加速。</p>
+<pre><code>举例：filter:opacity(70%);
+</code></pre><p>效果：</p>
+</li>
 </ul>
-<p>举例：filter:opacity(70%);</p>
-<p>效果：</p>
 <p><img src="http://ogodoej04.bkt.clouddn.com/opacity_filter.png" alt="blur img"></p>
 <ul>
-<li>3.drop-shadow(): 给图像设置一个阴影效果。阴影是合成在图像下面，可以有模糊度的，可以以特定颜色画出的遮罩图的偏移版本。函数接受<code>&lt;shadow&gt;</code>（在CSS3背景中定义）类型的值，除了“inset”关键字是不允许的。该函数与已有的box-shadow box-shadow属性很相似；不同之处在于，通过滤镜，一些浏览器为了更好的性能会提供硬件加速。</li>
+<li><p>3.drop-shadow(): 给图像设置一个阴影效果。阴影是合成在图像下面，可以有模糊度的，可以以特定颜色画出的遮罩图的偏移版本。函数接受<code>&lt;shadow&gt;</code>（在CSS3背景中定义）类型的值，除了“inset”关键字是不允许的。该函数与已有的box-shadow box-shadow属性很相似；不同之处在于，通过滤镜，一些浏览器为了更好的性能会提供硬件加速。</p>
+<pre><code>举例：filter:drop-shadow(2px 2px 2px grey);
+</code></pre><p>效果：</p>
+</li>
 </ul>
-<p>举例：filter:drop-shadow(2px 2px 2px grey);</p>
-<p>效果：</p>
 <p><img src="http://ogodoej04.bkt.clouddn.com/dropshadowfilter.png" alt="blur img"></p>
 <ul>
-<li>4.grayscale():将图片转化为灰度图片。默认图片灰度为0，图像变化范围为0%-100%。</li>
+<li><p>4.grayscale():将图片转化为灰度图片。默认图片灰度为0，图像变化范围为0%-100%。</p>
+<pre><code>举例：filter:grayscale(20%);
+</code></pre><p>效果：</p>
+</li>
 </ul>
-<p>举例：filter:grayscale(20%);</p>
-<p>效果：</p>
 <p><img src="http://ogodoej04.bkt.clouddn.com/grayscale.png" alt="blur img"></p>
 <ul>
-<li>5.invert():反转图像，效果就如照片底板。取值范围（0%-100%）。</li>
+<li><p>5.invert():反转图像，效果就如照片底板。取值范围（0%-100%）。</p>
+<pre><code>举例：filter:invert(70%);
+</code></pre><p>效果：</p>
+</li>
 </ul>
-<p>举例：filter:invert(70%);</p>
-<p>效果：</p>
 <p><img src="http://ogodoej04.bkt.clouddn.com/invert.png" alt="blur img"></p>
 <ul>
-<li>6.brightness():调节图片的亮度，值越小图片越黑，值越大图片偏白。默认值为1。</li>
+<li><p>6.brightness():调节图片的亮度，值越小图片越黑，值越大图片偏白。默认值为1。</p>
+<pre><code>举例：filter:brightness(2);
+</code></pre><p>效果：</p>
+</li>
 </ul>
-<p>举例：filter:brightness(2);</p>
-<p>效果：</p>
 <p><img src="http://ogodoej04.bkt.clouddn.com/brightness.png" alt="blur img"></p>
 <ul>
-<li>7.contrast():调整图像的对比度。值是0%的话，图像会全黑。值是100%，图像不变。值可以超过100%，意味着会运用更低的对比。若没有设置值，默认是1。</li>
+<li><p>7.contrast():调整图像的对比度。值是0%的话，图像会全黑。值是100%，图像不变。值可以超过100%，意味着会运用更低的对比。若没有设置值，默认是1。</p>
+<pre><code>举例：filter：contrast(2.6);
+</code></pre><p>效果：</p>
+</li>
 </ul>
-<p>举例：filter：contrast(2.6);</p>
-<p>效果：</p>
 <p><img src="http://ogodoej04.bkt.clouddn.com/contrast.png" alt="blur img"></p>
 <ul>
-<li>8.hue-rotate():旋转色相，改变图像色彩。单位deg,所得值是相对当前值旋转色相环得到新的色相值。</li>
+<li><p>8.hue-rotate():旋转色相，改变图像色彩。单位deg,所得值是相对当前值旋转色相环得到新的色相值。</p>
+<pre><code>举例：filter：hue-rotate(-55deg);
+</code></pre><p>效果：</p>
+</li>
 </ul>
-<p>举例：filter：hue-rotate(-55deg);</p>
-<p>效果：</p>
 <p><img src="http://ogodoej04.bkt.clouddn.com/hueRotate.png" alt="blur img"></p>
 <ul>
-<li>9.saturate():转换图像饱和度。值定义转换的比例。值为0%则是完全不饱和，值为100%则图像无变化。其他值，则是效果的线性乘子。超过100%的值是允许的，则有更高的饱和度。 若值未设置，值默认是1。</li>
+<li><p>9.saturate():转换图像饱和度。值定义转换的比例。值为0%则是完全不饱和，值为100%则图像无变化。其他值，则是效果的线性乘子。超过100%的值是允许的，则有更高的饱和度。 若值未设置，值默认是1。</p>
+<pre><code>举例：filter：saturate(200%);
+</code></pre><p>效果：</p>
+</li>
 </ul>
-<p>举例：filter：saturate(200%);</p>
-<p>效果：</p>
 <p><img src="http://ogodoej04.bkt.clouddn.com/saturate.png" alt="blur img"></p>
 <ul>
-<li>10.sepia():将图片转化为深褐色。值为100%则完全是深褐色的，值为0%图像无变化。值在0%到100%之间，则是效果的线性乘子。若未设置，值默认是0。</li>
+<li><p>10.sepia():将图片转化为深褐色。值为100%则完全是深褐色的，值为0%图像无变化。值在0%到100%之间，则是效果的线性乘子。若未设置，值默认是0。</p>
+<pre><code>举例：filter：sepia(95%);
+</code></pre><p>效果:</p>
+</li>
 </ul>
-<p>举例：filter：sepia(95%);</p>
-<p>效果:</p>
 <p><img src="http://ogodoej04.bkt.clouddn.com/sepia.png" alt="blur img"></p>
 <ul>
-<li>11.介绍完这十种方法，小伙伴应该大致有一个了解，最后来一个混合效果完成诚哥画风。</li>
+<li><p>11.介绍完这十种方法，小伙伴应该大致有一个了解，最后来一个混合效果完成诚哥画风。</p>
+<pre><code>举例： filter:hue-rotate(19deg) saturate(156%) contrast(218%) brightness(1.6)
+</code></pre><p>效果：</p>
+</li>
 </ul>
-<p>filter:hue-rotate(19deg) saturate(156%) contrast(218%) brightness(1.6)</p>
-<p>效果：</p>
 <p><img src="http://ogodoej04.bkt.clouddn.com/end.png" alt="blur img"></p>
 <hr>
 <p>filter就介绍这些，大家下去可以试试了。</p>
@@ -263,6 +274,11 @@
                 
 
                 <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/12/09/word-break/" data-toggle="tooltip" data-placement="top"
+                           title="">&larr; Previous Post</a>
+                    </li>
                     
                     
                     <li class="next">

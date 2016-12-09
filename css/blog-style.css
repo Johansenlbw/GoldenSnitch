@@ -4,7 +4,9 @@
         padding-right: 5%;
     }
 }
-
+html{
+    overflow-x: hidden;
+}
 
 hr{
     margin:0;
