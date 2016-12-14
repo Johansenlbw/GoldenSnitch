@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        Golden Snitch
+        你所不知道的字体下划线｜Golden Snitch
         
     </title>
 
-    <link rel="canonical" href="http://Johansen_lbw.github.io/tags/Life/">
+    <link rel="canonical" href="http://Johansen_lbw.github.io/2016/12/12/underline/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -43,7 +43,7 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="true
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -124,136 +124,178 @@
 
 <!-- Main Content -->
 
+<!--only post-->
 
-<!-- Page Header -->
-<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 visible-xs-block visible-sm-block">
-    <div class="row">
-        <header class="intro-header">
-            <div class="container">
-                <div class="site-heading text-center">
-                    <div class="about-me">
-                        <!--移动端头部显示-->
-                        <img src="http://ogodoej04.bkt.clouddn.com/timg.jpeg"/>
-                        <h5><a href="javascript:;">johansen</a></h5>
-                        <p>Work hard in silence; let success make the noise.</p>
+
+<img class="wechat-title-img"
+     src="http://ogodoej04.bkt.clouddn.com/blog/image/countryside.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ogodoej04.bkt.clouddn.com/blog/image/countryside.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>你所不知道的字体下划线</h1>
+                    
+                    <span class="meta">
+                         作者 johansen
+                        <span>
+                          日期 2016-12-12
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#技术小记"
+                           title="技术小记">技术小记</a>
+                        
                     </div>
                 </div>
             </div>
-        </header>
-    </div>
-</div>
-<!-- Main Content -->
-<div class="container custom-haojen-container">
-    <!-- Post Container -->
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-12 col-xs-12 post-container">
-            <!-- Main Content -->
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://ogodoej04.bkt.clouddn.com/5bf402f77cb3e45de67a7ddde19078a6.jpeg')">
-    <a href="/2016/11/15/Start-my-blog-s-life/">
-        <h2 class="post-title">
-            开场白--开始用文字记录的小时光
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-11-15
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                时光流转，从初中生时开始博客写作，一直到现在，已经有10年的光景，中间这十年间，真正玩博客也就不到一年，高中的三年就是在大量的考试与作业以及天天拥挤的公交车中度过，网络文字的写作也只有在寒暑假修来的清闲中，偶尔耍耍啦，写写博文，抒发一下那个轻狂少年的内心感受罢了，高中三年过后的大学生活，由于校内..
-            </p>
         </div>
-    </a>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            你所不知道的字体下划线
+        </span>
+    </div>
+</header>
 
-</div>
-
-<hr>
-
-
-
-
-<!-- 翻页 pager -->
-
-<ul class="pager">
-    
-    
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h3 id="你所不知道的字体下划线"><a href="#你所不知道的字体下划线" class="headerlink" title="你所不知道的字体下划线"></a>你所不知道的字体下划线</h3><pre><code>上周的一个项目涉及到关于文本下划线的问题，觉得还是用的地方很多，私下就研究了一下相关技术实现。
+觉得写到博客里面还是挺有用的，因此写个笔记吧。
+</code></pre><p>关于下划线，css有他的独有属性,<code>text-decorate:underline</code>。但是这个局限于浏览器默认样式。<br>对于线宽，线型，以及颜色都无法控制。因此我们去思考，关于这种下划线怎么实现。我们思考，发现对于下划线可以用<br>border控制它的颜色与宽度，以及距离字之间的间隙。</p>
+<ul>
+<li><ol>
+<li>border实现<blockquote>
+<p>display:inline-block;<br>border-bottom:1px solid orange;<br>text-decorate:none;<br>font-size:14px;<br>line-height:1.2;<br>height:22px;</p>
+</blockquote>
+</li>
+</ol>
+</li>
 </ul>
+<p>第二种方法是通过background实现的。</p>
+<ul>
+<li><ol>
+<li>background实现<blockquote>
+<p>html:<br><code>&lt;p&gt;“The only way to &lt;a&gt;get rid of a temp­ta­tion&lt;/a&gt; is to &lt;a&gt;yield&lt;/a&gt; to it.”&lt;/p&gt;</code><br>css:<br>background: linear-gradient(gray, gray) no-repeat;<br>background-size: 100% 1px;<br>background-position: 0 1.15em;(相对于字体的顶端的距离)</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<p>这里用到关于线性渐变的知识点，具体可参考<br><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/linear-gradient" target="_blank" rel="external">线性渐变</a><br>对于以上页面的实现会出现相关问题，下划线会穿过字体，因此建议对字体做一下处理<br><code>text-shadow: .05em 0 white, -.05em 0 white;</code> white为背景颜色。<br><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/text-shadow" target="_blank" rel="external">text-shadow</a></p>
 
+                <hr>
+                
 
-        </div>
-        <!-- Sidebar Container -->
-        <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
-
-            <!-- About Me -->
-            <section class="visible-md visible-lg" style="padding: 0 18px">
-                <div class="short-about">
-                    <!--侧边栏头像-->
+                <ul class="pager">
                     
-                    <img src="http://ogodoej04.bkt.clouddn.com/timg.jpeg"/>
+                    <li class="previous">
+                        <a href="/2016/12/13/drawCanvas/" data-toggle="tooltip" data-placement="top"
+                           title="基于一个小画板谈谈canvas">&larr; Previous Post</a>
+                    </li>
                     
-                    <h5><a href="javascript:;">johansen</a></h5>
                     
-                    <p>Work hard in silence; let success make the noise.</p>
+                    <li class="next">
+                        <a href="/2016/12/09/word-break/" data-toggle="tooltip" data-placement="top"
+                           title="calc 的实现举例">Next Post &rarr;</a>
+                    </li>
                     
-                    <hr>
-                    <!-- SNS Link 社交 -->
-                    <ul class="list-inline">
-                        
-                        
-                        
+                </ul>
 
-                        
-                        <li>
-                            <a target="_blank" href="http://weibo.com/5119403139">
-                                        <span class="fa-stack fa-lg">
-                                            <i class="fa fa-circle fa-stack-2x"></i>
-                                            <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
-                                        </span>
-                            </a>
-                        </li>
-                        
-
-                        
-
-                        
-
-                        
-                    </ul>
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2016/12/12/underline/"
+                         data-title="你所不知道的字体下划线"
+                         data-url="http://Johansen_lbw.github.io/2016/12/12/underline/">
+                    </div>
                 </div>
-            </section>
+                <!-- 多说评论框 end -->
+                
 
-            <!-- Featured Tags  标签 -->
-            
-            <section>
-                <div class="tags">
-                    
-                    
-                    <a href="/tags/#技术小记" title="技术小记"
-                       rel="5">技术小记</a>
-                    
-                    
-                    
-                    
-                    
-                    
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#你所不知道的字体下划线"><span class="toc-text">你所不知道的字体下划线</span></a></li></ol>
                 </div>
-            </section>
-            
-
-            
-
+            </div>
         </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#技术小记"
+                           title="技术小记">技术小记</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
     </div>
-</div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'johansenlbw';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
 
 <!-- Footer -->
 <!-- Footer -->
