@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        利用canvas实现图片色彩变换｜Golden Snitch
+        浅析SetTimeOut｜Golden Snitch
         
     </title>
 
-    <link rel="canonical" href="http://Johansen_lbw.github.io/2016/12/20/canvasImg/">
+    <link rel="canonical" href="http://Johansen_lbw.github.io/2016/12/30/aniCanvas/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -145,12 +145,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>利用canvas实现图片色彩变换</h1>
+                    <h1>浅析SetTimeOut</h1>
                     
                     <span class="meta">
                          作者 johansen
                         <span>
-                          日期 2016-12-20
+                          日期 2016-12-30
                          </span>
                     </span>
                     <div class="tags text-center">
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            利用canvas实现图片色彩变换
+            浅析SetTimeOut
         </span>
     </div>
 </header>
@@ -176,67 +176,40 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h3 id="canvas实现图片的变色效果"><a href="#canvas实现图片的变色效果" class="headerlink" title="canvas实现图片的变色效果"></a>canvas实现图片的变色效果</h3><pre><code>上一篇文章涉及到关于canvas的技术细节，开启了本人canvas的技术学习，这周介绍一个关于利用canvas实现图片滤镜。
-</code></pre><p>相关技术点：</p>
-<ul>
-<li><p>1.将图片绘制到canvas画布上。</p>
-<pre><code>涉及API :
-ctx.drawImage(image,sx,sy,sWidth,sHeight,dx,dy,dWidth,dHeight);
-参数介绍 ：
-* image: 图片对象或者canvas对象，video对象。
-* sx,sy: 源对象上需要截取的图像起始点x,y坐标。
-* sWidth,sHeight：源对象上需要截取的图像的宽高。
-* dx,dy: 需要绘制到画布上的起始点坐标。
-* dWidth,dHeight: 需要绘制到画布上的图片的大小。
-
-代码片段：
-      var obj_img = new Image();
-      obj_img.onload = function(){
-          //绘制图片到画布，假设canvas的上下文为ctx
-          ctx.drawImage(obj_img,sx,sy,sWidth,sHeight,dx,dy,dWidth,dHeight);  
-      }
-      obj_img.src = &apos;myFace.png&apos;;
-</code></pre></li>
-</ul>
-<ul>
-<li><p>2.取出canvas画布相关的img数据。</p>
-<pre><code>涉及API :
-ctx.getImageData(x,y,width,height);
-参数介绍 ：
-* x,y: canvas画布的起始点x，y坐标。
-* width,height：canvas画布需要截取的图像的宽高。
-
-得到的结果是一个一维数组，包含每个像素点的RGBA的整型数据。
-</code></pre></li>
-</ul>
-<hr>
-<h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><p>我们通过将所要进行滤镜的图片进行载入，绘制到canvas上，然后获取图像数据，将canvas图像数据进行数值变换，将变换好的的数组赋值给原来的canvas对象的data。</p>
-<blockquote>
-<p>tip:<br>一维数组的数据结构如图，数组中的元素代表不同的色值以及透明度。<br><img src="http://ogodoej04.bkt.clouddn.com/canvasImageData.png" alt="blur img"></p>
+                <pre><code>本周继续Canvas的学习，话说过几天就是新年了，放着几天假，也没人约，估计宅家里了，那就搞搞技术，学学东西。本周学习相关JS动画。
+</code></pre><p>说起时间的循环，莫过会提到SetTimeOut 以及 SetInterval。这两个函数初学JS的人都不会陌生。因为相关动画的实现需要他们对时间的控制，也就是动画的帧频。利用一张一张图片的快速播放，实现的动画效果，时间函数的控制尤为重要，他决定动画的流畅效果。</p>
+<h3 id="SetTimeOut"><a href="#SetTimeOut" class="headerlink" title="SetTimeOut"></a>SetTimeOut</h3><blockquote>
+<p>这里我们不谈SetTimeOut 的实现方式，谈谈SetTimeOut如何工作的。</p>
 </blockquote>
-<p>实现代码如下，截图如下：</p>
-<p><img src="http://ogodoej04.bkt.clouddn.com/blog/image/canvasData.png" alt="blur img"></p>
-<hr>
-<p>技术链接：</p>
-<ol>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/putImageData" target="_blank" rel="external">putImageData</a>  </li>
-<li><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D/drawImage" target="_blank" rel="external">drawImage</a></li>
-</ol>
+<p>我们知道，js是单线程执行的,基于时间队列,想起了大学操作系统相关的进程的时间管理，有需要的同学可以自行补课OS。所以其实setTimeout和setInterval所谓的“异步调用”事实上是通过将代码段插入到代码的执行队列中实现的。 而如何计算插入的时间点呢？自然是要用到我们所说的timer，也就是计时器。当执行setTimeout和setInterval的时候，timer会根据你设定的时间“准确”地找到代码的插入点。当队列“正常”地执行到插入点时，就触发回调，也就是我们设定的回调函数。</p>
+<p>分析下面代码：</p>
+<pre><code>function a() { 
+    setTimeout(function(){alert(&apos;can you see me?&apos;);},1000); 
+    while(true) {} 
+} 
+</code></pre><p>问是否会执行 alert?</p>
+<p>答案是不行的。为什么呢？</p>
+<p>基于上面的原理我们得出答案：<br>因为，while这段代码没有执行完（如图，浏览器一直在解析while的代码），所以插入在后面的代码便永远不会执行。 其实JS终归是单线程产物。无论如何“异步”都不可能突破单线程这个障碍。所以许多的“异步调用”（包括Ajax）事实上也只是“伪异步”而已。</p>
+<p>这就是这周一个同事问我问题的答案。他遇到的问题就是程序在循环遍历中无法进行交互。</p>
+<p>那么解决办法就是程序利用闭包进行循环的异步操作。将循环的每一步插入到可用的时间分片里。</p>
+<p>有个函数库Concurrent.Thread.js 就是实现js的多线程的。使用方法：</p>
+<blockquote>
+<p>Concurrent.Thread.create(function(){<br>        for (var i = 0;i&lt;1000000;i++) {<br>            console.log(i);<br>        };<br>    });</p>
+</blockquote>
+<p>在此期间浏览器不会出现卡死。交互OK。</p>
+<p>具体下载地址：<br>   <a href="https://sourceforge.net/projects/jsthread/files/release/Concurrent.Thread-full-20090713.js/download" target="_blank" rel="external">Concurrent.Thread.js</a></p>
+<p>或者使用 web Worker 实现。</p>
+<p>参考文档：<br><a href="http://www.w3school.com.cn/html5/html_5_webworkers.asp" target="_blank" rel="external">web Worker</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/setTimeout" target="_blank" rel="external">setTimeout</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Worker/Worker" target="_blank" rel="external">Worker wiki</a></p>
 
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2016/12/30/aniCanvas/" data-toggle="tooltip" data-placement="top"
-                           title="浅析SetTimeOut">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2016/12/15/drawCanvas/" data-toggle="tooltip" data-placement="top"
-                           title="基于一个小画板谈谈canvas">Next Post &rarr;</a>
+                        <a href="/2016/12/20/canvasImg/" data-toggle="tooltip" data-placement="top"
+                           title="利用canvas实现图片色彩变换">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -245,9 +218,9 @@ ctx.getImageData(x,y,width,height);
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2016/12/20/canvasImg/"
-                         data-title="利用canvas实现图片色彩变换"
-                         data-url="http://Johansen_lbw.github.io/2016/12/20/canvasImg/">
+                         data-thread-key="2016/12/30/aniCanvas/"
+                         data-title="浅析SetTimeOut"
+                         data-url="http://Johansen_lbw.github.io/2016/12/30/aniCanvas/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -259,7 +232,7 @@ ctx.getImageData(x,y,width,height);
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#canvas实现图片的变色效果"><span class="toc-text">canvas实现图片的变色效果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#实现原理"><span class="toc-text">实现原理</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#SetTimeOut"><span class="toc-text">SetTimeOut</span></a></li></ol>
                 </div>
             </div>
         </div>
