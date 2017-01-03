@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        css3 渲染逼真的新海诚画风｜Golden Snitch
+        physical method｜Golden Snitch
         
     </title>
 
-    <link rel="canonical" href="http://Johansen_lbw.github.io/2016/11/24/filterCss/">
+    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/01/03/physical-method/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -145,18 +145,15 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>css3 渲染逼真的新海诚画风</h1>
+                    <h1>physical method</h1>
                     
                     <span class="meta">
                          作者 johansen
                         <span>
-                          日期 2016-11-24
+                          日期 2017-01-03
                          </span>
                     </span>
                     <div class="tags text-center">
-                        
-                        <a class="tag" href="/tags/#技术小记"
-                           title="技术小记">技术小记</a>
                         
                     </div>
                 </div>
@@ -165,7 +162,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            css3 渲染逼真的新海诚画风
+            physical method
         </span>
     </div>
 </header>
@@ -176,114 +173,16 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h2 id="利用css3实现新海诚画风"><a href="#利用css3实现新海诚画风" class="headerlink" title="利用css3实现新海诚画风"></a>利用css3实现新海诚画风</h2><p>&emsp;&emsp;距离诚哥的新作《 你的名字 》即将上映的时间还有一周多。新海诚迷们在当今各种美图软件盛行的时期，开始了新的PS探索。作为一个直男单身码农，如何凭借代码撩妹，因此结合最近关于css3的滤镜应用，我颇有体会，用在这里就是感同<br>身受。</p>
-<p>&emsp;&emsp;在介绍滤镜之前，首先需要了解关于HSL色彩模型。</p>
-<blockquote>
-<p>HSL色彩模型：<br>HSL使用色相、饱和度、亮度三个分量描述色彩。<br>色相（Hue）：在实际应用中，我们需要记住色相环上的六大主色，用作基本参照：360°/0°红、60°黄、120°绿、180°青、240°蓝、300°洋红，它们在色相环上按照60°圆心角的间隔排列。<br>饱和度（saturation）：指的是色彩的饱和度，它用0%至100%的值描述了相同色相、明度下色彩纯度的变化。数值越大，颜色中的灰色越少，颜色越鲜艳，呈现一种从理性(灰度)到感性(纯色)的变化。<br>亮度（lightness）：指的是色彩的明度，作用是控制色彩的明暗变化。它同样使用了0%至100%的取值范围。数值越小，色彩越暗，越接近于黑色；数值越大，色彩越亮，越接近于白色。</p>
-</blockquote>
-<p>下面提供一个资源，里面有详细介绍:<a href="http://www.baike.com/wiki/HSL" target="_blank" rel="external">HSL色彩模型</a></p>
-<p>我们刚才对于HSL有了大致的了解，现在就步入正题，介绍一个css3的新属性–filter。就是它能让你get新海诚的画风。</p>
-<blockquote>
-<p>语法结构：<br>filter: <code>&lt;filter-function&gt; [&lt;filter-function&gt;]* | none</code></p>
-</blockquote>
-<p>看了语法结构我们就会知道，关键的招数就是filter函数。接下来就隆重请出我们10个基本方法。</p>
-<ul>
-<li><p>1.blur(): 增加图像的模糊度。单位px,数值越大，模糊程度越高。</p>
-<pre><code>举例：filter:blur(2px);
-</code></pre><p>效果：</p>
-</li>
-</ul>
-<p><img src="http://ogodoej04.bkt.clouddn.com/blurImg.png" alt="blur img"></p>
-<ul>
-<li><p>2.opactiy(): 改变图像的透明程度。值为0%则是完全透明，值为100%则图像无变化。值在0%和100%之间， 若值未设置，值默认是1。该函数与已有的opacity属性很相似，不同之处在于通过filter，一些浏览器为了提升性能会提供硬件加速。</p>
-<pre><code>举例：filter:opacity(70%);
-</code></pre><p>效果：</p>
-</li>
-</ul>
-<p><img src="http://ogodoej04.bkt.clouddn.com/opacity_filter.png" alt="blur img"></p>
-<ul>
-<li><p>3.drop-shadow(): 给图像设置一个阴影效果。阴影是合成在图像下面，可以有模糊度的，可以以特定颜色画出的遮罩图的偏移版本。函数接受<code>&lt;shadow&gt;</code>（在CSS3背景中定义）类型的值，除了“inset”关键字是不允许的。该函数与已有的box-shadow box-shadow属性很相似；不同之处在于，通过滤镜，一些浏览器为了更好的性能会提供硬件加速。</p>
-<pre><code>举例：filter:drop-shadow(2px 2px 2px grey);
-</code></pre><p>效果：</p>
-</li>
-</ul>
-<p><img src="http://ogodoej04.bkt.clouddn.com/dropshadowfilter.png" alt="blur img"></p>
-<ul>
-<li><p>4.grayscale():将图片转化为灰度图片。默认图片灰度为0，图像变化范围为0%-100%。</p>
-<pre><code>举例：filter:grayscale(20%);
-</code></pre><p>效果：</p>
-</li>
-</ul>
-<p><img src="http://ogodoej04.bkt.clouddn.com/grayscale.png" alt="blur img"></p>
-<ul>
-<li><p>5.invert():反转图像，效果就如照片底板。取值范围（0%-100%）。</p>
-<pre><code>举例：filter:invert(70%);
-</code></pre><p>效果：</p>
-</li>
-</ul>
-<p><img src="http://ogodoej04.bkt.clouddn.com/invert.png" alt="blur img"></p>
-<ul>
-<li><p>6.brightness():调节图片的亮度，值越小图片越黑，值越大图片偏白。默认值为1。</p>
-<pre><code>举例：filter:brightness(2);
-</code></pre><p>效果：</p>
-</li>
-</ul>
-<p><img src="http://ogodoej04.bkt.clouddn.com/brightness.png" alt="blur img"></p>
-<ul>
-<li><p>7.contrast():调整图像的对比度。值是0%的话，图像会全黑。值是100%，图像不变。值可以超过100%，意味着会运用更低的对比。若没有设置值，默认是1。</p>
-<pre><code>举例：filter：contrast(2.6);
-</code></pre><p>效果：</p>
-</li>
-</ul>
-<p><img src="http://ogodoej04.bkt.clouddn.com/contrast.png" alt="blur img"></p>
-<ul>
-<li><p>8.hue-rotate():旋转色相，改变图像色彩。单位deg,所得值是相对当前值旋转色相环得到新的色相值。</p>
-<pre><code>举例：filter：hue-rotate(-55deg);
-</code></pre><p>效果：</p>
-</li>
-</ul>
-<p><img src="http://ogodoej04.bkt.clouddn.com/hueRotate.png" alt="blur img"></p>
-<ul>
-<li><p>9.saturate():转换图像饱和度。值定义转换的比例。值为0%则是完全不饱和，值为100%则图像无变化。其他值，则是效果的线性乘子。超过100%的值是允许的，则有更高的饱和度。 若值未设置，值默认是1。</p>
-<pre><code>举例：filter：saturate(200%);
-</code></pre><p>效果：</p>
-</li>
-</ul>
-<p><img src="http://ogodoej04.bkt.clouddn.com/saturate.png" alt="blur img"></p>
-<ul>
-<li><p>10.sepia():将图片转化为深褐色。值为100%则完全是深褐色的，值为0%图像无变化。值在0%到100%之间，则是效果的线性乘子。若未设置，值默认是0。</p>
-<pre><code>举例：filter：sepia(95%);
-</code></pre><p>效果:</p>
-</li>
-</ul>
-<p><img src="http://ogodoej04.bkt.clouddn.com/sepia.png" alt="blur img"></p>
-<ul>
-<li><p>11.介绍完这十种方法，小伙伴应该大致有一个了解，最后来一个混合效果完成诚哥画风。</p>
-<pre><code>举例： filter:hue-rotate(19deg) saturate(156%) contrast(218%) brightness(1.6)
-</code></pre><p>效果：</p>
-</li>
-</ul>
-<p><img src="http://ogodoej04.bkt.clouddn.com/end.png" alt="blur img"></p>
-<hr>
-<p>filter就介绍这些，大家下去可以试试了。</p>
-<blockquote>
-<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/filter" target="_blank" rel="external">MDN filter</a></p>
-</blockquote>
-
+                
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2016/12/09/word-break/" data-toggle="tooltip" data-placement="top"
-                           title="calc 的实现举例">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2016/11/20/htmlMeta/" data-toggle="tooltip" data-placement="top"
-                           title="你所不知道的 Meta 标签的实现">Next Post &rarr;</a>
+                        <a href="/2016/12/30/aniCanvas/" data-toggle="tooltip" data-placement="top"
+                           title="浅析SetTimeOut">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -292,9 +191,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2016/11/24/filterCss/"
-                         data-title="css3 渲染逼真的新海诚画风"
-                         data-url="http://Johansen_lbw.github.io/2016/11/24/filterCss/">
+                         data-thread-key="2017/01/03/physical-method/"
+                         data-title="physical method"
+                         data-url="http://Johansen_lbw.github.io/2017/01/03/physical-method/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -306,7 +205,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#利用css3实现新海诚画风"><span class="toc-text">利用css3实现新海诚画风</span></a></li></ol>
+                    
                 </div>
             </div>
         </div>
@@ -327,9 +226,6 @@
                         <a href="/tags/">FEATURED TAGS</a>
                     </h5>
                     <div class="tags">
-                        
-                        <a class="tag" href="/tags/#技术小记"
-                           title="技术小记">技术小记</a>
                         
                     </div>
                 </section>

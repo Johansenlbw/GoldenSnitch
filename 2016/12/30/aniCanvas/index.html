@@ -189,7 +189,7 @@
 } 
 </code></pre><p>问是否会执行 alert?</p>
 <p>答案是不行的。为什么呢？</p>
-<p>基于上面的原理我们得出答案：<br>因为，while这段代码没有执行完（如图，浏览器一直在解析while的代码），所以插入在后面的代码便永远不会执行。 其实JS终归是单线程产物。无论如何“异步”都不可能突破单线程这个障碍。所以许多的“异步调用”（包括Ajax）事实上也只是“伪异步”而已。</p>
+<p>基于上面的原理我们得出答案：<br>因为，while这段代码没有执行完（浏览器一直在解析while的代码），所以插入在后面的代码便永远不会执行。 其实JS终归是单线程产物。无论如何“异步”都不可能突破单线程这个障碍。所以许多的“异步调用”（包括Ajax）事实上也只是“伪异步”而已。</p>
 <p>这就是这周一个同事问我问题的答案。他遇到的问题就是程序在循环遍历中无法进行交互。</p>
 <p>那么解决办法就是程序利用闭包进行循环的异步操作。将循环的每一步插入到可用的时间分片里。</p>
 <p>有个函数库Concurrent.Thread.js 就是实现js的多线程的。使用方法：</p>
@@ -205,6 +205,11 @@
                 
 
                 <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2017/01/03/physical-method/" data-toggle="tooltip" data-placement="top"
+                           title="physical method">&larr; Previous Post</a>
+                    </li>
                     
                     
                     <li class="next">
@@ -324,7 +329,7 @@
 
                 </ul>
                 <p class="copyright text-muted">
-                    Copyright &copy; Golden Snitch 2016
+                    Copyright &copy; Golden Snitch 2017
                     <br>
                     <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
                     <br>
