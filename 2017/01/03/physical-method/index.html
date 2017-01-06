@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        physical method｜Golden Snitch
+        动画的物理数学方法｜Golden Snitch
         
     </title>
 
@@ -145,7 +145,7 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>physical method</h1>
+                    <h1>动画的物理数学方法</h1>
                     
                     <span class="meta">
                          作者 johansen
@@ -155,6 +155,9 @@
                     </span>
                     <div class="tags text-center">
                         
+                        <a class="tag" href="/tags/#技术小记"
+                           title="技术小记">技术小记</a>
+                        
                     </div>
                 </div>
             </div>
@@ -162,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            physical method
+            动画的物理数学方法
         </span>
     </div>
 </header>
@@ -173,7 +176,55 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                
+                <pre><code>本周介绍一些关于动画相关的物理数学方法，希望通过相关的学习，来对于canvas动画的绘制有所帮助。
+</code></pre><h3 id="1-关于动画小球对象的建立。"><a href="#1-关于动画小球对象的建立。" class="headerlink" title="1.关于动画小球对象的建立。"></a>1.关于动画小球对象的建立。</h3><p>首先假设存在一个小球对象 objCircle ,其坐标为（x,y），半径为 r。我们可以建立一个关于小球的JS对象：</p>
+<blockquote>
+<pre><code>var Circle = function(x,y,r){
+    this.x = x;
+    this.y = y;
+    this.r = r;
+}  
+</code></pre></blockquote>
+<h3 id="2-小球对象速度的引入。"><a href="#2-小球对象速度的引入。" class="headerlink" title="2.小球对象速度的引入。"></a>2.小球对象速度的引入。</h3><p>其次当要让小球动起来势必要改变小球的位置，因此物理学里，影响运动小球位移的改变，那就是速度。<br>因此我们引入x,y方向的速度vx,vy。由于canvas是2D的所以忽略z坐标上的情况。因此对象的属性引入速度参数。</p>
+<blockquote>
+<pre><code>var Circle = function(x,y,r,vx,vy){
+    this.x = x;
+    this.y = y;
+    this.r = r;
+    this.vx = vx;
+    this.vy = vy;
+}  
+</code></pre></blockquote>
+<p>引入速度，改变对象的x,y值。</p>
+<pre><code>this.x += this.vx;
+this.y += this.vy;
+</code></pre><p>相关概念：<a href="https://zh.wikipedia.org/wiki/%E9%80%9F%E5%BA%A6" target="_blank" rel="external">速度</a></p>
+<h3 id="3-关于速度变化的运动"><a href="#3-关于速度变化的运动" class="headerlink" title="3.关于速度变化的运动"></a>3.关于速度变化的运动</h3><p>理想情况下的绝对光滑是不存在的，为了让动画更加贴近现实，因此速度是需要变化的，这里我们说两个方面，<br>速度大小的变化，以及速度方向上的变化。</p>
+<p>1.速度大小的变化：</p>
+<p>假设x轴方向的速度变化因子为0.8，那么这是一个<em>加速运动</em>，单位时间内速度增加0.8。对应的位移为：</p>
+<pre><code>var ax = 0.8
+this.vx +=ax;
+this.x += this.vx;
+</code></pre><p>对于摩擦力而言，摩擦力体现在速度的不断减小直至减为0。因此基于极限的概念，vx/n最终趋于0。</p>
+<p>举个例子：</p>
+<pre><code>var vax = 0.8;
+this.vx = this.vx*0.8;
+if(this.vx&lt;0.01){
+    this.vx = 0;
+}
+this.x + = this.vx;
+</code></pre><p>2.速度方向的改变：</p>
+<p>关于速度方向的改变莫过于圆周运动。说到圆周运动，我们应该想到关于圆周的极坐标定义，因为匀速圆周运动，速度改变的就是方向。因此圆周弧度的改变是根本。</p>
+<blockquote>
+<p>圆的极坐标表达式为：<br>x = rcosθ<br>y = rsinθ</p>
+</blockquote>
+<p>也就是说给我一个圆的半径和每次旋转的角度，我就可以用x和y的方式描绘圆的路径。<br>对应小球坐标为：</p>
+<pre><code>// r 为圆周运动的轨迹的半径，angle为弧度,(x,y)为圆周运动轨迹的圆心坐标。
+this.x = x0+Math.cos(angle)*r;
+this.y = y0+Math.sin(angle)*r;
+angle += 0.1;
+</code></pre><p>综上介绍了相关动画的物理知识的储备，深度挖掘相关算法需要查阅高数以及基础物理。</p>
+
                 <hr>
                 
 
@@ -192,7 +243,7 @@
                 <div class="comment">
                     <div class="ds-thread"
                          data-thread-key="2017/01/03/physical-method/"
-                         data-title="physical method"
+                         data-title="动画的物理数学方法"
                          data-url="http://Johansen_lbw.github.io/2017/01/03/physical-method/">
                     </div>
                 </div>
@@ -205,7 +256,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-关于动画小球对象的建立。"><span class="toc-text">1.关于动画小球对象的建立。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-小球对象速度的引入。"><span class="toc-text">2.小球对象速度的引入。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-关于速度变化的运动"><span class="toc-text">3.关于速度变化的运动</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -226,6 +277,9 @@
                         <a href="/tags/">FEATURED TAGS</a>
                     </h5>
                     <div class="tags">
+                        
+                        <a class="tag" href="/tags/#技术小记"
+                           title="技术小记">技术小记</a>
                         
                     </div>
                 </section>
