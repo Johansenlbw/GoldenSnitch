@@ -185,13 +185,13 @@
 <blockquote>
 <p>要让CSS生效，必须满足两个条件：<br>1.元素必须是浮动的。<br>2.元素必须有确定的尺寸。</p>
 </blockquote>
-<p>我们还可以使用图片定义shape</p>
-<p>使用shape-outside属性，传递一个url()值，指向我们想要的图片。图像需要一个alpha通道才可以让浏览器提取形状。<br>当图像内像素的alpha值大于某个阈值。这个阈值默认值为0.0(完全透明),或者你可以直接使用shape-image-threshold属性。因此,图像中任何不透明的像素，都会被用来定义形状。如果有这种情况,shape-image-threshold将根据开关状态，来确定alpha通道或亮度的阈值。<br>当然,如果你要把叶子形状作为元素背景,那图像中形状之外的需要被裁减掉。你可以使用mask-image属性(用适当的前缀)做到这一点,因为clip-path属性并不能接收一个alpha图片作为值。</p>
+<p>我们还可以使用图片定义shape:<br>向shape-outside属性，传递一个url()值，指向我们想要的图片。图像需要一个alpha通道才可以让浏览器提取形状。<br>当图像内像素的alpha值大于某个阈值。这个阈值默认值为0.0(完全透明),或者你可以直接使用shape-image-threshold属性。因此,图像中任何不透明的像素，都会被用来定义形状。如果有这种情况,shape-image-threshold将根据开关状态，来确定alpha通道或亮度的阈值。<br>当然,如果你要把叶子形状作为元素背景,那图像中形状之外的需要被裁减掉。你可以使用mask-image属性(用适当的前缀)做到这一点,因为clip-path属性并不能接收一个alpha图片作为值。</p>
 <blockquote>
 <p>.shaped-element {<br>    float: left;<br>    width: 192px;<br>    height: 65px;<br>    shape-outside: url(<a href="http://pic05.babytreeimg.com/img/header_footer/logo-201610.png" target="_blank" rel="external">http://pic05.babytreeimg.com/img/header_footer/logo-201610.png</a>);<br>    shape-margin: 15px;<br>    shape-image-threshold: 0.5;<br>    background: #009966;<br>    mask-image: url(<a href="http://pic05.babytreeimg.com/img/header_footer/logo-201610.png" target="_blank" rel="external">http://pic05.babytreeimg.com/img/header_footer/logo-201610.png</a>);<br>}</p>
 </blockquote>
-<p>最后给大家一个demo</p>
+<p>最后给大家一个demo，可以参考。</p>
 <p><a href="http://codepen.io/Johansen_lbw/pen/RKRooj" target="_blank" rel="external">demo</a></p>
+<p>参考资料：<br><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Shapes" target="_blank" rel="external">shape</a></p>
 
                 <hr>
                 
