@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        Tags｜Golden Snitch
+        关于css shape的实现｜Golden Snitch
         
     </title>
 
-    <link rel="canonical" href="http://Johansen_lbw.github.io/Tags/">
+    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/01/12/pzjc/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -43,7 +43,7 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="false
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
 " data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -123,178 +123,167 @@
 </script>
 
 <!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://ogodoej04.bkt.clouddn.com/blog/image/countryside.jpg">
+
+
 <style>
-    .intro-header .site-heading {
-        margin: 50px;
+    
+    header.intro-header {
+        background-image: url('http://ogodoej04.bkt.clouddn.com/blog/image/countryside.jpg')
     }
+
+    
 </style>
 
-<!-- Page Header -->
 <header class="intro-header">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading text-center">
-                    <h1>Tags</h1>
-                    <span class="subheading"></span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>关于css shape的实现</h1>
+                    
+                    <span class="meta">
+                         作者 johansen
+                        <span>
+                          日期 2017-01-12
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#技术小记"
+                           title="技术小记">技术小记</a>
+                        
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            关于css shape的实现
+        </span>
     </div>
 </header>
 
-<!-- Main Content -->
-<div class="container">
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-            <!-- 标签云 -->
-            <div id='tag_cloud' class="tags">
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h2 id="关于css-shape的实现"><a href="#关于css-shape的实现" class="headerlink" title="关于css shape的实现"></a>关于css shape的实现</h2><pre><code>有时候我们看见过文字环绕图片的效果，怎么通过css实现相关效果，今天介绍一个css方法给大家，那就是css shape。
+</code></pre><h3 id="CSS-shape-的属性定义"><a href="#CSS-shape-的属性定义" class="headerlink" title="CSS shape 的属性定义"></a>CSS shape 的属性定义</h3><blockquote>
+<p>.elem{<br>        float: left;<br>        height: 10em;<br>        width: 15em;<br>        shape-outside: circle();<br>        }</p>
+</blockquote>
+<p>我们可以使用以下形状函数：<br>1.circle(); <code>&lt;circle()&gt; = circle( [ &lt;shape-radius&gt; ]? [ at &lt;position&gt; ]? )</code><br>2.ellipse(); <code>&lt;ellipse()&gt; = ellipse( [ &lt;shape-radius&gt;{2} ]? [ at &lt;position&gt; ]? )</code><br>3.inset(); <code>&lt;inset()&gt; = inset( &lt;length-percentage&gt;{1,4} [ round &lt;border-radius&gt; ]? )</code><br>4.polygon(); <code>&lt;polygon()&gt; = polygon( &lt;fill-rule&gt;? , [ &lt;length-percentage&gt; &lt;length-percentage&gt; ]# )</code></p>
+<p>每一个形状是都是由一组点定义的。有些函数把点作为参数,另外一些则采用偏移量–最终他们都会在元素上绘制一个由一组点组成的形状。</p>
+<blockquote>
+<p>要让CSS生效，必须满足两个条件：<br>1.元素必须是浮动的。<br>2.元素必须有确定的尺寸。</p>
+</blockquote>
+<p>我们还可以使用图片定义shape</p>
+<p>使用shape-outside属性，传递一个url()值，指向我们想要的图片。图像需要一个alpha通道才可以让浏览器提取形状。<br>当图像内像素的alpha值大于某个阈值。这个阈值默认值为0.0(完全透明),或者你可以直接使用shape-image-threshold属性。因此,图像中任何不透明的像素，都会被用来定义形状。如果有这种情况,shape-image-threshold将根据开关状态，来确定alpha通道或亮度的阈值。<br>当然,如果你要把叶子形状作为元素背景,那图像中形状之外的需要被裁减掉。你可以使用mask-image属性(用适当的前缀)做到这一点,因为clip-path属性并不能接收一个alpha图片作为值。</p>
+<blockquote>
+<p>.shaped-element {<br>    float: left;<br>    width: 192px;<br>    height: 65px;<br>    shape-outside: url(<a href="http://pic05.babytreeimg.com/img/header_footer/logo-201610.png" target="_blank" rel="external">http://pic05.babytreeimg.com/img/header_footer/logo-201610.png</a>);<br>    shape-margin: 15px;<br>    shape-image-threshold: 0.5;<br>    background: #009966;<br>    mask-image: url(<a href="http://pic05.babytreeimg.com/img/header_footer/logo-201610.png" target="_blank" rel="external">http://pic05.babytreeimg.com/img/header_footer/logo-201610.png</a>);<br>}</p>
+</blockquote>
+<p>最后给大家一个demo</p>
+<p><a href="http://codepen.io/Johansen_lbw/pen/RKRooj" target="_blank" rel="external">demo</a></p>
+
+                <hr>
                 
-                <a href="#杂文小记" title="杂文小记" rel="1">杂文小记</a>
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/01/03/physical-method/" data-toggle="tooltip" data-placement="top"
+                           title="动画的物理数学方法">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
                 
-                <a href="#Life" title="Life" rel="1">Life</a>
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2017/01/12/pzjc/"
+                         data-title="关于css shape的实现"
+                         data-url="http://Johansen_lbw.github.io/2017/01/12/pzjc/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
                 
-                <a href="#技术小记" title="技术小记" rel="9">技术小记</a>
+
                 
+
             </div>
 
-            <!-- 标签列表 -->
-            
-            <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="杂文小记">
-                    <span class="tag-text">杂文小记</span>
-                </span>
-                
-                <div class="post-preview">
-                    <a href="/2016/11/15/Start-my-blog-s-life/">
-                        <h2 class="post-title">
-                            开场白--开始用文字记录的小时光
-                        </h2>
-                        
-                    </a>
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于css-shape的实现"><span class="toc-text">关于css shape的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS-shape-的属性定义"><span class="toc-text">CSS shape 的属性定义</span></a></li></ol></li></ol>
                 </div>
-                <hr>
-                
             </div>
-            
-            <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="Life">
-                    <span class="tag-text">Life</span>
-                </span>
-                
-                <div class="post-preview">
-                    <a href="/2016/11/15/Start-my-blog-s-life/">
-                        <h2 class="post-title">
-                            开场白--开始用文字记录的小时光
-                        </h2>
-                        
-                    </a>
-                </div>
-                <hr>
-                
-            </div>
-            
-            <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="技术小记">
-                    <span class="tag-text">技术小记</span>
-                </span>
-                
-                <div class="post-preview">
-                    <a href="/2016/12/30/aniCanvas/">
-                        <h2 class="post-title">
-                            浅析SetTimeOut
-                        </h2>
-                        
-                    </a>
-                </div>
-                <hr>
-                
-                <div class="post-preview">
-                    <a href="/2016/11/24/filterCss/">
-                        <h2 class="post-title">
-                            css3 渲染逼真的新海诚画风
-                        </h2>
-                        
-                    </a>
-                </div>
-                <hr>
-                
-                <div class="post-preview">
-                    <a href="/2016/12/15/drawCanvas/">
-                        <h2 class="post-title">
-                            基于一个小画板谈谈canvas
-                        </h2>
-                        
-                    </a>
-                </div>
-                <hr>
-                
-                <div class="post-preview">
-                    <a href="/2016/12/20/canvasImg/">
-                        <h2 class="post-title">
-                            利用canvas实现图片色彩变换
-                        </h2>
-                        
-                    </a>
-                </div>
-                <hr>
-                
-                <div class="post-preview">
-                    <a href="/2017/01/12/pzjc/">
-                        <h2 class="post-title">
-                            关于css shape的实现
-                        </h2>
-                        
-                    </a>
-                </div>
-                <hr>
-                
-                <div class="post-preview">
-                    <a href="/2016/11/20/htmlMeta/">
-                        <h2 class="post-title">
-                            你所不知道的 Meta 标签的实现
-                        </h2>
-                        
-                    </a>
-                </div>
-                <hr>
-                
-                <div class="post-preview">
-                    <a href="/2017/01/03/physical-method/">
-                        <h2 class="post-title">
-                            动画的物理数学方法
-                        </h2>
-                        
-                    </a>
-                </div>
-                <hr>
-                
-                <div class="post-preview">
-                    <a href="/2016/12/12/underline/">
-                        <h2 class="post-title">
-                            你所不知道的字体下划线
-                        </h2>
-                        
-                    </a>
-                </div>
-                <hr>
-                
-                <div class="post-preview">
-                    <a href="/2016/12/09/word-break/">
-                        <h2 class="post-title">
-                            calc 的实现举例
-                        </h2>
-                        
-                    </a>
-                </div>
-                <hr>
-                
-            </div>
-            
-
         </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#技术小记"
+                           title="技术小记">技术小记</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
     </div>
-</div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'johansenlbw';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
 
 <!-- Footer -->
 <!-- Footer -->
