@@ -182,20 +182,14 @@
 </blockquote>
 <p>我们可以使用以下形状函数：<br>1.circle(); <code>&lt;circle()&gt; = circle( [ &lt;shape-radius&gt; ]? [ at &lt;position&gt; ]? )</code><br>2.ellipse(); <code>&lt;ellipse()&gt; = ellipse( [ &lt;shape-radius&gt;{2} ]? [ at &lt;position&gt; ]? )</code><br>3.inset(); <code>&lt;inset()&gt; = inset( &lt;length-percentage&gt;{1,4} [ round &lt;border-radius&gt; ]? )</code><br>4.polygon(); <code>&lt;polygon()&gt; = polygon( &lt;fill-rule&gt;? , [ &lt;length-percentage&gt; &lt;length-percentage&gt; ]# )</code></p>
 <h4 id="实现举例1"><a href="#实现举例1" class="headerlink" title="实现举例1"></a>实现举例1</h4><blockquote>
-<pre><code>.shaped-element {
-float: left;
-width: 200px;
-height:250px;
-shape-outside:circle(100px at 50% 50%);
-shape-margin:20px;
-background:url(http://ogodoej04.bkt.clouddn.com/image_large.svg) no-repeat center;
-background-size:100% auto;
-}
-</code></pre></blockquote>
+<p>.shaped-element {<br>    float: left;<br>    width: 200px;<br>    height:250px;<br>    shape-outside:circle(100px at 50% 50%);<br>    shape-margin:20px;<br>    background:url(<a href="http://ogodoej04.bkt.clouddn.com/image_large.svg" target="_blank" rel="external">http://ogodoej04.bkt.clouddn.com/image_large.svg</a>) no-repeat center;<br>    background-size:100% auto;<br>    }</p>
+</blockquote>
 <p>每一个形状是都是由一组点定义的。有些函数把点作为参数,另外一些则采用偏移量–最终他们都会在元素上绘制一个由一组点组成的形状。</p>
-<p>tip:<br><code>要让CSS生效，必须满足两个条件：
+<p>强调tip:<br><code>要让CSS生效，必须满足两个条件：
 1.元素必须是浮动的。
-2.元素必须有确定的尺寸。</code><br>我们还可以使用图片定义shape:<br>向shape-outside属性，传递一个url()值，指向我们想要的图片。图像需要一个alpha通道才可以让浏览器提取形状。<br>当图像内像素的alpha值大于某个阈值。这个阈值默认值为0.0(完全透明),或者你可以直接使用shape-image-threshold属性。因此,图像中任何不透明的像素，都会被用来定义形状。如果有这种情况,shape-image-threshold将根据开关状态，来确定alpha通道或亮度的阈值。<br>当然,如果你要把叶子形状作为元素背景,那图像中形状之外的需要被裁减掉。你可以使用mask-image属性(用适当的前缀)做到这一点,因为clip-path属性并不能接收一个alpha图片作为值。</p>
+2.元素必须有确定的尺寸。</code></p>
+<p>我们还可以使用图片定义shape:</p>
+<p>向shape-outside属性，传递一个url()值，指向我们想要的图片。图像需要一个alpha通道才可以让浏览器提取形状。<br>当图像内像素的alpha值大于某个阈值。这个阈值默认值为0.0(完全透明),或者你可以直接使用shape-image-threshold属性。因此,图像中任何不透明的像素，都会被用来定义形状。如果有这种情况,shape-image-threshold将根据开关状态，来确定alpha通道或亮度的阈值。<br>当然,如果你要把叶子形状作为元素背景,那图像中形状之外的需要被裁减掉。你可以使用mask-image属性(用适当的前缀)做到这一点,因为clip-path属性并不能接收一个alpha图片作为值。</p>
 <h4 id="实现举例2"><a href="#实现举例2" class="headerlink" title="实现举例2"></a>实现举例2</h4><blockquote>
 <p>.shaped-element {<br>    float: left;<br>    width: 192px;<br>    height: 65px;<br>    shape-outside: url(<a href="http://pic05.babytreeimg.com/img/header_footer/logo-201610.png" target="_blank" rel="external">http://pic05.babytreeimg.com/img/header_footer/logo-201610.png</a>);<br>    shape-margin: 15px;<br>    shape-image-threshold: 0.5;<br>    background: #009966;<br>    mask-image: url(<a href="http://pic05.babytreeimg.com/img/header_footer/logo-201610.png" target="_blank" rel="external">http://pic05.babytreeimg.com/img/header_footer/logo-201610.png</a>);<br>}</p>
 </blockquote>
