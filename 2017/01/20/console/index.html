@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        关于css shape的实现｜Golden Snitch
+        你所错过的consol｜Golden Snitch
         
     </title>
 
-    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/01/12/pzjc/">
+    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/01/20/console/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -145,18 +145,18 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>关于css shape的实现</h1>
+                    <h1>你所错过的consol</h1>
                     
                     <span class="meta">
                          作者 johansen
                         <span>
-                          日期 2017-01-12
+                          日期 2017-01-20
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#技术小记"
-                           title="技术小记">技术小记</a>
+                        <a class="tag" href="/tags/#-技术小记"
+                           title="-技术小记">-技术小记</a>
                         
                     </div>
                 </div>
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            关于css shape的实现
+            你所错过的consol
         </span>
     </div>
 </header>
@@ -176,40 +176,45 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h2 id="关于css-shape的实现"><a href="#关于css-shape的实现" class="headerlink" title="关于css shape的实现"></a>关于css shape的实现</h2><pre><code>有时候我们看见过文字环绕图片的效果，怎么通过css实现相关效果，今天介绍一个css方法给大家，那就是css shape。
-</code></pre><h3 id="CSS-shape-的属性定义"><a href="#CSS-shape-的属性定义" class="headerlink" title="CSS shape 的属性定义"></a>CSS shape 的属性定义</h3><blockquote>
-<p>.elem{<br>        float: left;<br>        height: 10em;<br>        width: 15em;<br>        shape-outside: circle();<br>        }</p>
+                <h3 id="你所错过的console"><a href="#你所错过的console" class="headerlink" title="你所错过的console"></a>你所错过的console</h3><pre><code>曾经他们出现在你的面前，你只看中了console.log(),但今天他们又来到了你面前亮了灯，你是否还会灭灯。那就先让我介绍一下你所错过的他们哈。
+</code></pre><h4 id="1-console-log"><a href="#1-console-log" class="headerlink" title="1.console.log()"></a>1.console.log()</h4><blockquote>
+<p>这里介绍console.log()多种参数的情况，他可以使用 C 语言 printf() 风格的占位符，不过其支持的占位符种类较少，只支持字符串（%s）、整数（%d或%i）、浮点数（%f）和对象（%o）。</p>
 </blockquote>
-<p>我们可以使用以下形状函数：<br>1.circle(); <code>&lt;circle()&gt; = circle( [ &lt;shape-radius&gt; ]? [ at &lt;position&gt; ]? )</code><br>2.ellipse(); <code>&lt;ellipse()&gt; = ellipse( [ &lt;shape-radius&gt;{2} ]? [ at &lt;position&gt; ]? )</code><br>3.inset(); <code>&lt;inset()&gt; = inset( &lt;length-percentage&gt;{1,4} [ round &lt;border-radius&gt; ]? )</code><br>4.polygon(); <code>&lt;polygon()&gt; = polygon( &lt;fill-rule&gt;? , [ &lt;length-percentage&gt; &lt;length-percentage&gt; ]# )</code></p>
-<h4 id="实现举例1"><a href="#实现举例1" class="headerlink" title="实现举例1"></a>实现举例1</h4><blockquote>
-<p>.shaped-element {<br>    float: left;<br>    width: 200px;<br>    height:250px;<br>    shape-outside:circle(100px at 50% 50%);<br>    shape-margin:20px;<br>    background:url(<a href="http://ogodoej04.bkt.clouddn.com/image_large.svg" target="_blank" rel="external">http://ogodoej04.bkt.clouddn.com/image_large.svg</a>) no-repeat center;<br>    background-size:100% auto;<br>    }</p>
+<p><img src="http://ogodoej04.bkt.clouddn.com/blog/image/console/log.png" alt="blur img"></p>
+<h4 id="2-console-debug-、console-info-、-console-warn-与-console-error"><a href="#2-console-debug-、console-info-、-console-warn-与-console-error" class="headerlink" title="2.console.debug()、console.info()、 console.warn() 与 console.error()"></a>2.console.debug()、console.info()、 console.warn() 与 console.error()</h4><blockquote>
+<p>这四个方法的使用方法跟 console.log() 一模一样，差别在于输出的颜色与图标不同。直接给个“栗”子：</p>
 </blockquote>
-<p>每一个形状是都是由一组点定义的。有些函数把点作为参数,另外一些则采用偏移量–最终他们都会在元素上绘制一个由一组点组成的形状。</p>
-<p>强调tip:<br><code>要让CSS生效，必须满足两个条件：
-1.元素必须是浮动的。
-2.元素必须有确定的尺寸。</code></p>
-<p>我们还可以使用图片定义shape:</p>
-<p>向shape-outside属性，传递一个url()值，指向我们想要的图片。图像需要一个alpha通道才可以让浏览器提取形状。<br>当图像内像素的alpha值大于某个阈值。这个阈值默认值为0.0(完全透明),或者你可以直接使用shape-image-threshold属性。因此,图像中任何不透明的像素，都会被用来定义形状。如果有这种情况,shape-image-threshold将根据开关状态，来确定alpha通道或亮度的阈值。<br>当然,如果你要把图片形状作为元素背景,那图像中形状之外的需要被裁减掉。你可以使用mask-image属性(用适当的前缀)做到这一点,因为clip-path属性并不能接收一个alpha图片作为值。</p>
-<h4 id="实现举例2"><a href="#实现举例2" class="headerlink" title="实现举例2"></a>实现举例2</h4><blockquote>
-<p>.shaped-element {<br>    float: left;<br>    width: 192px;<br>    height: 65px;<br>    shape-outside: url(<a href="http://pic05.babytreeimg.com/img/header_footer/logo-201610.png" target="_blank" rel="external">http://pic05.babytreeimg.com/img/header_footer/logo-201610.png</a>);<br>    shape-margin: 15px;<br>    shape-image-threshold: 0.5;<br>    background: #009966;<br>    mask-image: url(<a href="http://pic05.babytreeimg.com/img/header_footer/logo-201610.png" target="_blank" rel="external">http://pic05.babytreeimg.com/img/header_footer/logo-201610.png</a>);<br>}</p>
+<p><img src="http://ogodoej04.bkt.clouddn.com/blog/image/console/debug.png" alt="blur img"></p>
+<h4 id="3-console-table"><a href="#3-console-table" class="headerlink" title="3.console.table()"></a>3.console.table()</h4><blockquote>
+<p>还是直接给一个栗子：</p>
 </blockquote>
-<p>最后给大家一个demo，可以参考。</p>
-<p><a href="http://codepen.io/Johansen_lbw/pen/RKRooj" target="_blank" rel="external">demo</a><br>参考资料：<br><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Shapes" target="_blank" rel="external">shape</a></p>
+<p><img src="http://ogodoej04.bkt.clouddn.com/blog/image/console/table.png" alt="blur img"></p>
+<p>console.table() 以表格的形式输出，嵌套三层及以上的也会以表格形式输出，但限于表格只能显示二维信息的特点，其会在嵌套三层或以上的地方会显示 “Object” 字符串。</p>
+<h4 id="4-console-time-与-console-timeEnd"><a href="#4-console-time-与-console-timeEnd" class="headerlink" title="4.console.time() 与 console.timeEnd()"></a>4.console.time() 与 console.timeEnd()</h4><blockquote>
+<p>调试代码时，我们监测程序性能，常常通过程序的time的计算进行衡量。举一个例子：</p>
+</blockquote>
+<p><img src="http://ogodoej04.bkt.clouddn.com/blog/image/console/time.png" alt="blur img"></p>
+<p>从上面的例子可以看出，我们用 console.time() 和 console.timeEnd() 包围要测试运行时间的代码，这两个方法的参数保持一致，以便正确识别和匹配代码开始和结束的位置。</p>
+<h4 id="5-console-count"><a href="#5-console-count" class="headerlink" title="5.console.count()"></a>5.console.count()</h4><blockquote>
+<p>调试代码时，我们经常需要知道一段代码被执行了多少次，我们可以使用 console.count() 来方便的达到我们的目的。举例如下：</p>
+</blockquote>
+<p><img src="http://ogodoej04.bkt.clouddn.com/blog/image/console/count.png" alt="blur img"></p>
+<h4 id="6-console-assert"><a href="#6-console-assert" class="headerlink" title="6.console.assert()"></a>6.console.assert()</h4><blockquote>
+<p>console.assert() 类似于单元测试中的断言，当表达式为 false 时，输出错误信息。示例如下：</p>
+</blockquote>
+<p><img src="http://ogodoej04.bkt.clouddn.com/blog/image/console/assert.png" alt="blur img"></p>
+<hr>
+<p>大家周末愉快，最近发现一部电视剧不错，回家看《请回答1988》了。</p>
 
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/01/20/console/" data-toggle="tooltip" data-placement="top"
-                           title="你所错过的consol">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2017/01/03/physical-method/" data-toggle="tooltip" data-placement="top"
-                           title="动画的物理数学方法">Next Post &rarr;</a>
+                        <a href="/2017/01/12/pzjc/" data-toggle="tooltip" data-placement="top"
+                           title="关于css shape的实现">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -218,9 +223,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2017/01/12/pzjc/"
-                         data-title="关于css shape的实现"
-                         data-url="http://Johansen_lbw.github.io/2017/01/12/pzjc/">
+                         data-thread-key="2017/01/20/console/"
+                         data-title="你所错过的consol"
+                         data-url="http://Johansen_lbw.github.io/2017/01/20/console/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -232,7 +237,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#关于css-shape的实现"><span class="toc-text">关于css shape的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS-shape-的属性定义"><span class="toc-text">CSS shape 的属性定义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#实现举例1"><span class="toc-text">实现举例1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实现举例2"><span class="toc-text">实现举例2</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#你所错过的console"><span class="toc-text">你所错过的console</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-console-log"><span class="toc-text">1.console.log()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-console-debug-、console-info-、-console-warn-与-console-error"><span class="toc-text">2.console.debug()、console.info()、 console.warn() 与 console.error()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-console-table"><span class="toc-text">3.console.table()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-console-time-与-console-timeEnd"><span class="toc-text">4.console.time() 与 console.timeEnd()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-console-count"><span class="toc-text">5.console.count()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-console-assert"><span class="toc-text">6.console.assert()</span></a></li></ol></li></ol>
                 </div>
             </div>
         </div>
@@ -254,8 +259,8 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#技术小记"
-                           title="技术小记">技术小记</a>
+                        <a class="tag" href="/tags/#-技术小记"
+                           title="-技术小记">-技术小记</a>
                         
                     </div>
                 </section>
