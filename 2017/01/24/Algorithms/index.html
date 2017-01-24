@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        你所错过的console｜Golden Snitch
+        Algorithms｜Golden Snitch
         
     </title>
 
-    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/01/20/console/">
+    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/01/24/Algorithms/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -145,18 +145,18 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>你所错过的console</h1>
+                    <h1>Algorithms</h1>
                     
                     <span class="meta">
                          作者 johansen
                         <span>
-                          日期 2017-01-20
+                          日期 2017-01-24
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#-技术小记"
-                           title="-技术小记">-技术小记</a>
+                        <a class="tag" href="/tags/#技术小记"
+                           title="技术小记">技术小记</a>
                         
                     </div>
                 </div>
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            你所错过的console
+            Algorithms
         </span>
     </div>
 </header>
@@ -176,50 +176,49 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h3 id="你所错过的console"><a href="#你所错过的console" class="headerlink" title="你所错过的console"></a>你所错过的console</h3><pre><code>曾经他们出现在你的面前，你只看中了console.log(),但今天他们又来到了你面前亮了灯，你是否还会灭灯。那就先让我介绍一下你所错过的他们哈。
-</code></pre><h4 id="1-console-log"><a href="#1-console-log" class="headerlink" title="1.console.log()"></a>1.console.log()</h4><blockquote>
-<p>这里介绍console.log()多种参数的情况，他可以使用 C 语言 printf() 风格的占位符，不过其支持的占位符种类较少，只支持字符串（%s）、整数（%d或%i）、浮点数（%f）和对象（%o）。</p>
-</blockquote>
-<p><img src="http://ogodoej04.bkt.clouddn.com/blog/image/console/log.png" alt="blur img"></p>
-<h4 id="2-console-debug-、console-info-、-console-warn-与-console-error"><a href="#2-console-debug-、console-info-、-console-warn-与-console-error" class="headerlink" title="2.console.debug()、console.info()、 console.warn() 与 console.error()"></a>2.console.debug()、console.info()、 console.warn() 与 console.error()</h4><blockquote>
-<p>这四个方法的使用方法跟 console.log() 一模一样，差别在于输出的颜色与图标不同。直接给个“栗”子：</p>
-</blockquote>
-<p><img src="http://ogodoej04.bkt.clouddn.com/blog/image/console/debug.png" alt="blur img"></p>
-<h4 id="3-console-table"><a href="#3-console-table" class="headerlink" title="3.console.table()"></a>3.console.table()</h4><blockquote>
-<p>还是直接给一个栗子：</p>
-</blockquote>
-<p><img src="http://ogodoej04.bkt.clouddn.com/blog/image/console/table.png" alt="blur img"></p>
-<p>console.table() 以表格的形式输出，嵌套三层及以上的也会以表格形式输出，但限于表格只能显示二维信息的特点，其会在嵌套三层或以上的地方会显示 “Object” 字符串。</p>
-<h4 id="4-console-time-与-console-timeEnd"><a href="#4-console-time-与-console-timeEnd" class="headerlink" title="4.console.time() 与 console.timeEnd()"></a>4.console.time() 与 console.timeEnd()</h4><blockquote>
-<p>调试代码时，我们监测程序性能，常常通过程序的time的计算进行衡量。举一个例子：</p>
-</blockquote>
-<p><img src="http://ogodoej04.bkt.clouddn.com/blog/image/console/time.png" alt="blur img"></p>
-<p>从上面的例子可以看出，我们用 console.time() 和 console.timeEnd() 包围要测试运行时间的代码，这两个方法的参数保持一致，以便正确识别和匹配代码开始和结束的位置。</p>
-<h4 id="5-console-count"><a href="#5-console-count" class="headerlink" title="5.console.count()"></a>5.console.count()</h4><blockquote>
-<p>调试代码时，我们经常需要知道一段代码被执行了多少次，我们可以使用 console.count() 来方便的达到我们的目的。举例如下：</p>
-</blockquote>
-<p><img src="http://ogodoej04.bkt.clouddn.com/blog/image/console/count.png" alt="blur img"></p>
-<h4 id="6-console-assert"><a href="#6-console-assert" class="headerlink" title="6.console.assert()"></a>6.console.assert()</h4><blockquote>
-<p>console.assert() 类似于单元测试中的断言，当表达式为 false 时，输出错误信息。示例如下：</p>
-</blockquote>
-<p><img src="http://ogodoej04.bkt.clouddn.com/blog/image/console/assert.png" alt="blur img"></p>
-<hr>
-<p>大家周末愉快，最近发现一部电视剧不错，回家看《请回答1988》了。</p>
+                <p>又是一年又一年，后天赶车回家，今天有时间就以这篇文章结束猴年博客更新。回想今年过往，博客还是坚持了下来，习惯还在培养。希望鸡年有更高的提升。</p>
+<h2 id="搜索算法"><a href="#搜索算法" class="headerlink" title="搜索算法"></a>搜索算法</h2><p>说起数据结构我们就想到算法，生产工程中实际问题很多涉及到他，但对于前端来说很少有人去提到这一块，其实不然，算法是计算机的基础构建的核心，提高计算性能，减轻压力，算法起到至关重要的作用。<br>今天我们谈谈搜索相关的算法。</p>
+<p>前端JS时长用到关于排重的操作，因此搜索去重是关键。怎么提高搜索的效率，需要一个好的算法进行优化。</p>
+<h2 id="算法介绍"><a href="#算法介绍" class="headerlink" title="算法介绍"></a>算法介绍</h2><ul>
+<li><p>顺序搜索<br> 顺序搜索是最基本的搜索算法。它的机制是，将每一个数据结构中的元素和我们要找的元素做比较。顺序搜索是最低效的一种搜索算法。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">this</span>.squentialSearch = <span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span>&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;arr.length;i++)</div><div class="line">    &#123;  </div><div class="line">        <span class="keyword">if</span>(item == arr[i])</div><div class="line">        &#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'命中'</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>二分搜索法<br> 二分搜索算法的原理和猜数字游戏类似。<br> 这个算法要求被搜索的数据结构<strong>已排序</strong>。以下是该算法遵循的步骤。<br> (1) 选择数组的中间值。<br> (2) 如果选中值是待搜索值，那么算法执行完毕(值找到了)。<br> (3) 如果待搜索值比选中值要小，则返回步骤1并在选中值左边的子数组中寻找。 (4) 如果待搜索值比选中值要大，则返回步骤1并在选种值右边的子数组中寻找。<br> 以下是其实现:</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">    <span class="keyword">this</span>.binarySearch = <span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span>&#123;</div><div class="line">      <span class="keyword">this</span>.quickSort(); <span class="comment">//首先对数组排序</span></div><div class="line">      <span class="keyword">var</span> low = <span class="number">0</span>,                </div><div class="line">          high = array.length - <span class="number">1</span>, </div><div class="line">          mid, element;</div><div class="line">      <span class="keyword">while</span> (low &lt;= high)&#123; </div><div class="line">            mid = <span class="built_in">Math</span>.floor((low + high) / <span class="number">2</span>); </div><div class="line">            element = array[mid];</div><div class="line">            <span class="keyword">if</span> (element &lt; item) &#123;</div><div class="line">                low = mid + <span class="number">1</span>;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (element &gt; item) &#123;</div><div class="line">                high = mid - <span class="number">1</span>;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">return</span> mid;</div><div class="line">            &#125; </div><div class="line">        &#125;</div><div class="line">      <span class="keyword">return</span> <span class="number">-1</span>; </div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>分析两个算法的时间复杂度如下</p>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th style="text-align:right">数据结构</th>
+<th style="text-align:center">最差情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>顺序搜索</td>
+<td style="text-align:right">数组和链表</td>
+<td style="text-align:center">O(n)</td>
+</tr>
+<tr>
+<td>二分搜索</td>
+<td style="text-align:right">排好序的数组或二分搜索树</td>
+<td style="text-align:center">O(log(n))</td>
+</tr>
+</tbody>
+</table>
 
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/01/24/Algorithms/" data-toggle="tooltip" data-placement="top"
-                           title="Algorithms">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2017/01/12/pzjc/" data-toggle="tooltip" data-placement="top"
-                           title="关于css shape的实现">Next Post &rarr;</a>
+                        <a href="/2017/01/20/console/" data-toggle="tooltip" data-placement="top"
+                           title="你所错过的console">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -228,9 +227,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2017/01/20/console/"
-                         data-title="你所错过的console"
-                         data-url="http://Johansen_lbw.github.io/2017/01/20/console/">
+                         data-thread-key="2017/01/24/Algorithms/"
+                         data-title="Algorithms"
+                         data-url="http://Johansen_lbw.github.io/2017/01/24/Algorithms/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -242,7 +241,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#你所错过的console"><span class="toc-text">你所错过的console</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-console-log"><span class="toc-text">1.console.log()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-console-debug-、console-info-、-console-warn-与-console-error"><span class="toc-text">2.console.debug()、console.info()、 console.warn() 与 console.error()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-console-table"><span class="toc-text">3.console.table()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-console-time-与-console-timeEnd"><span class="toc-text">4.console.time() 与 console.timeEnd()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-console-count"><span class="toc-text">5.console.count()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-console-assert"><span class="toc-text">6.console.assert()</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#搜索算法"><span class="toc-text">搜索算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法介绍"><span class="toc-text">算法介绍</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -264,8 +263,8 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#-技术小记"
-                           title="-技术小记">-技术小记</a>
+                        <a class="tag" href="/tags/#技术小记"
+                           title="技术小记">技术小记</a>
                         
                     </div>
                 </section>
