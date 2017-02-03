@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        你所错过的console｜Golden Snitch
+        Algorithms(二)｜Golden Snitch
         
     </title>
 
-    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/01/20/console/">
+    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/02/03/Algorithms01/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -145,18 +145,18 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>你所错过的console</h1>
+                    <h1>Algorithms(二)</h1>
                     
                     <span class="meta">
                          作者 johansen
                         <span>
-                          日期 2017-01-20
+                          日期 2017-02-03
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#-技术小记"
-                           title="-技术小记">-技术小记</a>
+                        <a class="tag" href="/tags/#技术小记"
+                           title="技术小记">技术小记</a>
                         
                     </div>
                 </div>
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            你所错过的console
+            Algorithms(二)
         </span>
     </div>
 </header>
@@ -176,50 +176,56 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h3 id="你所错过的console"><a href="#你所错过的console" class="headerlink" title="你所错过的console"></a>你所错过的console</h3><pre><code>曾经他们出现在你的面前，你只看中了console.log(),但今天他们又来到了你面前亮了灯，你是否还会灭灯。那就先让我介绍一下你所错过的他们哈。
-</code></pre><h4 id="1-console-log"><a href="#1-console-log" class="headerlink" title="1.console.log()"></a>1.console.log()</h4><blockquote>
-<p>这里介绍console.log()多种参数的情况，他可以使用 C 语言 printf() 风格的占位符，不过其支持的占位符种类较少，只支持字符串（%s）、整数（%d或%i）、浮点数（%f）和对象（%o）。</p>
-</blockquote>
-<p><img src="http://ogodoej04.bkt.clouddn.com/blog/image/console/log.png" alt="blur img"></p>
-<h4 id="2-console-debug-、console-info-、-console-warn-与-console-error"><a href="#2-console-debug-、console-info-、-console-warn-与-console-error" class="headerlink" title="2.console.debug()、console.info()、 console.warn() 与 console.error()"></a>2.console.debug()、console.info()、 console.warn() 与 console.error()</h4><blockquote>
-<p>这四个方法的使用方法跟 console.log() 一模一样，差别在于输出的颜色与图标不同。直接给个“栗”子：</p>
-</blockquote>
-<p><img src="http://ogodoej04.bkt.clouddn.com/blog/image/console/debug.png" alt="blur img"></p>
-<h4 id="3-console-table"><a href="#3-console-table" class="headerlink" title="3.console.table()"></a>3.console.table()</h4><blockquote>
-<p>还是直接给一个栗子：</p>
-</blockquote>
-<p><img src="http://ogodoej04.bkt.clouddn.com/blog/image/console/table.png" alt="blur img"></p>
-<p>console.table() 以表格的形式输出，嵌套三层及以上的也会以表格形式输出，但限于表格只能显示二维信息的特点，其会在嵌套三层或以上的地方会显示 “Object” 字符串。</p>
-<h4 id="4-console-time-与-console-timeEnd"><a href="#4-console-time-与-console-timeEnd" class="headerlink" title="4.console.time() 与 console.timeEnd()"></a>4.console.time() 与 console.timeEnd()</h4><blockquote>
-<p>调试代码时，我们监测程序性能，常常通过程序的time的计算进行衡量。举一个例子：</p>
-</blockquote>
-<p><img src="http://ogodoej04.bkt.clouddn.com/blog/image/console/time.png" alt="blur img"></p>
-<p>从上面的例子可以看出，我们用 console.time() 和 console.timeEnd() 包围要测试运行时间的代码，这两个方法的参数保持一致，以便正确识别和匹配代码开始和结束的位置。</p>
-<h4 id="5-console-count"><a href="#5-console-count" class="headerlink" title="5.console.count()"></a>5.console.count()</h4><blockquote>
-<p>调试代码时，我们经常需要知道一段代码被执行了多少次，我们可以使用 console.count() 来方便的达到我们的目的。举例如下：</p>
-</blockquote>
-<p><img src="http://ogodoej04.bkt.clouddn.com/blog/image/console/count.png" alt="blur img"></p>
-<h4 id="6-console-assert"><a href="#6-console-assert" class="headerlink" title="6.console.assert()"></a>6.console.assert()</h4><blockquote>
-<p>console.assert() 类似于单元测试中的断言，当表达式为 false 时，输出错误信息。示例如下：</p>
-</blockquote>
-<p><img src="http://ogodoej04.bkt.clouddn.com/blog/image/console/assert.png" alt="blur img"></p>
-<hr>
-<p>大家周末愉快，最近发现一部电视剧不错，回家看《请回答1988》了。</p>
+                <h2 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h2><p>即上次对于搜索算法的学习，我们还记得搜索算法第一步是构建一个有序的数组结构，那么怎么获得一个有序的数组结构，首先介绍一个排序算法–冒泡排序。<br>以及冒泡排序的优化。</p>
+<h2 id="算法介绍"><a href="#算法介绍" class="headerlink" title="算法介绍"></a>算法介绍</h2><ul>
+<li><p>冒泡排序<br> 冒泡排序比较任何两个相邻的项，如果第一个比第二个大，则交换它们。元素项向上移动至 正确的顺序，就好像气泡升至表面一样，冒泡排序因此得名。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> swap = <span class="function"><span class="keyword">function</span>(<span class="params">index1, index2</span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> aux = array[index1];</div><div class="line">        array[index1] = array[index2];</div><div class="line">        array[index2] = aux;</div><div class="line">&#125;;</div><div class="line"><span class="comment">//冒泡算法</span></div><div class="line"><span class="keyword">this</span>.bubbleSort = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> length = array.length;          </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;length; i++)&#123;       </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> j=<span class="number">0</span>; j&lt;length<span class="number">-1</span>; j++ )&#123; </div><div class="line">            <span class="keyword">if</span> (array[j] &gt; array[j+<span class="number">1</span>])&#123;  </div><div class="line">                    swap(j, j+<span class="number">1</span>);<span class="comment">//交换元素</span></div><div class="line">            &#125; &#125;</div><div class="line">       &#125; </div><div class="line">    &#125;;</div></pre></td></tr></table></figure>
+<p>举例算法图解：<br><img src="http://ogodoej04.bkt.clouddn.com/blog/image/maopao.png" alt="blur img"></p>
+<p>注意当算法执行外循环的第二轮的时候，数字4和5已经是正确排序的了。尽管如此，在后续 比较中，它们还一直在进行着比较，即使这是不必要的。因此，我们可以稍稍改进一下冒泡排序 算法。</p>
+</li>
+<li><p>改进后的冒泡算法<br> 如果从内循环减去外循环中已跑过的轮数，就可以避免内循环中所有不必要的比较。</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> swap = <span class="function"><span class="keyword">function</span>(<span class="params">index1, index2</span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> aux = array[index1];</div><div class="line">        array[index1] = array[index2];</div><div class="line">        array[index2] = aux;</div><div class="line">&#125;;</div><div class="line"><span class="comment">//冒泡算法</span></div><div class="line"><span class="keyword">this</span>.bubbleSort = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> length = array.length;          </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;length; i++)&#123;  </div><div class="line">        <span class="comment">//去掉不必要的比较过程     </span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> j=<span class="number">0</span>; j&lt;length<span class="number">-1</span>-i; j++ )&#123; </div><div class="line">            <span class="keyword">if</span> (array[j] &gt; array[j+<span class="number">1</span>])&#123;  </div><div class="line">                    swap(j, j+<span class="number">1</span>);<span class="comment">//交换元素</span></div><div class="line">            &#125; &#125;</div><div class="line">    &#125; </div><div class="line">    &#125;;</div></pre></td></tr></table></figure>
+</li>
+<li><p>选择排序<br> 选择排序算法是一种原址比较排序算法。选择排序大致的思路是找到数据结构中的最小值并将其放置在第一位，接着找到第二小的值并将其放在第二位，以此类推。</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> swap = <span class="function"><span class="keyword">function</span>(<span class="params">index1, index2</span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> aux = array[index1];</div><div class="line">        array[index1] = array[index2];</div><div class="line">        array[index2] = aux;</div><div class="line">&#125;;</div><div class="line"><span class="comment">//选择排序算法</span></div><div class="line"><span class="keyword">this</span>.selectionSort = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> length = array.length,</div><div class="line">    indexMin;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;length<span class="number">-1</span>; i++)&#123;</div><div class="line">        indexMin = i;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> j=i; j&lt;length; j++)&#123;</div><div class="line">            <span class="keyword">if</span>(array[indexMin]&gt;array[j])&#123; </div><div class="line">                indexMin = j;</div><div class="line">            &#125; </div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (i !== indexMin)&#123;</div><div class="line">                swap(i, indexMin);</div><div class="line">        &#125; </div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>举例算法图解：<br><img src="http://ogodoej04.bkt.clouddn.com/blog/image/select.png" alt="blur img"></p>
+<p>分析两个算法的时间复杂度如下</p>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>最好情况</th>
+<th style="text-align:center">一般情况</th>
+<th style="text-align:right">最差情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>冒泡排序</td>
+<td>O(n)</td>
+<td style="text-align:center">O(n^2)</td>
+<td style="text-align:right">O(n^2)</td>
+</tr>
+<tr>
+<td>选择排序</td>
+<td>O(n^2)</td>
+<td style="text-align:center">O(n^2)</td>
+<td style="text-align:right">O(n^2)</td>
+</tr>
+</tbody>
+</table>
 
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/01/24/Algorithms/" data-toggle="tooltip" data-placement="top"
-                           title="Algorithms（一）">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2017/01/12/pzjc/" data-toggle="tooltip" data-placement="top"
-                           title="关于css shape的实现">Next Post &rarr;</a>
+                        <a href="/2017/01/24/Algorithms/" data-toggle="tooltip" data-placement="top"
+                           title="Algorithms（一）">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -228,9 +234,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2017/01/20/console/"
-                         data-title="你所错过的console"
-                         data-url="http://Johansen_lbw.github.io/2017/01/20/console/">
+                         data-thread-key="2017/02/03/Algorithms01/"
+                         data-title="Algorithms(二)"
+                         data-url="http://Johansen_lbw.github.io/2017/02/03/Algorithms01/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -242,7 +248,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#你所错过的console"><span class="toc-text">你所错过的console</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-console-log"><span class="toc-text">1.console.log()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-console-debug-、console-info-、-console-warn-与-console-error"><span class="toc-text">2.console.debug()、console.info()、 console.warn() 与 console.error()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-console-table"><span class="toc-text">3.console.table()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-console-time-与-console-timeEnd"><span class="toc-text">4.console.time() 与 console.timeEnd()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-console-count"><span class="toc-text">5.console.count()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-console-assert"><span class="toc-text">6.console.assert()</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#排序算法"><span class="toc-text">排序算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法介绍"><span class="toc-text">算法介绍</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -264,8 +270,8 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#-技术小记"
-                           title="-技术小记">-技术小记</a>
+                        <a class="tag" href="/tags/#技术小记"
+                           title="技术小记">技术小记</a>
                         
                     </div>
                 </section>
