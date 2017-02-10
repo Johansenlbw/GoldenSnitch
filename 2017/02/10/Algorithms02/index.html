@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        Algorithms(二)｜Golden Snitch
+        Algorithms(三)｜Golden Snitch
         
     </title>
 
-    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/02/03/Algorithms01/">
+    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/02/10/Algorithms02/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -145,12 +145,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>Algorithms(二)</h1>
+                    <h1>Algorithms(三)</h1>
                     
                     <span class="meta">
                          作者 johansen
                         <span>
-                          日期 2017-02-03
+                          日期 2017-02-10
                          </span>
                     </span>
                     <div class="tags text-center">
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            Algorithms(二)
+            Algorithms(三)
         </span>
     </div>
 </header>
@@ -176,22 +176,12 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h2 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h2><p>即上次对于搜索算法的学习，我们还记得搜索算法第一步是构建一个有序的数组结构，那么怎么获得一个有序的数组结构，首先介绍一个排序算法–冒泡排序,以及冒泡排序的优化。</p>
+                <h2 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h2><p>今天介绍一个性能较优的排序算法</p>
 <h2 id="算法介绍"><a href="#算法介绍" class="headerlink" title="算法介绍"></a>算法介绍</h2><ul>
-<li><p>冒泡排序<br> 冒泡排序比较任何两个相邻的项，如果第一个比第二个大，则交换它们。元素项向上移动至 正确的顺序，就好像气泡升至表面一样，冒泡排序因此得名。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> swap = <span class="function"><span class="keyword">function</span>(<span class="params">index1, index2</span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> aux = array[index1];</div><div class="line">        array[index1] = array[index2];</div><div class="line">        array[index2] = aux;</div><div class="line">&#125;;</div><div class="line"><span class="comment">//冒泡算法</span></div><div class="line"><span class="keyword">this</span>.bubbleSort = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> length = array.length;          </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;length; i++)&#123;       </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> j=<span class="number">0</span>; j&lt;length<span class="number">-1</span>; j++ )&#123; </div><div class="line">            <span class="keyword">if</span> (array[j] &gt; array[j+<span class="number">1</span>])&#123;  </div><div class="line">                    swap(j, j+<span class="number">1</span>);<span class="comment">//交换元素</span></div><div class="line">            &#125; &#125;</div><div class="line">       &#125; </div><div class="line">    &#125;;</div></pre></td></tr></table></figure>
-<p>举例算法图解：<br><img src="http://ogodoej04.bkt.clouddn.com/blog/image/maopao.png" alt="blur img"></p>
-<p>注意当算法执行外循环的第二轮的时候，数字4和5已经是正确排序的了。尽管如此，在后续 比较中，它们还一直在进行着比较，即使这是不必要的。因此，我们可以稍稍改进一下冒泡排序 算法。</p>
-</li>
-<li><p>改进后的冒泡算法<br> 如果从内循环减去外循环中已跑过的轮数，就可以避免内循环中所有不必要的比较。</p>
- <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> swap = <span class="function"><span class="keyword">function</span>(<span class="params">index1, index2</span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> aux = array[index1];</div><div class="line">        array[index1] = array[index2];</div><div class="line">        array[index2] = aux;</div><div class="line">&#125;;</div><div class="line"><span class="comment">//冒泡算法</span></div><div class="line"><span class="keyword">this</span>.bubbleSort = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> length = array.length;          </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;length; i++)&#123;  </div><div class="line">        <span class="comment">//去掉不必要的比较过程     </span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> j=<span class="number">0</span>; j&lt;length<span class="number">-1</span>-i; j++ )&#123; </div><div class="line">            <span class="keyword">if</span> (array[j] &gt; array[j+<span class="number">1</span>])&#123;  </div><div class="line">                    swap(j, j+<span class="number">1</span>);<span class="comment">//交换元素</span></div><div class="line">            &#125; &#125;</div><div class="line">    &#125; </div><div class="line">    &#125;;</div></pre></td></tr></table></figure>
-</li>
-<li><p>选择排序<br> 选择排序算法是一种原址比较排序算法。选择排序大致的思路是找到数据结构中的最小值并将其放置在第一位，接着找到第二小的值并将其放在第二位，以此类推。</p>
- <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> swap = <span class="function"><span class="keyword">function</span>(<span class="params">index1, index2</span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> aux = array[index1];</div><div class="line">        array[index1] = array[index2];</div><div class="line">        array[index2] = aux;</div><div class="line">&#125;;</div><div class="line"><span class="comment">//选择排序算法</span></div><div class="line"><span class="keyword">this</span>.selectionSort = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> length = array.length,</div><div class="line">    indexMin;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt;length<span class="number">-1</span>; i++)&#123;</div><div class="line">        indexMin = i;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> j=i; j&lt;length; j++)&#123;</div><div class="line">            <span class="keyword">if</span>(array[indexMin]&gt;array[j])&#123; </div><div class="line">                indexMin = j;</div><div class="line">            &#125; </div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (i !== indexMin)&#123;</div><div class="line">                swap(i, indexMin);</div><div class="line">        &#125; </div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-</li>
+<li>快速排序<br> 快速排序使用分治的方法，具体操作如下：<br> (1) 首先，从数组中选择中间一项作为主元。<br> (2) 创建两个指针，左边一个指向数组第一个项，右边一个指向数组最后一个项。移动左指 针直到我们找到一个比主元大的元素，接着，移动右指针直到找到一个比主元小的元素，然后交 换它们，重复这个过程，直到左指针超过了右指针。这个过程将使得比主元小的值都排在主元之 前，而比主元大的值都排在主元之后。这一步叫作划分操作。<br> (3) 接着，算法对划分后的小数组(较主元小的值组成的子数组，以及较主元大的值组成的 子数组)重复之前的两个步骤，直至数组已完全排序。</li>
 </ul>
-<p>举例算法图解：<br><img src="http://ogodoej04.bkt.clouddn.com/blog/image/select.png" alt="blur img"></p>
-<p>分析两个算法的时间复杂度如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//开始我们声明一个主方法来调用递归函数，传递待排序数组，以及索引 0及其最末的位置(因为我们要排整个数组，而不是一个子数组)作为参数。</span></div><div class="line"><span class="keyword">this</span>.quickSort = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        quick(array,  <span class="number">0</span>, array.length - <span class="number">1</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line">首先声明index，该变量能帮助我们将子数组分离为较小值数组和较大值数组，</div><div class="line">这样，我们就能再次递归的调用quick函数了。</div><div class="line">partition函数返回值将赋值给index。</div><div class="line">如果数组的长度比1大(因为只有一个元素的数组必然是已排序了的，</div><div class="line">我们将对给 定子数组执行partition操作(第一次调用是针对整个数组)以得到index。</div><div class="line">如果子 数组存在较小值的元素，则对该数组重复这个过程。</div><div class="line">同理，对存在较大值得 子数组也是如此，如果存在子数组存在较大值，我们也将重复快速排序过程。</div><div class="line">*/</div><div class="line"><span class="keyword">var</span> quick = <span class="function"><span class="keyword">function</span>(<span class="params">array, left, right</span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> index; </div><div class="line">        <span class="keyword">if</span> (array.length &gt; <span class="number">1</span>) &#123; </div><div class="line">            index = partition(array, left, right); </div><div class="line">        &#125;;</div><div class="line">        <span class="keyword">if</span> (left &lt; index - <span class="number">1</span>) &#123;</div><div class="line">            quick(array, left, index - <span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (index &lt; right) &#123;  </div><div class="line">            quick(array, index, right);</div><div class="line">        &#125; </div><div class="line">&#125;</div><div class="line"><span class="comment">//划分数组</span></div><div class="line"><span class="comment">/*</span></div><div class="line">第一件要做的事情是选择主元(pivot)，有好几种方式。</div><div class="line">最简单的一种是选择数组的第一项(最左项)。然而，研究表明对于几乎已排序的数组，这不是一个好的选择，它将导致该算法 的最差表现。</div><div class="line">另外一种方式是随机选择一个数组项或是选择中间项。</div><div class="line">在本实现中，我们选择中间 项作为主元。</div><div class="line">我们初始化两个指针:left，初始化为数组第一个元素; right，初始化为数组最后一个元素。只要left和right指针没有相互交错，就执行划分操作。</div><div class="line">首先，移动left指针 直到找到一个元素比主元大。对right指针，我们做同样的事情，移动right指针直 到我们找到一个元素比主元小。</div><div class="line">当左指针指向的元素比主元大且右指针指向的元素比主元小，并且此时左指针索引没有右指 针索引大，意思是左项比右项大(值比较)。我们交换它们，然后移动两个指针，并重复此过程。</div><div class="line">*/</div><div class="line"><span class="keyword">var</span> partition = <span class="function"><span class="keyword">function</span>(<span class="params">array, left, right</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> pivot = array[<span class="built_in">Math</span>.floor((right + left) / <span class="number">2</span>)], </div><div class="line">        i = left,</div><div class="line">        j = right;</div><div class="line">        <span class="keyword">while</span> (i &lt;= j) &#123;</div><div class="line">            <span class="keyword">while</span> (array[i] &lt; pivot) &#123;  </div><div class="line">                i++; </div><div class="line">            &#125;</div><div class="line">            <span class="keyword">while</span> (array[j] &gt; pivot) &#123;  </div><div class="line">                j--;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (i &lt;= j) &#123; </div><div class="line">                swapQuickStort(array, i, j); </div><div class="line">                i++;</div><div class="line">                j--;</div><div class="line">            &#125; </div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> i; </div><div class="line">&#125;;</div><div class="line"><span class="comment">/*</span></div><div class="line">在划分操作结束后，返回左指针的索引，用来在处创建子数组。</div><div class="line">swapQuickStort函数和我们在本章开始处实现的swap函数十分相似。</div><div class="line">唯一的不同之处是发 生交换值的的数组同样也是函数的参数。    </div><div class="line">*/</div><div class="line"><span class="keyword">var</span> swapQuickStort = <span class="function"><span class="keyword">function</span>(<span class="params">array, index1, index2</span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> aux = array[index1];</div><div class="line">        array[index1] = array[index2];</div><div class="line">        array[index2] = aux;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>对比上次介绍的冒泡，插入排序算法，时间复杂度如下</p>
 <table>
 <thead>
 <tr>
@@ -202,6 +192,12 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>快速排序</td>
+<td>O(nlog(n))</td>
+<td style="text-align:center">O(nlog(n))</td>
+<td style="text-align:right">O(n^2)</td>
+</tr>
 <tr>
 <td>冒泡排序</td>
 <td>O(n)</td>
@@ -222,15 +218,10 @@
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/02/10/Algorithms02/" data-toggle="tooltip" data-placement="top"
-                           title="Algorithms(三)">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2017/01/24/Algorithms/" data-toggle="tooltip" data-placement="top"
-                           title="Algorithms（一）">Next Post &rarr;</a>
+                        <a href="/2017/02/03/Algorithms01/" data-toggle="tooltip" data-placement="top"
+                           title="Algorithms(二)">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -239,9 +230,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2017/02/03/Algorithms01/"
-                         data-title="Algorithms(二)"
-                         data-url="http://Johansen_lbw.github.io/2017/02/03/Algorithms01/">
+                         data-thread-key="2017/02/10/Algorithms02/"
+                         data-title="Algorithms(三)"
+                         data-url="http://Johansen_lbw.github.io/2017/02/10/Algorithms02/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
