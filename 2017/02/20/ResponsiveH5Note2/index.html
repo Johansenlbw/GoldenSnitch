@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="null">
+    <meta name="keyword" content="undefined">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="http://tva1.sinaimg.cn/crop.0.0.199.199.180/005AsuCnjw1eiw60g34h1j305k05kjrm.jpg">
+    <link rel="alternate" type="application/atom+xml" title="Golden Snitch" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        ResponsiveH5Note2｜Golden Snitch
+        
+    </title>
+
+    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/02/20/ResponsiveH5Note2/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('http://ogodoej04.bkt.clouddn.com/blog/image/countryside.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Golden Snitch
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://ogodoej04.bkt.clouddn.com/blog/image/countryside.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ogodoej04.bkt.clouddn.com/blog/image/countryside.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>ResponsiveH5Note2</h1>
+                    
+                    <span class="meta">
+                         作者 johansen
+                        <span>
+                          日期 2017-02-20
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#技术小记"
+                           title="技术小记">技术小记</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            ResponsiveH5Note2
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>今天继续上次关于H5,css3响应式布局的探讨。这次主要介绍关于css3相关的技术实战。</p>
+<h3 id="css3新特性"><a href="#css3新特性" class="headerlink" title="css3新特性"></a>css3新特性</h3><ol>
+<li>css响应式多列布局 </li>
+</ol>
+<p>方法：使用CSS多列布局可以通过几种方式让文本分成多列显示。可以给每一列设定固定的列宽，也可以指定内容需要填充的列数。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">main</span>&#123;</div><div class="line">    <span class="attribute">column-width</span>:<span class="number">12em</span>;</div><div class="line">    <span class="attribute">column-gap</span>:<span class="number">2em</span>;</div><div class="line">    <span class="attribute">column-rule</span>:thin dotted <span class="number">#999</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">/*设定列数为4*/</span></div><div class="line"><span class="selector-tag">main</span>&#123;</div><div class="line">    <span class="attribute">column-count</span>:<span class="number">4</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ol>
+<li><p>断字 将很长的文本放在一个有限宽度的容器里</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="selector-tag">p</span>&#123;</div><div class="line">    <span class="attribute">width</span>:<span class="number">100px</span>;</div><div class="line">    <span class="attribute">word-wrap</span>:break-word;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>增加省略号</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.ellipsis</span>&#123;</div><div class="line">    <span class="attribute">width</span>:<span class="number">252px</span>;</div><div class="line">    <span class="attribute">overflow</span>:hidden;</div><div class="line">    <span class="attribute">text-overflow</span>:ellipsis;</div><div class="line">    <span class="attribute">white-space</span>:no-wrap;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>创建水平滚动面板</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.Scroll_Wrapper</span> &#123;</div><div class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">  <span class="attribute">white-space</span>: nowrap;</div><div class="line">  <span class="attribute">overflow-x</span>: auto;</div><div class="line">  <span class="attribute">overflow-y</span>: hidden;</div><div class="line">   <span class="attribute">-webkit-overflow-scrolling</span>: touch;</div><div class="line">    <span class="comment">/* 在支持的IE中删除滚动条 */</span></div><div class="line">    <span class="attribute">-ms-overflow-style</span>: none;</div><div class="line">&#125;</div><div class="line"><span class="comment">/* 防止WebKit浏览器中出现滚动条 */</span> </div><div class="line"><span class="selector-class">.Scroll_Wrapper</span><span class="selector-pseudo">::-webkit-scrollbar</span> &#123;</div><div class="line">    <span class="attribute">display</span>: none;</div><div class="line">&#125;</div><div class="line"><span class="selector-class">.Item</span> &#123;</div><div class="line">  <span class="attribute">display</span>: inline-flex;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>特性查询<br>语法举例：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@<span class="keyword">supports</span> (display: flex) &#123;</div><div class="line">   <span class="selector-class">.Item</span> &#123;</div><div class="line">     <span class="attribute">display</span>: inline-flex;</div><div class="line">   &#125;</div><div class="line"> &#125;</div><div class="line"> @<span class="keyword">supports</span> not (display: flex) &#123;</div><div class="line">   <span class="selector-class">.Item</span> &#123;</div><div class="line">     <span class="attribute">display</span>: inline-block;</div><div class="line">   &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>6.理解alpha通道<br>CSS3也支持设置元素的opacity属性，取值范围也是0到1(.1表示10%)。 与RGBA和HSLA不同，对元素设置opacity影响整个元素，而RGBA和HSLA 则只影响元素特定的方面，比如背景。这样就可以实现元素中不透明的文字和 透明的背景。</p>
+<p>7.关于css透视效果，我们使用perspective属性来实现。这个属性设置了用户视点到3D场景的距离。创建3D效果的关键点是transform- styles:preserve-3d。这告诉浏览器，当我们要为这个元素创造变形效果时，它的子元素 也保持3D效果。<br>8.使用transform-origin，我们可以修改变形原点。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="selector-class">.panel</span> &#123;</div><div class="line">	<span class="attribute">display</span>: flex;</div><div class="line">	<span class="attribute">min-height</span>: <span class="number">44px</span>;</div><div class="line">	<span class="attribute">align-items</span>: center;</div><div class="line">	<span class="attribute">justify-content</span>: center;</div><div class="line">	<span class="attribute">top</span>: <span class="number">0</span>;</div><div class="line">	<span class="attribute">width</span>: <span class="number">100%</span>;</div><div class="line">	<span class="attribute">height</span>: <span class="number">100%</span>;</div><div class="line">	<span class="attribute">position</span>: absolute;</div><div class="line">	<span class="attribute">backface-visibility</span>: hidden;</div><div class="line">	<span class="attribute">transform-origin</span>: left center;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>9.animation-play-state这个属性可以设置为running|paused。通过这个属性运行或暂停动画。<br>10.animation-fill-mode : none | forwards | backwards | both;</p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>none</td>
+<td>不改变默认行为。</td>
+</tr>
+<tr>
+<td>forwards</td>
+<td>当动画完成后，保持最后一个属性值（在最后一个关键帧中定义）。</td>
+</tr>
+<tr>
+<td>backwards</td>
+<td>在 animation-delay 所指定的一段时间内，在动画显示之前，应用开始属性值（在第一个关键帧中定义）。</td>
+</tr>
+<tr>
+<td>both</td>
+<td>向前和向后填充模式都被应用。</td>
+</tr>
+</tbody>
+</table>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/02/15/ResponsiveH5Note/" data-toggle="tooltip" data-placement="top"
+                           title="响应式web设计（——）">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2017/02/20/ResponsiveH5Note2/"
+                         data-title="ResponsiveH5Note2"
+                         data-url="http://Johansen_lbw.github.io/2017/02/20/ResponsiveH5Note2/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#css3新特性"><span class="toc-text">css3新特性</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#技术小记"
+                           title="技术小记">技术小记</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'johansenlbw';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/5119403139">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Golden Snitch 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://Johansen_lbw.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="http://ogodoej04.bkt.clouddn.com/timg.jpeg">
+</body>
+
+</html>
