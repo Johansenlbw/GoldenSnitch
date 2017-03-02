@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        Algorithms(三)｜Golden Snitch
+        响应式图片｜Golden Snitch
         
     </title>
 
-    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/02/10/Algorithms02/">
+    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/03/02/responseImg/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -145,12 +145,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>Algorithms(三)</h1>
+                    <h1>响应式图片</h1>
                     
                     <span class="meta">
                          作者 johansen
                         <span>
-                          日期 2017-02-10
+                          日期 2017-03-02
                          </span>
                     </span>
                     <div class="tags text-center">
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            Algorithms(三)
+            响应式图片
         </span>
     </div>
 </header>
@@ -176,57 +176,33 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h2 id="排序算法"><a href="#排序算法" class="headerlink" title="排序算法"></a>排序算法</h2><p>今天介绍一个性能较优的排序算法</p>
-<h2 id="算法介绍"><a href="#算法介绍" class="headerlink" title="算法介绍"></a>算法介绍</h2><ul>
-<li>快速排序<br> 快速排序使用分治的方法，具体操作如下：<br> (1) 首先，从数组中选择中间一项作为主元。<br> (2) 创建两个指针，左边一个指向数组第一个项，右边一个指向数组最后一个项。移动左指 针直到我们找到一个比主元大的元素，接着，移动右指针直到找到一个比主元小的元素，然后交 换它们，重复这个过程，直到左指针超过了右指针。这个过程将使得比主元小的值都排在主元之 前，而比主元大的值都排在主元之后。这一步叫作划分操作。<br> (3) 接着，算法对划分后的小数组(较主元小的值组成的子数组，以及较主元大的值组成的 子数组)重复之前的两个步骤，直至数组已完全排序。</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//开始我们声明一个主方法来调用递归函数，传递待排序数组，以及索引 0及其最末的位置(因为我们要排整个数组，而不是一个子数组)作为参数。</span></div><div class="line"><span class="keyword">this</span>.quickSort = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">        quick(array,  <span class="number">0</span>, array.length - <span class="number">1</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line">首先声明index，该变量能帮助我们将子数组分离为较小值数组和较大值数组，</div><div class="line">这样，我们就能再次递归的调用quick函数了。</div><div class="line">partition函数返回值将赋值给index。</div><div class="line">如果数组的长度比1大(因为只有一个元素的数组必然是已排序了的，</div><div class="line">我们将对给 定子数组执行partition操作(第一次调用是针对整个数组)以得到index。</div><div class="line">如果子 数组存在较小值的元素，则对该数组重复这个过程。</div><div class="line">同理，对存在较大值得 子数组也是如此，如果存在子数组存在较大值，我们也将重复快速排序过程。</div><div class="line">*/</div><div class="line"><span class="keyword">var</span> quick = <span class="function"><span class="keyword">function</span>(<span class="params">array, left, right</span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> index; </div><div class="line">        <span class="keyword">if</span> (array.length &gt; <span class="number">1</span>) &#123; </div><div class="line">            index = partition(array, left, right); </div><div class="line">        &#125;;</div><div class="line">        <span class="keyword">if</span> (left &lt; index - <span class="number">1</span>) &#123;</div><div class="line">            quick(array, left, index - <span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (index &lt; right) &#123;  </div><div class="line">            quick(array, index, right);</div><div class="line">        &#125; </div><div class="line">&#125;</div><div class="line"><span class="comment">//划分数组</span></div><div class="line"><span class="comment">/*</span></div><div class="line">第一件要做的事情是选择主元(pivot)，有好几种方式。</div><div class="line">最简单的一种是选择数组的第一项(最左项)。然而，研究表明对于几乎已排序的数组，这不是一个好的选择，它将导致该算法 的最差表现。</div><div class="line">另外一种方式是随机选择一个数组项或是选择中间项。</div><div class="line">在本实现中，我们选择中间 项作为主元。</div><div class="line">我们初始化两个指针:left，初始化为数组第一个元素; right，初始化为数组最后一个元素。只要left和right指针没有相互交错，就执行划分操作。</div><div class="line">首先，移动left指针 直到找到一个元素比主元大。对right指针，我们做同样的事情，移动right指针直 到我们找到一个元素比主元小。</div><div class="line">当左指针指向的元素比主元大且右指针指向的元素比主元小，并且此时左指针索引没有右指 针索引大，意思是左项比右项大(值比较)。我们交换它们，然后移动两个指针，并重复此过程。</div><div class="line">*/</div><div class="line"><span class="keyword">var</span> partition = <span class="function"><span class="keyword">function</span>(<span class="params">array, left, right</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> pivot = array[<span class="built_in">Math</span>.floor((right + left) / <span class="number">2</span>)], </div><div class="line">        i = left,</div><div class="line">        j = right;</div><div class="line">        <span class="keyword">while</span> (i &lt;= j) &#123;</div><div class="line">            <span class="keyword">while</span> (array[i] &lt; pivot) &#123;  </div><div class="line">                i++; </div><div class="line">            &#125;</div><div class="line">            <span class="keyword">while</span> (array[j] &gt; pivot) &#123;  </div><div class="line">                j--;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (i &lt;= j) &#123; </div><div class="line">                swapQuickStort(array, i, j); </div><div class="line">                i++;</div><div class="line">                j--;</div><div class="line">            &#125; </div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> i; </div><div class="line">&#125;;</div><div class="line"><span class="comment">/*</span></div><div class="line">在划分操作结束后，返回左指针的索引，用来在处创建子数组。</div><div class="line">swapQuickStort函数和我们在本章开始处实现的swap函数十分相似。</div><div class="line">唯一的不同之处是发 生交换值的的数组同样也是函数的参数。    </div><div class="line">*/</div><div class="line"><span class="keyword">var</span> swapQuickStort = <span class="function"><span class="keyword">function</span>(<span class="params">array, index1, index2</span>)</span>&#123;</div><div class="line">        <span class="keyword">var</span> aux = array[index1];</div><div class="line">        array[index1] = array[index2];</div><div class="line">        array[index2] = aux;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>对比上次介绍的冒泡，插入排序算法，时间复杂度如下</p>
-<table>
-<thead>
-<tr>
-<th>算法</th>
-<th>最好情况</th>
-<th style="text-align:center">一般情况</th>
-<th style="text-align:right">最差情况</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>快速排序</td>
-<td>O(nlog(n))</td>
-<td style="text-align:center">O(nlog(n))</td>
-<td style="text-align:right">O(n^2)</td>
-</tr>
-<tr>
-<td>冒泡排序</td>
-<td>O(n)</td>
-<td style="text-align:center">O(n^2)</td>
-<td style="text-align:right">O(n^2)</td>
-</tr>
-<tr>
-<td>选择排序</td>
-<td>O(n^2)</td>
-<td style="text-align:center">O(n^2)</td>
-<td style="text-align:right">O(n^2)</td>
-</tr>
-</tbody>
-</table>
+                <p>今天介绍一个关于图片的响应式相关的技术实现。</p>
+<h4 id="什么是响应式图片"><a href="#什么是响应式图片" class="headerlink" title="什么是响应式图片"></a>什么是响应式图片</h4><p>所谓响应式图片：就是根据用户的设备和使用场景提供合适的图片。</p>
+<h4 id="响应式图片的使用场景是什么"><a href="#响应式图片的使用场景是什么" class="headerlink" title="响应式图片的使用场景是什么"></a>响应式图片的使用场景是什么</h4><p>两个响应式图片的典型应用场景，分别是切换同一张图片的不同分辨率的版 本，以及根据视口大小使用不同的图片。</p>
+<p>基于以上问题，我们提出相关的解决方案：</p>
+<h4 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h4><h5 id="1-通过srcset切换分辨率"><a href="#1-通过srcset切换分辨率" class="headerlink" title="1. 通过srcset切换分辨率"></a>1. 通过srcset切换分辨率</h5><p>假设一张图片有三种分辨率的版本，一张小的针对小屏幕，一个中等的针对中等屏幕，还有一个比较大的针对所有其他屏幕。要让浏览器知道这三个版本，怎么办呢?</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"scones_small.jpg"</span> <span class="attr">srcset</span>=<span class="string">"scones_medium.jpg 1.5x, scones_ large.jpg 2x"</span> <span class="attr">alt</span>=<span class="string">"Scones taste amazing"</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>首先，src属性是大家已经熟悉的，它在这里有两个角色。一是指定1倍大小的小图片，二是在不支持srcset属性的浏览器中用作后备。</p>
+<blockquote>
+<p>关键点：<br>支持srcset属性的浏览器，通过逗号分隔的图片描述，让浏览器自己决定选择哪一个。 图片描述首先是图片名(如scones_medium.jpg)，然后是一个分辨率说明。本例中用的是1.5x和 2x。</p>
+</blockquote>
+<h5 id="2-srcset及sizes联合切换"><a href="#2-srcset及sizes联合切换" class="headerlink" title="2. srcset及sizes联合切换"></a>2. srcset及sizes联合切换</h5><p>在响应式设计中，经常可以看到小屏幕中全屏显示，而在大屏幕上只显示一半宽的图片。要把我们的意图告诉浏览器，怎么办呢?<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">srcset</span>=<span class="string">"scones-small.jpg 450w, scones-medium.jpg 900w"</span> <span class="attr">sizes</span>=<span class="string">"(min-width: 17em) 100vw, (min-width: 40em) 50vw"</span> <span class="attr">src</span>=<span class="string">"sconessmall. jpg"</span> <span class="attr">alt</span>=<span class="string">"Scones"</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>使用w后缀的值对引入sizes属性非常重要。通过后者可以把意图传达给浏览器。在前面的 例子中，我们用第一个值告诉浏览器“在最小宽度为17em的设备中，我想让图片显示的宽度约 为100vw”。<br>sizes属性的第二个值，意思其实是“浏览器，如果设备宽度大于等于40em，我只想让对应的图片显示为50vw宽”。我们用DPI(或表示Device Pixel Ratio的DPR，即设备像素比)来解 释就明白了。比如，如果设备宽度是320像素，而分辨率为2x(实际宽度是640像素)，那浏览器 可能会选择900像素宽的图片，因为对当前屏幕宽度而言，它是第一个符合要求的足够大的图片。</p>
+<h5 id="3-picture元素"><a href="#3-picture元素" class="headerlink" title="3. picture元素"></a>3. picture元素</h5><p>最后一种情况就是你希望为不同的视口提供不同的图片。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">picture</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">media</span>=<span class="string">"(min-width: 30em)"</span> <span class="attr">srcset</span>=<span class="string">"cake-table.jpg"</span>&gt;</span> </div><div class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">media</span>=<span class="string">"(min-width: 60em)"</span> <span class="attr">srcset</span>=<span class="string">"cake-shop.jpg"</span>&gt;</span> </div><div class="line">    <span class="tag">&lt;<span class="name">source</span> <span class="attr">type</span>=<span class="string">"image/webp"</span> <span class="attr">srcset</span>=<span class="string">"scones-baby-yeah.webp"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"scones.jpg"</span> <span class="attr">alt</span>=<span class="string">"One way or another, you WILL get cake."</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">picture</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>这里最不同的是source标签。在这个标签里，可以使用媒体查询表达式明确告诉浏览器在 什么条件下使用什么图片。比如，例子中的第一个source标签跟浏览器说:“如果屏幕大于等于30em，给我替换成cake-table.jpg”。</p>
+<blockquote>
+<p>资源：<a href="http://efe.baidu.com/blog/responsive-images-in-practice/" target="_blank" rel="external">响应式图片</a></p>
+</blockquote>
 
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/02/15/ResponsiveH5Note/" data-toggle="tooltip" data-placement="top"
-                           title="响应式web设计（ 一 ）">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2017/02/03/Algorithms01/" data-toggle="tooltip" data-placement="top"
-                           title="Algorithms(二)">Next Post &rarr;</a>
+                        <a href="/2017/02/20/ResponsiveH5Note2/" data-toggle="tooltip" data-placement="top"
+                           title="响应式web设计（ 二 ）">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -235,9 +211,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2017/02/10/Algorithms02/"
-                         data-title="Algorithms(三)"
-                         data-url="http://Johansen_lbw.github.io/2017/02/10/Algorithms02/">
+                         data-thread-key="2017/03/02/responseImg/"
+                         data-title="响应式图片"
+                         data-url="http://Johansen_lbw.github.io/2017/03/02/responseImg/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -249,7 +225,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#排序算法"><span class="toc-text">排序算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法介绍"><span class="toc-text">算法介绍</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#什么是响应式图片"><span class="toc-text">什么是响应式图片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#响应式图片的使用场景是什么"><span class="toc-text">响应式图片的使用场景是什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解决方法"><span class="toc-text">解决方法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-通过srcset切换分辨率"><span class="toc-text">1. 通过srcset切换分辨率</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-srcset及sizes联合切换"><span class="toc-text">2. srcset及sizes联合切换</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-picture元素"><span class="toc-text">3. picture元素</span></a></li></ol></li></ol>
                 </div>
             </div>
         </div>
