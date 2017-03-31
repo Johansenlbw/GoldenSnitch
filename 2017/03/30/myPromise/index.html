@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        使用Proxy,Reflect实现观察者模式｜Golden Snitch
+        ES6‘s Promise 初探｜Golden Snitch
         
     </title>
 
-    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/03/23/Reflect/">
+    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/03/30/myPromise/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -145,12 +145,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>使用Proxy,Reflect实现观察者模式</h1>
+                    <h1>ES6‘s Promise 初探</h1>
                     
                     <span class="meta">
                          作者 johansen
                         <span>
-                          日期 2017-03-23
+                          日期 2017-03-30
                          </span>
                     </span>
                     <div class="tags text-center">
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            使用Proxy,Reflect实现观察者模式
+            ES6‘s Promise 初探
         </span>
     </div>
 </header>
@@ -176,36 +176,29 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>上周我们探讨了相关ES6 的 Proxy ,并由此引入相关代理模式的思考，今天我们继续上周ES6的学习，去思考由此引发的JS设计方面的考量。</p>
-<h3 id="利用ES6-Proxy-实现观察者模式"><a href="#利用ES6-Proxy-实现观察者模式" class="headerlink" title="利用ES6 Proxy 实现观察者模式"></a>利用ES6 Proxy 实现观察者模式</h3><blockquote>
-<p><strong> 观察者模式: </strong><br>它定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都将得到通知。</p>
-</blockquote>
-<p>举个例子 ：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> person = observable(&#123;</div><div class="line">  <span class="attr">name</span>: <span class="string">'张三'</span>,</div><div class="line">  <span class="attr">age</span>: <span class="number">20</span></div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">print</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;person.name&#125;</span>, <span class="subst">$&#123;person.age&#125;</span>`</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line">observe(print);</div><div class="line">person.name = <span class="string">'李四'</span>;</div><div class="line"><span class="comment">// 输出</span></div><div class="line"><span class="comment">// 李四, 20</span></div><div class="line"><span class="keyword">var</span> queuedObservers = <span class="keyword">new</span> <span class="built_in">Set</span>();</div><div class="line"></div><div class="line"><span class="keyword">var</span> observe = <span class="function"><span class="keyword">function</span> <span class="title">observe</span>(<span class="params">fn</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> queuedObservers.add(fn);</div><div class="line">&#125;;</div><div class="line"><span class="keyword">var</span> observable = <span class="function"><span class="keyword">function</span> <span class="title">observable</span>(<span class="params">obj</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Proxy</span>(obj, &#123; <span class="attr">set</span>: set &#125;);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">set</span>(<span class="params">target, key, value, receiver</span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> result = <span class="built_in">Reflect</span>.set(target, key, value, receiver);</div><div class="line">  queuedObservers.forEach(<span class="function"><span class="keyword">function</span> (<span class="params">observer</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> observer();</div><div class="line">  &#125;);</div><div class="line">  <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上面代码中，数据对象person是观察目标，函数print是观察者。一旦数据对象发生变化，print就会自动执行。利用proxy的set方法捕获相关对象，然后利用Reflect实现最初的方法。proxy的Set中实现的是依赖的对象的设置。</p>
-<h3 id="发布订阅模式的作用"><a href="#发布订阅模式的作用" class="headerlink" title="发布订阅模式的作用"></a>发布订阅模式的作用</h3><ol>
-<li>说明发布—订阅模式可以广泛应用于异步编程中。</li>
-<li>发布—订阅模式可以取代对象之间硬编码的通知机制，一个对象不用再显式地调用另外一个对象的某个接口。</li>
-</ol>
-<h3 id="发布订阅模式通用实现"><a href="#发布订阅模式通用实现" class="headerlink" title="发布订阅模式通用实现"></a>发布订阅模式通用实现</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> event = &#123;</div><div class="line">    <span class="attr">clientList</span>: [],<span class="comment">//存放订阅事件</span></div><div class="line">    listen: <span class="function"><span class="keyword">function</span>(<span class="params"> key, fn </span>)</span>&#123;</div><div class="line">        <span class="keyword">if</span> ( !<span class="keyword">this</span>.clientList[ key ] )&#123;</div><div class="line">            <span class="keyword">this</span>.clientList[ key ] = [];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">this</span>.clientList[ key ].push( fn );    <span class="comment">// 订阅的消息添加进缓存列表，注册</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">trigger</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="comment">//发布，触发</span></div><div class="line">        <span class="keyword">var</span> key = <span class="built_in">Array</span>.prototype.shift.call( <span class="built_in">arguments</span> ),    <span class="comment">// (1);</span></div><div class="line">            fns = <span class="keyword">this</span>.clientList[ key ];</div><div class="line"></div><div class="line">        <span class="keyword">if</span> ( !fns || fns.length === <span class="number">0</span> )&#123;    <span class="comment">// 如果没有绑定对应的消息</span></div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span>( <span class="keyword">var</span> i = <span class="number">0</span>, fn; fn = fns[ i++ ]; )&#123;</div><div class="line">            fn.apply( <span class="keyword">this</span>, <span class="built_in">arguments</span> );    <span class="comment">// (2) // arguments 是trigger时带上的参数</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>综述：</p>
-<p>发布—订阅模式的优点非常明显，一为时间上的解耦，二为对象之间的解耦。它的应用非常广泛，既可以用在异步编程中，也可以帮助我们完成更松耦合的代码编写。发布—订阅模式还可以用来帮助实现一些别的设计模式，比如中介者模式。 从架构上来看，无论是MVC还是MVVM，都少不了发布—订阅模式的参与，而且JavaScript本身也是一门基于事件驱动的语言。</p>
-<p>当然，发布—订阅模式也不是完全没有缺点。创建订阅者本身要消耗一定的时间和内存，而且当你订阅一个消息后，也许此消息最后都未发生，但这个订阅者会始终存在于内存中。另外，发布—订阅模式虽然可以弱化对象之间的联系，但如果过度使用的话，对象和对象之间的必要联系也将被深埋在背后，会导致程序难以跟踪维护和理解。特别是有多个发布者和订阅者嵌套到一起的时候，要跟踪一个bug不是件轻松的事情。</p>
+                <p>   节前焦虑症，又来了。话说得静下心来看看书，调节一下心性。这周博客继续学习ES6,相关技术点就是Promise。</p>
+<h3 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h3><p>   首先在介绍promise之前回顾一下异步回调，异步回调是最直接的异步结果处理模式，将一个回调函数 callback 扔进异步处理函数中，当异步处理获得结果之后再调用这个回调函数就可以继续之后的处理。<br>   但是若最后callback又是异步回调怎么办,回调多层嵌套，对于代码的维护性是一个很坏的结果。怎么解决这些问题。如今的JS对于处理异步调用已经有了很多成熟的方案（co、async、Q 、es6原生promise、then.js、bluebird）。今天单独就promise谈一谈。</p>
+<h3 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h3><p>   Promise是一个对象，它是用来实现异步操作的，它可以让异步代码书写起来更优雅，更便于阅读。</p>
+<h4 id="Promise的特性："><a href="#Promise的特性：" class="headerlink" title="Promise的特性："></a>Promise的特性：</h4><ul>
+<li>1、Promise对象有三种状态：Pending（进行中）、Resolved（已完成，又称 Fulfilled）和 Rejected（已失败），只有异步操作结果可以改变当前状态，其他操作不能改变状态，Promise对象的状态只能从“进行中”改为“已完成”或者从“进行中”改为“失败”。</li>
+<li><p>2、Promise对象的then方法，就是用来指定回调函数。一旦非同步操作完成，就调用指定的回调函数，并总是返回一个promise对象，方便链式调用。而且同一个promise的then可以调用多次。</p>
+</li>
+<li><p>3、then方法接受两个回调函数作为参数，第一个参数是成功Resolved时的回调，第二个是失败Reject时的回调。第二个参数是可以选的，同时，then可以接受另一个promise传入，也接受一个“类then”的对象或方法，即thenable对象。</p>
+</li>
+</ul>
+<p>综上特性,我们举个例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> sleep = <span class="function"><span class="keyword">function</span> (<span class="params">time</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            resolve(<span class="string">'test'</span>);</div><div class="line">        &#125;, time);</div><div class="line">    &#125;)</div><div class="line">&#125;;</div><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'start'</span>);</div><div class="line">    sleep(<span class="number">3000</span>)</div><div class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(data);</div><div class="line">        <span class="keyword">return</span> sleep(<span class="number">5000</span>);&#125;)</div><div class="line">    .then(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(data);</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'end'</span>);</div><div class="line">    &#125;)</div><div class="line">&#125;)();</div></pre></td></tr></table></figure></p>
+<p>上面代码中，sleep方法返回一个Promise实例，表示一段时间以后才会发生的结果。首先输出‘start’,然后，sleep执行后，3秒后返回“test”，触发then方法绑定的回调函数，输出回调返回值“test”,又return sleep(5000),这样第一个then的返回值，就是第二个的参数，再次执行sleep，5秒后返回‘test’，输出‘test’、’end’。</p>
+<p> 这个例子让我们初步认识了promise的基本实现。下周我们将对其具体的api进行分析。后天踏青，洗洗睡了，养足体力哈。</p>
 
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/03/30/myPromise/" data-toggle="tooltip" data-placement="top"
-                           title="ES6‘s Promise 初探">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2017/03/16/proxy/" data-toggle="tooltip" data-placement="top"
-                           title="ES6 Proxy 的思考">Next Post &rarr;</a>
+                        <a href="/2017/03/23/Reflect/" data-toggle="tooltip" data-placement="top"
+                           title="使用Proxy,Reflect实现观察者模式">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -214,9 +207,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2017/03/23/Reflect/"
-                         data-title="使用Proxy,Reflect实现观察者模式"
-                         data-url="http://Johansen_lbw.github.io/2017/03/23/Reflect/">
+                         data-thread-key="2017/03/30/myPromise/"
+                         data-title="ES6‘s Promise 初探"
+                         data-url="http://Johansen_lbw.github.io/2017/03/30/myPromise/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -228,7 +221,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#利用ES6-Proxy-实现观察者模式"><span class="toc-text">利用ES6 Proxy 实现观察者模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#发布订阅模式的作用"><span class="toc-text">发布订阅模式的作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#发布订阅模式通用实现"><span class="toc-text">发布订阅模式通用实现</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#回顾"><span class="toc-text">回顾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise"><span class="toc-text">Promise</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Promise的特性："><span class="toc-text">Promise的特性：</span></a></li></ol></li></ol>
                 </div>
             </div>
         </div>
