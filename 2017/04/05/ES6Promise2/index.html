@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="null">
+    <meta name="keyword" content="undefined">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="http://tva1.sinaimg.cn/crop.0.0.199.199.180/005AsuCnjw1eiw60g34h1j305k05kjrm.jpg">
+    <link rel="alternate" type="application/atom+xml" title="Golden Snitch" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        ES6&#39;s Promise 进击（一）｜Golden Snitch
+        
+    </title>
+
+    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/04/05/ES6Promise2/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('http://ogodoej04.bkt.clouddn.com/blog/image/countryside.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Golden Snitch
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://ogodoej04.bkt.clouddn.com/blog/image/countryside.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ogodoej04.bkt.clouddn.com/blog/image/countryside.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>ES6&#39;s Promise 进击（一）</h1>
+                    
+                    <span class="meta">
+                         作者 johansen
+                        <span>
+                          日期 2017-04-05
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#技术小记"
+                           title="技术小记">技术小记</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            ES6's Promise 进击（一）
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>上周我们分析了关于promise简单实现，以及promise的特性。这周我们谈谈关于ES6 Promise的API相关的话题。</p>
+<h3 id="Promise-实例方法"><a href="#Promise-实例方法" class="headerlink" title="Promise 实例方法"></a>Promise 实例方法</h3><h4 id="then方法"><a href="#then方法" class="headerlink" title="then方法"></a>then方法</h4><p>Promise 对象拥有两个实例方法 then() 和 catch() 。以下我们将介绍一下他们二者。具体实现代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">getData(method, url)&#123;</div><div class="line">        <span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>)</span>&#123;</div><div class="line">            <span class="keyword">var</span> xmlHttp = <span class="keyword">new</span> XMLHttpRequest();</div><div class="line">            xmlHttp.open(method, url);</div><div class="line">            xmlHttp.send();</div><div class="line">            xmlHttp.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.status == <span class="number">200</span> ) &#123;</div><div class="line">                resolve(<span class="keyword">this</span>.response);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                reject(<span class="keyword">this</span>.statusText);</div><div class="line">            &#125;</div><div class="line">            &#125;;</div><div class="line">            xmlHttp.onerror = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            reject(<span class="keyword">this</span>.statusText);</div><div class="line">            &#125;;</div><div class="line">        &#125;)</div><div class="line">        <span class="keyword">return</span> promise;</div><div class="line">        &#125;</div><div class="line">getData(<span class="string">'get'</span>,<span class="string">'www.xxx.com'</span>).then(successFun, failFun)</div></pre></td></tr></table></figure>
+<p>从以上例子中可以看到，成功和失败的回调函数我们是通过 then() 添加，在 promise 状态改变时分别调用。 promise 构造函数中通常都是异步的，所以 then 方法往往都先于 resolve 和 reject 方法执行。所以 promise 内部需要有一个存储 fulfill 时调用函数的数组和一个存储 reject 时调用函数的数组。我们还可以看到 then 方法可以接收两个参数，且通常都是函数。第一个参数会添加到 fulfill 时调用的数组中，第二个参数添加到 reject 时调用的数组中。当 promise 状态 fulfill 时，会把 resolve(value) 中的 value 值传给调用的函数中，同理，当 promise 状态 reject 时，会把 reject(reason) 中的 reason 值传给调用的函数。</p>
+<p>再看一个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>)</span>&#123;</div><div class="line">    <span class="comment">//resolve(5);</span></div><div class="line">    reject(<span class="number">5</span>);</div><div class="line">&#125;).then(<span class="literal">undefined</span>,<span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(value) <span class="comment">//5</span></div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">var</span> p1 = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>)</span>&#123;</div><div class="line">    reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'错误'</span>));</div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'test'</span>)</div><div class="line">&#125;);</div><div class="line"><span class="keyword">var</span> p2 = p1.then(<span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(value)</div><div class="line">&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">reason</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(reason) <span class="comment">//Error: 错误(…)</span></div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'fulfill '</span> + value)   <span class="comment">// fulfill undefined</span></div><div class="line">&#125;, <span class="function"><span class="keyword">function</span>(<span class="params">reason</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'reject '</span> + reason)</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(p2 == p1);<span class="comment">//false</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>以上例子说明：</p>
+<ol>
+<li>then方法支持链式调用，且返回的对象为新的Promise区别于JQuery的链式调用。</li>
+<li>前一个promise对象的reject 不影响新的promise。</li>
+</ol>
+</blockquote>
+<p>再看一个例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">    <span class="keyword">var</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>)</span>&#123;</div><div class="line">    resolve(<span class="number">5</span>)</div><div class="line">&#125;)</div><div class="line">    <span class="keyword">var</span> p1 = p.then(<span class="literal">undefined</span>, <span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(value) </div><div class="line">    &#125;)</div><div class="line">    <span class="keyword">var</span> p2 = p1.then(<span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'fulfill '</span> + value)   <span class="comment">// fulfill 5</span></div><div class="line">    &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">reason</span>)</span>&#123;</div><div class="line">        <span class="built_in">console</span>.log(<span class="string">'reject '</span> + reason)   </div><div class="line">    &#125;)</div></pre></td></tr></table></figure></p>
+<p>该例子中 then 第一个参数是 undefined ，且 value 值5被传到了 p1 成功时的回调函数中。上面那个例子中 then 的第二个参数是 undefined ，同样 reason 值也传到了 p1 失败时的回调函数中。这是因当对应的参数不为函数时，会将前一 promise 的状态和值传递下去。</p>
+<h4 id="catch方法"><a href="#catch方法" class="headerlink" title="catch方法"></a>catch方法</h4><p>promise 含有一个实例方法catch ，从名字上我们就看得出来，它和异常有千丝万缕的关系。其实 catch(onReject) 方法等价于 then(undefined, onReject) ，也就是说如下两种情况是等效的。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>)</span>&#123;</div><div class="line">    reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'error'</span>))</div><div class="line">&#125;).then(<span class="literal">undefined</span>, <span class="function"><span class="keyword">function</span>(<span class="params">reason</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(reason) <span class="comment">// Error: error(…)</span></div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>)</span>&#123;</div><div class="line">    reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'error'</span>))</div><div class="line">&#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">reason</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(reason) <span class="comment">// Error: error(…)</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>我们提到参数不为函数时会把值和状态传递下去。所以我们可以在多个 then 之后添加一个 catch 方法，这样前面只要 reject 或抛出异常，都会被最后的 catch 方法处理。<br>例如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>)</span>&#123;</div><div class="line">    resolve(<span class="number">5</span>)</div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</div><div class="line">    taskA()</div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</div><div class="line">    taskB()</div><div class="line">&#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</div><div class="line">    taskC()</div><div class="line">&#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">reason</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(reason)</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/03/30/myPromise/" data-toggle="tooltip" data-placement="top"
+                           title="ES6‘s Promise 初探">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2017/04/05/ES6Promise2/"
+                         data-title="ES6&#39;s Promise 进击（一）"
+                         data-url="http://Johansen_lbw.github.io/2017/04/05/ES6Promise2/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-实例方法"><span class="toc-text">Promise 实例方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#then方法"><span class="toc-text">then方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#catch方法"><span class="toc-text">catch方法</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#技术小记"
+                           title="技术小记">技术小记</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'johansenlbw';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/5119403139">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Golden Snitch 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://Johansen_lbw.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="http://ogodoej04.bkt.clouddn.com/timg.jpeg">
+</body>
+
+</html>
