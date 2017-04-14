@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="null">
+    <meta name="keyword" content="undefined">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="http://tva1.sinaimg.cn/crop.0.0.199.199.180/005AsuCnjw1eiw60g34h1j305k05kjrm.jpg">
+    <link rel="alternate" type="application/atom+xml" title="Golden Snitch" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        ES6 Promise 进击（二）｜Golden Snitch
+        
+    </title>
+
+    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/04/13/JQPromise/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('http://ogodoej04.bkt.clouddn.com/blog/image/countryside.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Golden Snitch
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://ogodoej04.bkt.clouddn.com/blog/image/countryside.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ogodoej04.bkt.clouddn.com/blog/image/countryside.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>ES6 Promise 进击（二）</h1>
+                    
+                    <span class="meta">
+                         作者 johansen
+                        <span>
+                          日期 2017-04-13
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#技术文档"
+                           title="技术文档">技术文档</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            ES6 Promise 进击（二）
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>这周我们结合JQ的Deferred用法，对比前面学习过的Promise,进行分析。</p>
+<h3 id="Promise-API"><a href="#Promise-API" class="headerlink" title="Promise API"></a>Promise API</h3><p>上周我们谈到了关于Promise的两个API，then以及catch。今天介绍resolve,reject,all。</p>
+<hr>
+<h4 id="1-Promise-resolve"><a href="#1-Promise-resolve" class="headerlink" title="1. Promise.resolve"></a>1. Promise.resolve</h4><p>一般情况下我们都会使用 <strong>new Promise()</strong> 来创建promise对象，但是除此之外我们也可以使用其他方法。在这里，我们将会学习如何使用 <strong>Promise.resolve</strong> 和 <strong>Promise.reject</strong>这两个方法。</p>
+<p>静态方法Promise.resolve(value) 可以认为是 new Promise() 方法的快捷方式。<br>比如 Promise.resolve(42); 可以认为是以下代码的语法糖。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//方法1</span></div><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve</span>)</span>&#123;</div><div class="line">resolve(<span class="number">42</span>);</div><div class="line">&#125;); </div><div class="line"><span class="comment">//方法2</span></div><div class="line"><span class="comment">//两个方法的表述方式不同，但实质是相通的。</span></div><div class="line"><span class="built_in">Promise</span>.resolve(<span class="number">42</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</div><div class="line"><span class="built_in">console</span>.log(value);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>强调一个 promise.resolve(thenable);接收的thenable对象具体指什么（<strong><em>类Promise对象：拥有名为.then方法的对象</em></strong>），我们举个例子。<br>到底什么样的对象能算是thenable的呢，最简单的例子就是 jQuery.ajax()，它的返回值就是thenable的。<br>因为jQuery.ajax() 的返回值是 jqXHR Object 对象，这个对象具有 .then 方法。<br><code>$.ajax(&#39;/json/comment.json&#39;);//拥有 .then方法的对象</code><br>这个thenable的对象可以使用 Promise.resolve 来转换为一个promise对象。<br>变成了promise对象的话，就能直接使用 then 或者 catch 等这些在 ES6 Promises里定义的方法了。</p>
+<p><code>将thenable对象转换promise对象</code><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> promise = <span class="built_in">Promise</span>.resolve($.ajax(<span class="string">'/json/comment.json'</span>));<span class="comment">//promise对象</span></div><div class="line">promise.then(<span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</div><div class="line">   <span class="built_in">console</span>.log(value);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h4 id="2-Promise-reject"><a href="#2-Promise-reject" class="headerlink" title="2. Promise.reject"></a>2. Promise.reject</h4><p>Promise.reject(error)是和 Promise.resolve(value) 类似的静态方法，是 new Promise() 方法的快捷方式。<br>比如 Promise.reject(new Error(“出错了”)) 就是下面代码的语法糖形式。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve,reject</span>)</span>&#123;</div><div class="line">    reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"出错了"</span>));</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>这段代码的功能是调用该promise对象通过then指定的 onRejected 函数，并将错误（Error）对象传递给这个 onRejected 函数。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Promise</span>.reject(<span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"BOOM!"</span>)).catch(<span class="function"><span class="keyword">function</span>(<span class="params">error</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.error(error);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h4 id="3-Promise-all"><a href="#3-Promise-all" class="headerlink" title="3. Promise.all"></a>3. Promise.all</h4><p>Promise.all 接收一个 promise对象的数组作为参数，当这个数组里的所有promise对象全部变为resolve或reject状态的时候，它才会去调用 .then 方法。<br>如下批量XHR的请求结果的例子，使用 Promise.all 的话代码会非常简单。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getURL</span>(<span class="params">URL</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> req = <span class="keyword">new</span> XMLHttpRequest();</div><div class="line">        req.open(<span class="string">'GET'</span>, URL, <span class="literal">true</span>);</div><div class="line">        req.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span> (req.status === <span class="number">200</span>) &#123;</div><div class="line">                resolve(req.responseText);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                reject(<span class="keyword">new</span> <span class="built_in">Error</span>(req.statusText));</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">        req.onerror = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            reject(<span class="keyword">new</span> <span class="built_in">Error</span>(req.statusText));</div><div class="line">        &#125;;</div><div class="line">        req.send();</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> request = &#123;</div><div class="line">        <span class="attr">comment</span>: <span class="function"><span class="keyword">function</span> <span class="title">getComment</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> getURL(<span class="string">'http://azu.github.io/promises-book/json/comment.json'</span>).then(<span class="built_in">JSON</span>.parse);</div><div class="line">        &#125;,</div><div class="line">        <span class="attr">people</span>: <span class="function"><span class="keyword">function</span> <span class="title">getPeople</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> getURL(<span class="string">'http://azu.github.io/promises-book/json/people.json'</span>).then(<span class="built_in">JSON</span>.parse);</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">function</span> <span class="title">recordValue</span>(<span class="params">results, value</span>) </span>&#123;</div><div class="line">        results.push(value);</div><div class="line">        <span class="keyword">return</span> results;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// [] 用来保存初始化的值</span></div><div class="line">    <span class="keyword">var</span> pushValue = recordValue.bind(<span class="literal">null</span>, []);</div><div class="line">    <span class="keyword">return</span> request.comment().then(pushValue).then(request.people).then(pushValue);</div><div class="line">&#125;</div><div class="line"><span class="comment">// 运行的例子</span></div><div class="line">main().then(<span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(value);</div><div class="line">&#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">error</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.error(error);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>之前例子中的 getURL 返回了一个promise对象，它封装了XHR通信的实现。 向 Promise.all 传递一个由封装了XHR通信的promise对象数组的话，则只有在全部的XHR通信完成之后（变为FulFilled或Rejected状态）之后，才会调用 .then 方法。<br>修改如下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getURL</span>(<span class="params">URL</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</div><div class="line">        <span class="keyword">var</span> req = <span class="keyword">new</span> XMLHttpRequest();</div><div class="line">        req.open(<span class="string">'GET'</span>, URL, <span class="literal">true</span>);</div><div class="line">        req.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">if</span> (req.status === <span class="number">200</span>) &#123;</div><div class="line">                resolve(req.responseText);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                reject(<span class="keyword">new</span> <span class="built_in">Error</span>(req.statusText));</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">        req.onerror = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            reject(<span class="keyword">new</span> <span class="built_in">Error</span>(req.statusText));</div><div class="line">        &#125;;</div><div class="line">        req.send();</div><div class="line">    &#125;);</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> request = &#123;</div><div class="line">        <span class="attr">comment</span>: <span class="function"><span class="keyword">function</span> <span class="title">getComment</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> getURL(<span class="string">'http://azu.github.io/promises-book/json/comment.json'</span>).then(<span class="built_in">JSON</span>.parse);</div><div class="line">        &#125;,</div><div class="line">        <span class="attr">people</span>: <span class="function"><span class="keyword">function</span> <span class="title">getPeople</span>(<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="keyword">return</span> getURL(<span class="string">'http://azu.github.io/promises-book/json/people.json'</span>).then(<span class="built_in">JSON</span>.parse);</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">main</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>.all([request.comment(), request.people()]);</div><div class="line">&#125;</div><div class="line"><span class="comment">// 运行示例</span></div><div class="line">main().then(<span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(value);</div><div class="line">&#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">error</span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(error);</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>这个例子的执行方法和前面的例子一样。 不过Promise.all 在以下几点和之前的例子有所不同。</p>
+<ul>
+<li>main中的处理流程显得非常清晰。</li>
+<li>Promise.all 接收 promise对象组成的数组作为参数。Promise.all([request.comment(), request.people()]);</li>
+</ul>
+<p>在上面的代码中，request.comment() 和 request.people() 会同时开始执行，而且每个promise的结果（resolve或reject时传递的参数值），和传递给 Promise.all 的promise数组的顺序是一致的。<br>也就是说，这时候 .then 得到的promise数组的执行结果的顺序是固定的，即 [comment, people]。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">main().then(<span class="function"><span class="keyword">function</span> (<span class="params">results</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(results); <span class="comment">// 按照[comment, people]的顺序</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h4 id="4-Promise-race"><a href="#4-Promise-race" class="headerlink" title="4. Promise.race"></a>4. Promise.race</h4><p>和 Promise.all 类似的对多个promise对象进行处理的 Promise.race 方法。<br>Promise.all 在接收到的所有的对象promise都变为 FulFilled 或者 Rejected 状态之后才会继续进行后面的处理， 与之相对的是 Promise.race 只要有一个promise对象进入 FulFilled 或者 Rejected 状态的话，就会继续进行后面的处理。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> winnerPromise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve</span>) </span>&#123;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'this is winner'</span>);</div><div class="line">            resolve(<span class="string">'this is winner'</span>);</div><div class="line">        &#125;, <span class="number">4</span>);</div><div class="line">    &#125;);</div><div class="line"><span class="keyword">var</span> loserPromise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve</span>) </span>&#123;</div><div class="line">        setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">            <span class="built_in">console</span>.log(<span class="string">'this is loser'</span>);</div><div class="line">            resolve(<span class="string">'this is loser'</span>);</div><div class="line">        &#125;, <span class="number">1000</span>);</div><div class="line">    &#125;);</div><div class="line"><span class="comment">// 第一个promise变为resolve后程序停止</span></div><div class="line"><span class="built_in">Promise</span>.race([winnerPromise, loserPromise]).then(<span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(value);    <span class="comment">// =&gt; 'this is winner'</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p> 上面例子我们还发现，Promise.race 在第一个promise对象变为Fulfilled之后，并不会取消其他promise对象的执行。</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/04/05/ES6Promise2/" data-toggle="tooltip" data-placement="top"
+                           title="ES6's Promise 进击（一）">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2017/04/13/JQPromise/"
+                         data-title="ES6 Promise 进击（二）"
+                         data-url="http://Johansen_lbw.github.io/2017/04/13/JQPromise/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Promise-API"><span class="toc-text">Promise API</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Promise-resolve"><span class="toc-text">1. Promise.resolve</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Promise-reject"><span class="toc-text">2. Promise.reject</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Promise-all"><span class="toc-text">3. Promise.all</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Promise-race"><span class="toc-text">4. Promise.race</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#技术文档"
+                           title="技术文档">技术文档</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'johansenlbw';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/5119403139">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Golden Snitch 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://Johansen_lbw.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="http://ogodoej04.bkt.clouddn.com/timg.jpeg">
+</body>
+
+</html>
