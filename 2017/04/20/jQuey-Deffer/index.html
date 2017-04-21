@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="null">
+    <meta name="keyword" content="undefined">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="http://tva1.sinaimg.cn/crop.0.0.199.199.180/005AsuCnjw1eiw60g34h1j305k05kjrm.jpg">
+    <link rel="alternate" type="application/atom+xml" title="Golden Snitch" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Promise 到 jQuey的Deferred｜Golden Snitch
+        
+    </title>
+
+    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/04/20/jQuey-Deffer/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('http://ogodoej04.bkt.clouddn.com/blog/image/countryside.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Golden Snitch
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://ogodoej04.bkt.clouddn.com/blog/image/countryside.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ogodoej04.bkt.clouddn.com/blog/image/countryside.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Promise 到 jQuey的Deferred</h1>
+                    
+                    <span class="meta">
+                         作者 johansen
+                        <span>
+                          日期 2017-04-20
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#技术小记"
+                           title="技术小记">技术小记</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Promise 到 jQuey的Deferred
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>这周来一次实战，延续上周的promise的介绍,谈谈工作中我们一直在使用JQuery,对于JQuery来说<strong>deferred</strong>就是jQuery的回调函数解决方案。<br>当今，我们遇到异步操作，常常引入回调函数，今天我们不谈ajax的回调函数。我们仅谈一下关于通过deferred的状态改变来进行后续逻辑操作。</p>
+<p>首先我们先创建一个Deferred对象。下文基本都用这个对象进行说明。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> deferred = $.Deferred();</div></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="deferred-resolve-amp-amp-deferred-reject"><a href="#deferred-resolve-amp-amp-deferred-reject" class="headerlink" title="deferred.resolve() &amp;&amp; deferred.reject()"></a>deferred.resolve() &amp;&amp; deferred.reject()</h3><p>jQuery规定，deferred对象有三种执行状态—-未完成，已完成和已失败。如果执行状态是”已完成”（resolved）,deferred对象立刻调用done()方法指定的回调函数；如果执行状态是”已失败”，调用fail()方法指定的回调函数；如果执行状态是”未完成”，则继续等待，或者调用progress()方法指定的回调函数<a href="http://api.jquery.com/deferred.progress/" target="_blank" rel="external"><strong>jQuery1.7+版本API</strong></a>。</p>
+<p>我们看一个例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> dtd = $.Deferred(); <span class="comment">// 新建一个Deferred对象</span></div><div class="line">　　<span class="keyword">var</span> wait = <span class="function"><span class="keyword">function</span>(<span class="params">dtd</span>)</span>&#123;</div><div class="line">　　　　<span class="keyword">var</span> tasks = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　　　　　alert(<span class="string">"执行完毕！"</span>);</div><div class="line">　　　　　　dtd.reject(); <span class="comment">// 改变Deferred对象的执行状态</span></div><div class="line">　　　　&#125;;</div><div class="line">　　　　setTimeout(tasks,<span class="number">5000</span>);</div><div class="line">　　　　<span class="keyword">return</span> dtd;</div><div class="line">　　&#125;;</div><div class="line">　　$.when(wait(dtd))</div><div class="line">　　.done(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; alert(<span class="string">"哈哈，成功了！"</span>); &#125;)</div><div class="line">　　.fail(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; alert(<span class="string">"出错啦！"</span>); &#125;);</div></pre></td></tr></table></figure></p>
+<p>我们通过手动改变dtd的状态，完成相关操作（done或者fail）。但是这样写并不好，我们暴露了dtd对象，因此接下来引入<strong>deferred.promise()</strong>方法。</p>
+<h3 id="deferred-promise"><a href="#deferred-promise" class="headerlink" title="deferred.promise()"></a>deferred.promise()</h3><p>我们通过deferred.promise()屏蔽改变执行状态有关的方法（比如resolve()方法和reject()方法），从而使得执行状态不能被改变。deferred.promise()，是在原来的deferred对象上返回另一个deferred对象。<br>例证：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> dtd = $.Deferred(); <span class="comment">// 新建一个Deferred对象</span></div><div class="line">　　<span class="keyword">var</span> wait = <span class="function"><span class="keyword">function</span>(<span class="params">dtd</span>)</span>&#123;</div><div class="line">　　　　<span class="keyword">var</span> tasks = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　　　　　alert(<span class="string">"执行完毕！"</span>);</div><div class="line">　　　　　　dtd.resolve(); <span class="comment">// 改变Deferred对象的执行状态</span></div><div class="line">　　　　&#125;;</div><div class="line"></div><div class="line">　　　　setTimeout(tasks,<span class="number">5000</span>);</div><div class="line">　　　　<span class="keyword">return</span> dtd.promise(); <span class="comment">// 返回deffer对象</span></div><div class="line">　　&#125;;</div><div class="line">　　<span class="keyword">var</span> d = wait(dtd); <span class="comment">// 新建一个d对象，改为对这个对象进行操作</span></div><div class="line">　　$.when(d)</div><div class="line">　　.done(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; alert(<span class="string">"哈哈，成功了！"</span>); &#125;)</div><div class="line">　　.fail(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; alert(<span class="string">"出错啦！"</span>); &#125;);</div><div class="line">　　d.resolve(); <span class="comment">// 此时，这个语句是无效的</span></div></pre></td></tr></table></figure></p>
+<p>建议还是将dtd作为内部调用，不对外。</p>
+<p>另一种防止执行状态被外部改变的方法，是使用deferred对象的建构函数$.Deferred()。这时，wait函数还是保持不变，我们直接把它传入$.Deferred()，jQuery规定，$.Deferred()可以接受一个函数名（注意，是函数名）作为参数，$.Deferred()所生成的deferred对象将作为这个函数的默认参数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> wait = <span class="function"><span class="keyword">function</span>(<span class="params">dtd</span>)</span>&#123;</div><div class="line"></div><div class="line">　　　　<span class="keyword">var</span> tasks = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"></div><div class="line">　　　　　　alert(<span class="string">"执行完毕！"</span>);</div><div class="line"></div><div class="line">　　　　　　dtd.resolve(); <span class="comment">// 改变Deferred对象的执行状态</span></div><div class="line"></div><div class="line">　　　　&#125;;</div><div class="line"></div><div class="line">　　　　setTimeout(tasks,<span class="number">5000</span>);</div><div class="line"></div><div class="line">　　　　<span class="keyword">return</span> dtd.promise();</div><div class="line"></div><div class="line">　　&#125;;</div><div class="line">　　$.Deferred(wait)</div><div class="line"></div><div class="line">　　.done(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; alert(<span class="string">"哈哈，成功了！"</span>); &#125;)</div><div class="line"></div><div class="line">　　.fail(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; alert(<span class="string">"出错啦！"</span>); &#125;);</div></pre></td></tr></table></figure>
+<p>综上我们介绍了相关JQuery的Deferred,希望今后多用到生产实践中，回顾三周的Promise的学习，发现技术的革新不断吸取好的实践，成为提案进而作为新的标准，所以温故知新的考量一个知识点的演变，真的大有裨益，历史是这样的，技术的变化未尝不是呢。</p>
+<p>后天周末了，还是要炫耀一下上周我竟然骑行110公里，把北京郊外的十三陵全部刷了一遍，成就感爆棚。周末快乐哈。</p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/04/13/JQPromise/" data-toggle="tooltip" data-placement="top"
+                           title="ES6 Promise 进击（二）">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2017/04/20/jQuey-Deffer/"
+                         data-title="Promise 到 jQuey的Deferred"
+                         data-url="http://Johansen_lbw.github.io/2017/04/20/jQuey-Deffer/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#deferred-resolve-amp-amp-deferred-reject"><span class="toc-text">deferred.resolve() && deferred.reject()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#deferred-promise"><span class="toc-text">deferred.promise()</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#技术小记"
+                           title="技术小记">技术小记</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'johansenlbw';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/5119403139">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Golden Snitch 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://Johansen_lbw.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="http://ogodoej04.bkt.clouddn.com/timg.jpeg">
+</body>
+
+</html>
