@@ -182,7 +182,7 @@
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">.verticle-mode &#123;</div><div class="line">    writing-mode: tb-rl;</div><div class="line">    -webkit-writing-mode: vertical-rl;      </div><div class="line">    writing-mode: vertical-rl;</div><div class="line">&#125;</div><div class="line">/* IE7比较弱，需要做点额外的动作 */</div><div class="line">.verticle-mode &#123;</div><div class="line">    *width: 120px;</div><div class="line">&#125;</div><div class="line">.verticle-mode h4,</div><div class="line">.verticle-mode p &#123;</div><div class="line">    *display: inline;</div><div class="line">    *writing-mode: tb-rl;</div><div class="line">&#125;</div><div class="line">.verticle-mode h4 &#123;</div><div class="line">    *float:right;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><a href="https://codepen.io/Johansen_lbw/pen/dWvXzP" target="_blank" rel="external">效果</a></p>
 <p>是不是好清新，好湿的排版来自css。</p>
-<h4 id="兼容效果"><a href="#兼容效果" class="headerlink" title="兼容效果"></a>兼容效果</h4><p><iframe src="http://caniuse.com/#search=writing-mode" width="1000" height="500"><br>兼容效果还是不错的。竟然IE67都OK。</iframe></p>
+<h4 id="兼容效果"><a href="#兼容效果" class="headerlink" title="兼容效果"></a>兼容效果</h4><p><iframe src="https://caniuse.com/#search=writing-mode" width="1000" height="500"><br>兼容效果还是不错的。竟然IE67都OK。</iframe></p>
 <blockquote>
 <p>设置或检索对象的内容块固有的书写方向。西方语言一般都是 lr-tb 的书写方式，但是亚洲语言 lr-tb | tb-rl 的书写方式都有。<br>作为IE的私有属性之一，IE5.5率先实现了 writing-mode ，后期被w3c采纳成标准属性；<br>此属性效果不能被累加使用。例如，父对象的此属性值设为 tb-rl ，子对象再设置该属性将不起作用，仍应用父对象的设置。<br>对应的脚本特性为writingMode。</p>
 </blockquote>
@@ -195,7 +195,7 @@
 <li>计算值：特定值</li>
 </ul>
 <p>各个属性具体的实现效果：</p>
-<iframe id="frame_Example" height="430" src="http://mdn.mozillademos.org/en-US/docs/Web/CSS/writing-mode$samples/Example?revision=1223455" frameborder="0" width="780">
+<iframe id="frame_Example" height="430" src="https://mdn.mozillademos.org/en-US/docs/Web/CSS/writing-mode$samples/Example?revision=1223455" frameborder="0" width="780">
 
 <p>看完效果大家就可以实践了，写个小诗吧。</p>
 <p>最后大家看资料深入研究吧：<br><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/writing-mode" target="_blank" rel="external">MDN 关于writing-mode</a></p>
