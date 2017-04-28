@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        Promise 到 jQuey的Deferred｜Golden Snitch
+        writing-mode｜Golden Snitch
         
     </title>
 
-    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/04/20/jQuey-Deffer/">
+    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/04/28/writing-mode/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -145,12 +145,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>Promise 到 jQuey的Deferred</h1>
+                    <h1>writing-mode</h1>
                     
                     <span class="meta">
                          作者 johansen
                         <span>
-                          日期 2017-04-20
+                          日期 2017-04-28
                          </span>
                     </span>
                     <div class="tags text-center">
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            Promise 到 jQuey的Deferred
+            writing-mode
         </span>
     </div>
 </header>
@@ -176,33 +176,39 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>这周来一次实战，延续上周的promise的介绍,谈谈工作中我们一直在使用JQuery,对于JQuery来说<strong>deferred</strong>就是jQuery的回调函数解决方案。<br>当今，我们遇到异步操作，常常引入回调函数，今天我们不谈ajax的回调函数。我们仅谈一下关于通过deferred的状态改变来进行后续逻辑操作。</p>
-<p>首先我们先创建一个Deferred对象。下文基本都用这个对象进行说明。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> deferred = $.Deferred();</div></pre></td></tr></table></figure></p>
-<hr>
-<h3 id="deferred-resolve-amp-amp-deferred-reject"><a href="#deferred-resolve-amp-amp-deferred-reject" class="headerlink" title="deferred.resolve() &amp;&amp; deferred.reject()"></a>deferred.resolve() &amp;&amp; deferred.reject()</h3><p>jQuery规定，deferred对象有三种执行状态—-未完成，已完成和已失败。如果执行状态是”已完成”（resolved）,deferred对象立刻调用done()方法指定的回调函数；如果执行状态是”已失败”，调用fail()方法指定的回调函数；如果执行状态是”未完成”，则继续等待，或者调用progress()方法指定的回调函数<a href="http://api.jquery.com/deferred.progress/" target="_blank" rel="external"><strong>jQuery1.7+版本API</strong></a>。</p>
-<p>我们看一个例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> dtd = $.Deferred(); <span class="comment">// 新建一个Deferred对象</span></div><div class="line">　　<span class="keyword">var</span> wait = <span class="function"><span class="keyword">function</span>(<span class="params">dtd</span>)</span>&#123;</div><div class="line">　　　　<span class="keyword">var</span> tasks = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　　　　　alert(<span class="string">"执行完毕！"</span>);</div><div class="line">　　　　　　dtd.reject(); <span class="comment">// 改变Deferred对象的执行状态</span></div><div class="line">　　　　&#125;;</div><div class="line">　　　　setTimeout(tasks,<span class="number">5000</span>);</div><div class="line">　　　　<span class="keyword">return</span> dtd;</div><div class="line">　　&#125;;</div><div class="line">　　$.when(wait(dtd))</div><div class="line">　　.done(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; alert(<span class="string">"哈哈，成功了！"</span>); &#125;)</div><div class="line">　　.fail(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; alert(<span class="string">"出错啦！"</span>); &#125;);</div></pre></td></tr></table></figure></p>
-<p>我们通过手动改变dtd的状态，完成相关操作（done或者fail）。但是这样写并不好，我们暴露了dtd对象，因此接下来引入<strong>deferred.promise()</strong>方法。</p>
-<h3 id="deferred-promise"><a href="#deferred-promise" class="headerlink" title="deferred.promise()"></a>deferred.promise()</h3><p>我们通过deferred.promise()屏蔽改变执行状态有关的方法（比如resolve()方法和reject()方法），从而使得执行状态不能被改变。deferred.promise()，是在原来的deferred对象上返回另一个deferred对象。<br>例证：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> dtd = $.Deferred(); <span class="comment">// 新建一个Deferred对象</span></div><div class="line">　　<span class="keyword">var</span> wait = <span class="function"><span class="keyword">function</span>(<span class="params">dtd</span>)</span>&#123;</div><div class="line">　　　　<span class="keyword">var</span> tasks = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">　　　　　　alert(<span class="string">"执行完毕！"</span>);</div><div class="line">　　　　　　dtd.resolve(); <span class="comment">// 改变Deferred对象的执行状态</span></div><div class="line">　　　　&#125;;</div><div class="line"></div><div class="line">　　　　setTimeout(tasks,<span class="number">5000</span>);</div><div class="line">　　　　<span class="keyword">return</span> dtd.promise(); <span class="comment">// 返回deffer对象</span></div><div class="line">　　&#125;;</div><div class="line">　　<span class="keyword">var</span> d = wait(dtd); <span class="comment">// 新建一个d对象，改为对这个对象进行操作</span></div><div class="line">　　$.when(d)</div><div class="line">　　.done(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; alert(<span class="string">"哈哈，成功了！"</span>); &#125;)</div><div class="line">　　.fail(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; alert(<span class="string">"出错啦！"</span>); &#125;);</div><div class="line">　　d.resolve(); <span class="comment">// 此时，这个语句是无效的</span></div></pre></td></tr></table></figure></p>
-<p>建议还是将dtd作为内部调用，不对外。</p>
-<p>另一种防止执行状态被外部改变的方法，是使用deferred对象的建构函数$.Deferred()。这时，wait函数还是保持不变，我们直接把它传入$.Deferred()，jQuery规定，$.Deferred()可以接受一个函数名（注意，是函数名）作为参数，$.Deferred()所生成的deferred对象将作为这个函数的默认参数。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> wait = <span class="function"><span class="keyword">function</span>(<span class="params">dtd</span>)</span>&#123;</div><div class="line"></div><div class="line">　　　　<span class="keyword">var</span> tasks = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"></div><div class="line">　　　　　　alert(<span class="string">"执行完毕！"</span>);</div><div class="line"></div><div class="line">　　　　　　dtd.resolve(); <span class="comment">// 改变Deferred对象的执行状态</span></div><div class="line"></div><div class="line">　　　　&#125;;</div><div class="line"></div><div class="line">　　　　setTimeout(tasks,<span class="number">5000</span>);</div><div class="line"></div><div class="line">　　　　<span class="keyword">return</span> dtd.promise();</div><div class="line"></div><div class="line">　　&#125;;</div><div class="line">　　$.Deferred(wait)</div><div class="line"></div><div class="line">　　.done(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; alert(<span class="string">"哈哈，成功了！"</span>); &#125;)</div><div class="line"></div><div class="line">　　.fail(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; alert(<span class="string">"出错啦！"</span>); &#125;);</div></pre></td></tr></table></figure>
-<p>综上我们介绍了相关JQuery的Deferred,希望今后多用到生产实践中，回顾三周的Promise的学习，发现技术的革新不断吸取好的实践，成为提案进而作为新的标准，所以温故知新的考量一个知识点的演变，真的大有裨益，历史是这样的，技术的变化未尝不是呢。</p>
-<p>后天周末了，还是要炫耀一下上周我竟然骑行110公里，把北京郊外的十三陵全部刷了一遍，成就感爆棚。周末快乐哈。</p>
+                <p>好久没有写关于css相关的博客了，结合这周的工作，介绍给大家一个关于很少接触的css特性“writing-mode”。</p>
+<h3 id="writing-mode介绍"><a href="#writing-mode介绍" class="headerlink" title="writing-mode介绍"></a>writing-mode介绍</h3><p>前些天，产品妹子问我能不能实现关于字体的竖版的排版方式，我犹豫了一下，好像曾经在日本的旅游网站见过,查了一下果然有一个属性，没错就是它 - -“writing-mode”,通过设置就可以实现类似古诗词相关的竖版样式。高大上啊，来一个栗子先：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">h4</span>&gt;</span>诗情<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>多少语言和往事<span class="tag">&lt;<span class="name">br</span>&gt;</span>都在微笑中消溶<span class="tag">&lt;<span class="name">br</span>&gt;</span>　　我们走进了夜海<span class="tag">&lt;<span class="name">br</span>&gt;</span>　　去打捞遗失的繁星<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"verticle-mode"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">h4</span>&gt;</span>诗情<span class="tag">&lt;/<span class="name">h4</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">p</span> <span class="attr">contenteditable</span>&gt;</span>多少语言和往事<span class="tag">&lt;<span class="name">br</span>&gt;</span>都在微笑中消溶<span class="tag">&lt;<span class="name">br</span>&gt;</span>　　我们走进了夜海<span class="tag">&lt;<span class="name">br</span>&gt;</span>　　去打捞遗失的繁星<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">.verticle-mode &#123;</div><div class="line">    writing-mode: tb-rl;</div><div class="line">    -webkit-writing-mode: vertical-rl;      </div><div class="line">    writing-mode: vertical-rl;</div><div class="line">&#125;</div><div class="line">/* IE7比较弱，需要做点额外的动作 */</div><div class="line">.verticle-mode &#123;</div><div class="line">    *width: 120px;</div><div class="line">&#125;</div><div class="line">.verticle-mode h4,</div><div class="line">.verticle-mode p &#123;</div><div class="line">    *display: inline;</div><div class="line">    *writing-mode: tb-rl;</div><div class="line">&#125;</div><div class="line">.verticle-mode h4 &#123;</div><div class="line">    *float:right;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><a href="https://codepen.io/Johansen_lbw/pen/dWvXzP" target="_blank" rel="external">效果</a></p>
+<p>是不是好清新，好湿的排版来自css。</p>
+<h4 id="兼容效果"><a href="#兼容效果" class="headerlink" title="兼容效果"></a>兼容效果</h4><p><iframe src="http://caniuse.com/#search=writing-mode" width="1000" height="500"><br>兼容效果还是不错的。竟然IE67都OK。</iframe></p>
+<blockquote>
+<p>设置或检索对象的内容块固有的书写方向。西方语言一般都是 lr-tb 的书写方式，但是亚洲语言 lr-tb | tb-rl 的书写方式都有。<br>作为IE的私有属性之一，IE5.5率先实现了 writing-mode ，后期被w3c采纳成标准属性；<br>此属性效果不能被累加使用。例如，父对象的此属性值设为 tb-rl ，子对象再设置该属性将不起作用，仍应用父对象的设置。<br>对应的脚本特性为writingMode。</p>
+</blockquote>
+<h4 id="细节介绍"><a href="#细节介绍" class="headerlink" title="细节介绍"></a>细节介绍</h4><ul>
+<li>writing-mode：horizontal-tb | vertical-rl | vertical-lr | lr-tb(ie) | tb-rl(ie)</li>
+<li>默认值：normal</li>
+<li>适用于：除 &lt;’ display ‘&gt; 属性定义为table-row-group | table-column-group | table-row | table-column之外的所有元素</li>
+<li>继承性：有</li>
+<li>动画性：否</li>
+<li>计算值：特定值</li>
+</ul>
+<p>各个属性具体的实现效果：</p>
+<iframe id="frame_Example" height="430" src="http://mdn.mozillademos.org/en-US/docs/Web/CSS/writing-mode$samples/Example?revision=1223455" frameborder="0" width="780">
 
+<p>看完效果大家就可以实践了，写个小诗吧。</p>
+<p>最后大家看资料深入研究吧：<br><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/writing-mode" target="_blank" rel="external">MDN 关于writing-mode</a></p>
+</iframe>
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/04/28/writing-mode/" data-toggle="tooltip" data-placement="top"
-                           title="writing-mode">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2017/04/13/JQPromise/" data-toggle="tooltip" data-placement="top"
-                           title="ES6 Promise 进击（二）">Next Post &rarr;</a>
+                        <a href="/2017/04/20/jQuey-Deffer/" data-toggle="tooltip" data-placement="top"
+                           title="Promise 到 jQuey的Deferred">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -211,9 +217,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2017/04/20/jQuey-Deffer/"
-                         data-title="Promise 到 jQuey的Deferred"
-                         data-url="http://Johansen_lbw.github.io/2017/04/20/jQuey-Deffer/">
+                         data-thread-key="2017/04/28/writing-mode/"
+                         data-title="writing-mode"
+                         data-url="http://Johansen_lbw.github.io/2017/04/28/writing-mode/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -225,7 +231,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#deferred-resolve-amp-amp-deferred-reject"><span class="toc-text">deferred.resolve() && deferred.reject()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#deferred-promise"><span class="toc-text">deferred.promise()</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#writing-mode介绍"><span class="toc-text">writing-mode介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#兼容效果"><span class="toc-text">兼容效果</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#细节介绍"><span class="toc-text">细节介绍</span></a></li></ol></li></ol>
                 </div>
             </div>
         </div>
