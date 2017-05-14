@@ -179,22 +179,10 @@
                 <p>这周遇到一个关于监测统计的需求，看了一下后台同学写的代码，开了一个定时器在前端不断发ajax请求，但是前端滑屏交互复杂，事件会出现无法触发，为了解决这个问题主要是时间片段无法给到手势事件。这也是js单线程的问题所在。<br>解决方法就拜托给web worker – 一个让web应用程序具备多线程处理能力的特性。常用来处理前端UI线程会被阻塞（这意味着用户需要对着一个无法进行任何交互的页面抓狂，这是无法容忍的）。所以我们可以通过建立worker对象将复杂的计算交由服务端进行，相当于开辟了一个新的线程。通过worker的onmessage的通信完成后台与前端的交互。</p>
 <p>下面的demo涉及两个文件，分别是demo.html、worker.js。代码很简单，但已经包含了webworker最重要的几个内容，细节在后面再展开：</p>
 <ul>
-<li><ol>
-<li>worker创建：new Worker(XX)</li>
-</ol>
-</li>
-<li><ol>
-<li>消息发送：postMessage</li>
-</ol>
-</li>
-<li><ol>
-<li>worker事件：消息接收(message)、出错处理(error)</li>
-</ol>
-</li>
-<li><ol>
-<li>worker终止：terminate</li>
-</ol>
-</li>
+<li>1.worker创建：new Worker(XX)</li>
+<li>2.消息发送：postMessage</li>
+<li>3.worker事件：消息接收(message)、出错处理(error)</li>
+<li>4.worker终止：terminate</li>
 </ul>
 <p>demo.html里面的代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> worker = <span class="keyword">new</span> Worker(<span class="string">'worker.js'</span>);</div><div class="line"></div><div class="line">worker.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">evt</span>)</span>&#123;</div><div class="line"></div><div class="line">    alert(<span class="string">'消息收到啦：'</span>+ evt.data);</div><div class="line"></div><div class="line">    worker.terminate();</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line">worker.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</div><div class="line"></div><div class="line">    alert(<span class="string">'demo出错了！出错原因是：'</span> + e.message);</div><div class="line"></div><div class="line">    worker.terminate();</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line">worker.postMessage(<span class="string">'这是webworker的demo！'</span>);</div></pre></td></tr></table></figure></p>
 <p>worker.js里面的代码：</p>
@@ -217,6 +205,20 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">    worker.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</div><div class="line">    alert(<span class="string">'demo出错了！出错原因是：'</span> + e.message);</div><div class="line">    worker.terminate();</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 </li>
 </ol>
+<h4 id="worker的this指向"><a href="#worker的this指向" class="headerlink" title="worker的this指向"></a>worker的this指向</h4><p>在worker.js中的顶层对象不是window,下面的demo可以证明这一点：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">alert(<span class="string">'hello'</span>); <span class="comment">//额外添加的语句</span></div><div class="line"><span class="keyword">this</span>.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">evt</span>)</span>&#123;</div><div class="line">    postMessage(evt.data +<span class="string">'--worker.js里的附加信息'</span>);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>由此可以知道在worker.js是无法访问到window.但是可以访问setInterval,setTimeout.<br>那真正的worker.js的全局上下文是什么？是一个workerGlobalScope的对象。他有如下属性</p>
+<ul>
+<li>1.self<blockquote>
+<p>指向WorkerGlobalScope</p>
+</blockquote>
+</li>
+<li>2.importScripts(xx[,xx,xx]);<blockquote>
+<p>加载外部脚本文件</p>
+</blockquote>
+</li>
+<li>3.close()<br>关闭当前线程，与terminate作用类似。</li>
+<li>4.setTimeout/setInterval</li>
+</ul>
 <p>这周项目很忙的我，第三方的设计稿改了4遍，导致我项目做了三遍，真是虐心，周五晚上上完线，写博客，对工作总结一下。赶紧回家聊妹子了。明天一定要睡到中午吃饭。大家周末愉快了。</p>
 
                 <hr>
@@ -250,7 +252,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#worker的API"><span class="toc-text">worker的API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#worker的事件"><span class="toc-text">worker的事件</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#worker的API"><span class="toc-text">worker的API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#worker的事件"><span class="toc-text">worker的事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#worker的this指向"><span class="toc-text">worker的this指向</span></a></li></ol>
                 </div>
             </div>
         </div>
