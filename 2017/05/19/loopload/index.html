@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        浅谈worker｜Golden Snitch
+        浅谈ES6--循环加载｜Golden Snitch
         
     </title>
 
-    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/05/12/mywork/">
+    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/05/19/loopload/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -145,12 +145,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>浅谈worker</h1>
+                    <h1>浅谈ES6--循环加载</h1>
                     
                     <span class="meta">
                          作者 johansen
                         <span>
-                          日期 2017-05-12
+                          日期 2017-05-19
                          </span>
                     </span>
                     <div class="tags text-center">
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            浅谈worker
+            浅谈ES6--循环加载
         </span>
     </div>
 </header>
@@ -176,65 +176,35 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>这周遇到一个关于监测统计的需求，看了一下后台同学写的代码，开了一个定时器在前端不断发ajax请求，但是前端滑屏交互复杂，事件会出现无法触发，为了解决这个问题主要是时间片段无法给到手势事件。这也是js单线程的问题所在。<br>解决方法就拜托给web worker – 一个让web应用程序具备多线程处理能力的特性。常用来处理前端UI线程会被阻塞（这意味着用户需要对着一个无法进行任何交互的页面抓狂，这是无法容忍的）。所以我们可以通过建立worker对象将复杂的计算交由服务端进行，相当于开辟了一个新的线程。通过worker的onmessage的通信完成后台与前端的交互。</p>
-<p>下面的demo涉及两个文件，分别是demo.html、worker.js。代码很简单，但已经包含了webworker最重要的几个内容，细节在后面再展开：</p>
-<ul>
-<li>1.worker创建：new Worker(XX)</li>
-<li>2.消息发送：postMessage</li>
-<li>3.worker事件：消息接收(message)、出错处理(error)</li>
-<li>4.worker终止：terminate</li>
-</ul>
-<p>demo.html里面的代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> worker = <span class="keyword">new</span> Worker(<span class="string">'worker.js'</span>);</div><div class="line"></div><div class="line">worker.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">evt</span>)</span>&#123;</div><div class="line"></div><div class="line">    alert(<span class="string">'消息收到啦：'</span>+ evt.data);</div><div class="line"></div><div class="line">    worker.terminate();</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line">worker.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</div><div class="line"></div><div class="line">    alert(<span class="string">'demo出错了！出错原因是：'</span> + e.message);</div><div class="line"></div><div class="line">    worker.terminate();</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line">worker.postMessage(<span class="string">'这是webworker的demo！'</span>);</div></pre></td></tr></table></figure></p>
-<p>worker.js里面的代码：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">evt</span>)</span>&#123;</div><div class="line"></div><div class="line">    postMessage(evt.data +<span class="string">'--worker.js里的附加信息'</span>);</div><div class="line"></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+                <p>这周的介绍相关循环加载相关的知识点，结合ES6相关技能，做相关学习。</p>
+<h3 id="循环加载的表象"><a href="#循环加载的表象" class="headerlink" title="循环加载的表象"></a>循环加载的表象</h3><p>所谓“循环加载”指的是，a脚本的执行依赖b脚本，而b脚本的执行又依赖a脚本。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// a.js</span></div><div class="line"><span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">'b'</span>);</div><div class="line"></div><div class="line"><span class="comment">// b.js</span></div><div class="line"><span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">'a'</span>);</div></pre></td></tr></table></figure></p>
+<p>通常，“循环加载”表示存在强耦合，如果处理不好，还可能导致递归加载，使得程序无法执行，因此应该避免出现。<br>但是实际上，这是很难避免的，尤其是依赖关系复杂的大项目，很容易出现a依赖b，b依赖c，c又依赖a这样的情况。这意味着，模块加载机制必须考虑“循环加载”的情况。</p>
+<p>对于JavaScript语言来说，目前最常见的两种模块格式CommonJS和ES6，处理“循环加载”的方法是不一样的，返回的结果也不一样。</p>
+<h3 id="CommonJS模块的加载原理"><a href="#CommonJS模块的加载原理" class="headerlink" title="CommonJS模块的加载原理"></a>CommonJS模块的加载原理</h3><p>CommonJS的一个模块，就是一个脚本文件。require命令第一次加载该脚本，就会执行整个脚本，然后在内存生成一个对象。CommonJS模块无论加载多少次，都只会在第一次加载时运行一次，以后再加载，就返回第一次运行的结果，除非手动清除系统缓存。</p>
+<h3 id="CommonJS模块的循环加载"><a href="#CommonJS模块的循环加载" class="headerlink" title="CommonJS模块的循环加载"></a>CommonJS模块的循环加载</h3><p>CommonJS模块的重要特性是加载时执行，即脚本代码在require的时候，就会全部执行。一旦出现某个模块被”循环加载”，就只输出已经执行的部分，还未执行的部分不会输出。<br>例如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//a.js</span></div><div class="line">exports.done = <span class="literal">false</span>;</div><div class="line"><span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">'./b.js'</span>);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'在 a.js 之中，b.done = %j'</span>, b.done);</div><div class="line">exports.done = <span class="literal">true</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'a.js 执行完毕'</span>);</div><div class="line"></div><div class="line"><span class="comment">//b.js</span></div><div class="line">exports.done = <span class="literal">false</span>;</div><div class="line"><span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">'./a.js'</span>);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'在 b.js 之中，a.done = %j'</span>, a.done);</div><div class="line">exports.done = <span class="literal">true</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'b.js 执行完毕'</span>);</div></pre></td></tr></table></figure></p>
+<p>上面代码之中，a.js脚本先输出一个done变量，然后加载另一个脚本文件b.js。注意，此时a.js代码就停在这里，等待b.js执行完毕，再往下执行。<br>因此最后执行的结果是：</p>
 <ol>
-<li>demo.html里创建一个worker W ， W 加载 worker.js ，并向其发送消息：这是’webworker的demo！’</li>
-<li>worker.js 收到 W 传给它的消息，并在该消息末尾加上’–worker.js里的附加信息’后，再回传给 W</li>
-<li>W 收到 worker.js 回传的消息，弹窗显示，然后把自己给终止掉.</li>
-</ol>
-<h4 id="worker的API"><a href="#worker的API" class="headerlink" title="worker的API"></a>worker的API</h4><ol>
-<li>worker创建<br><code>var worker = new Worker(&#39;worker.js&#39;);</code></li>
-<li>possMessage(data)<br>发送消息，data理论上可以为任意值，但保险起见最好还是传字符串。</li>
-<li>terminate()<br>终止worker，此后无法再利用其进行消息传递等。需要注意：worker不会自行终止，一旦terminate，无法重新启用，只能另行创建。</li>
-</ol>
-<h4 id="worker的事件"><a href="#worker的事件" class="headerlink" title="worker的事件"></a>worker的事件</h4><ol>
-<li><p>message<br>一旦有消息发送，则会触发。消息的发送是双向的，消息的内容可通过data获取，如demo.html中，evt.data即为worker.js中传递过来的消息内容：</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">    worker.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">evt</span>)</span>&#123;</div><div class="line">    alert(<span class="string">'消息收到啦：'</span>+ evt.data);</div><div class="line">    worker.terminate();</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-</li>
-<li><p>error<br>出错处理，比如worker.js中出现语法错误、运行时错误之类的，就会触发，错误信息可通过e.message获得，如demo.html中</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">    worker.onerror = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>)</span>&#123;</div><div class="line">    alert(<span class="string">'demo出错了！出错原因是：'</span> + e.message);</div><div class="line">    worker.terminate();</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="worker的this指向"><a href="#worker的this指向" class="headerlink" title="worker的this指向"></a>worker的this指向</h4><p>在worker.js中的顶层对象不是window,下面的demo可以证明这一点：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">alert(<span class="string">'hello'</span>); <span class="comment">//额外添加的语句</span></div><div class="line"><span class="keyword">this</span>.onmessage = <span class="function"><span class="keyword">function</span>(<span class="params">evt</span>)</span>&#123;</div><div class="line">    postMessage(evt.data +<span class="string">'--worker.js里的附加信息'</span>);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>由此可以知道在worker.js是无法访问到window.但是可以访问setInterval,setTimeout.<br>那真正的worker.js的全局上下文是什么？是一个workerGlobalScope的对象。他有如下属性</p>
-<ul>
-<li>1.self<blockquote>
-<p>指向WorkerGlobalScope</p>
+<li>在 b.js 之中，a.done = false</li>
+<li>b.js 执行完毕</li>
+<li>在 a.js 之中，b.done = true</li>
+<li>a.js 执行完毕</li>
+<li>在 main.js 之中, a.done=true, b.done=true<blockquote>
+<p>由于CommonJS模块遇到循环加载时，返回的是当前已经执行的部分的值，而不是代码全部执行后的值，两者可能会有差异。所以，输入变量的时候，必须非常小心。</p>
 </blockquote>
 </li>
-<li>2.importScripts(xx[,xx,xx]);<blockquote>
-<p>加载外部脚本文件</p>
-</blockquote>
-</li>
-<li>3.close()<br>关闭当前线程，与terminate作用类似。</li>
-<li>4.setTimeout/setInterval</li>
-</ul>
-<p>这周项目很忙的我，第三方的设计稿改了4遍，导致我项目做了三遍，真是虐心，周五晚上上完线，写博客，对工作总结一下。赶紧回家聊妹子了。明天一定要睡到中午吃饭。大家周末愉快了。</p>
+</ol>
+<h3 id="ES6模块的循环加载"><a href="#ES6模块的循环加载" class="headerlink" title="ES6模块的循环加载"></a>ES6模块的循环加载</h3><p>ES6处理“循环加载”与CommonJS有本质的不同。ES6模块是动态引用，如果使用import从一个模块加载变量（即import foo from ‘foo’），那些变量不会被缓存，而是成为一个指向被加载模块的引用，需要开发者自己保证，真正取值的时候能够取到值。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// a.js</span></div><div class="line"><span class="keyword">import</span> &#123;bar&#125; <span class="keyword">from</span> <span class="string">'./b.js'</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'a.js'</span>);</div><div class="line"><span class="built_in">console</span>.log(bar);</div><div class="line"><span class="keyword">export</span> <span class="keyword">let</span> foo = <span class="string">'foo'</span>;</div><div class="line"></div><div class="line"><span class="comment">// b.js</span></div><div class="line"><span class="keyword">import</span> &#123;foo&#125; <span class="keyword">from</span> <span class="string">'./a.js'</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'b.js'</span>);</div><div class="line"><span class="built_in">console</span>.log(foo);</div><div class="line"><span class="keyword">export</span> <span class="keyword">let</span> bar = <span class="string">'bar'</span>;</div></pre></td></tr></table></figure></p>
+<p>上面代码中，由于a.js的第一行是加载b.js，所以先执行的是b.js。而b.js的第一行又是加载a.js，这时由于a.js已经开始执行了，所以不会重复执行，而是继续往下执行b.js，所以第一行输出的是b.js。<br>接着，b.js要打印变量foo，这时a.js还没执行完，取不到foo的值，导致打印出来是undefined。b.js执行完，开始执行a.js，这时就一切正常了。</p>
 
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/05/19/loopload/" data-toggle="tooltip" data-placement="top"
-                           title="浅谈ES6--循环加载">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2017/05/05/css-steps/" data-toggle="tooltip" data-placement="top"
-                           title="css动画里的steps()用法详解">Next Post &rarr;</a>
+                        <a href="/2017/05/12/mywork/" data-toggle="tooltip" data-placement="top"
+                           title="浅谈worker">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -243,9 +213,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2017/05/12/mywork/"
-                         data-title="浅谈worker"
-                         data-url="http://Johansen_lbw.github.io/2017/05/12/mywork/">
+                         data-thread-key="2017/05/19/loopload/"
+                         data-title="浅谈ES6--循环加载"
+                         data-url="http://Johansen_lbw.github.io/2017/05/19/loopload/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -257,7 +227,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#worker的API"><span class="toc-text">worker的API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#worker的事件"><span class="toc-text">worker的事件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#worker的this指向"><span class="toc-text">worker的this指向</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#循环加载的表象"><span class="toc-text">循环加载的表象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CommonJS模块的加载原理"><span class="toc-text">CommonJS模块的加载原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CommonJS模块的循环加载"><span class="toc-text">CommonJS模块的循环加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ES6模块的循环加载"><span class="toc-text">ES6模块的循环加载</span></a></li></ol>
                 </div>
             </div>
         </div>
