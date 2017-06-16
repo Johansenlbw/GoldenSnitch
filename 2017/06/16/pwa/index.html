@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        浅谈ES6--循环加载｜Golden Snitch
+        Progressive Web Animation｜Golden Snitch
         
     </title>
 
-    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/05/19/loopload/">
+    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/06/16/pwa/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -145,12 +145,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>浅谈ES6--循环加载</h1>
+                    <h1>Progressive Web Animation</h1>
                     
                     <span class="meta">
                          作者 johansen
                         <span>
-                          日期 2017-05-19
+                          日期 2017-06-16
                          </span>
                     </span>
                     <div class="tags text-center">
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            浅谈ES6--循环加载
+            Progressive Web Animation
         </span>
     </div>
 </header>
@@ -176,41 +176,53 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>这周的介绍相关循环加载相关的知识点，结合ES6相关技能，做相关学习。</p>
-<h3 id="循环加载的表象"><a href="#循环加载的表象" class="headerlink" title="循环加载的表象"></a>循环加载的表象</h3><p>所谓“循环加载”指的是，a脚本的执行依赖b脚本，而b脚本的执行又依赖a脚本。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// a.js</span></div><div class="line"><span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">'b'</span>);</div><div class="line"></div><div class="line"><span class="comment">// b.js</span></div><div class="line"><span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">'a'</span>);</div></pre></td></tr></table></figure></p>
-<p>通常，“循环加载”表示存在强耦合，如果处理不好，还可能导致递归加载，使得程序无法执行，因此应该避免出现。<br>但是实际上，这是很难避免的，尤其是依赖关系复杂的大项目，很容易出现a依赖b，b依赖c，c又依赖a这样的情况。这意味着，模块加载机制必须考虑“循环加载”的情况。</p>
-<p>对于JavaScript语言来说，目前最常见的两种模块格式CommonJS和ES6，处理“循环加载”的方法是不一样的，返回的结果也不一样。</p>
-<h3 id="CommonJS模块的加载原理"><a href="#CommonJS模块的加载原理" class="headerlink" title="CommonJS模块的加载原理"></a>CommonJS模块的加载原理</h3><p>CommonJS的一个模块，就是一个脚本文件。require命令第一次加载该脚本，就会执行整个脚本，然后在内存生成一个对象。CommonJS模块无论加载多少次，都只会在第一次加载时运行一次，以后再加载，就返回第一次运行的结果，除非手动清除系统缓存。</p>
-<h3 id="CommonJS模块的循环加载"><a href="#CommonJS模块的循环加载" class="headerlink" title="CommonJS模块的循环加载"></a>CommonJS模块的循环加载</h3><p>CommonJS模块的重要特性是加载时执行，即脚本代码在require的时候，就会全部执行。一旦出现某个模块被”循环加载”，就只输出已经执行的部分，还未执行的部分不会输出。<br>例如：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//a.js</span></div><div class="line">exports.done = <span class="literal">false</span>;</div><div class="line"><span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">'./b.js'</span>);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'在 a.js 之中，b.done = %j'</span>, b.done);</div><div class="line">exports.done = <span class="literal">true</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'a.js 执行完毕'</span>);</div><div class="line"></div><div class="line"><span class="comment">//b.js</span></div><div class="line">exports.done = <span class="literal">false</span>;</div><div class="line"><span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">'./a.js'</span>);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'在 b.js 之中，a.done = %j'</span>, a.done);</div><div class="line">exports.done = <span class="literal">true</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'b.js 执行完毕'</span>);</div><div class="line"><span class="comment">//main.js</span></div><div class="line"><span class="keyword">var</span> a = <span class="built_in">require</span>(<span class="string">'./a.js'</span>);</div><div class="line"><span class="keyword">var</span> b = <span class="built_in">require</span>(<span class="string">'./b.js'</span>);</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'在 main.js 之中, a.done=%j, b.done=%j'</span>, a.done, b.done);</div></pre></td></tr></table></figure></p>
-<p>上面代码之中，a.js脚本先输出一个done变量，然后加载另一个脚本文件b.js。注意，此时a.js代码就停在这里，等待b.js执行完毕，再往下执行。<br>因此最后执行的结果是：</p>
-<ol>
-<li>在 b.js 之中，a.done = false</li>
-<li>b.js 执行完毕</li>
-<li>在 a.js 之中，b.done = true</li>
-<li>a.js 执行完毕</li>
-<li>在 main.js 之中, a.done=true, b.done=true<blockquote>
-<p>由于CommonJS模块遇到循环加载时，返回的是当前已经执行的部分的值，而不是代码全部执行后的值，两者可能会有差异。所以，输入变量的时候，必须非常小心。</p>
-</blockquote>
+                <p>PWA(Progressive Web Animation),这里要强调的此P非彼P(Progressive Web Apps),今天我们谈谈渐进式动画。我们分以下方式引入话题。</p>
+<ul>
+<li>1.认识动画</li>
+<li>2.操作动画</li>
+<li>3.管理动画</li>
+<li>4.制作动画</li>
+</ul>
+<hr>
+<h4 id="认识动画"><a href="#认识动画" class="headerlink" title="认识动画"></a>认识动画</h4><p>动画是指由许多帧静止的画面，以一定的速度（比如每秒24张）连续播放时，肉眼因视觉残象产生错觉，而误以为画面活动的作品。为了得到活动的画面，第个画面之间都会有细微的改变。<br>看图说话：<br><img src="https://www.w3cplus.com/sites/default/files/blogs/2017/1706/pwa-2.png" alt="动画1"></p>
+<p>图形A状态（一个正方形）经过时间的变换到了图形B的状态（一个圆形）。从正方形变成圆形这样的一个过程就是一个动画效果（动效）。当然为了制作这样的一个动画，会添加控制动画的一些手段，比如控制持续时间、延迟时间、缓动函数、动画次数和方向之类的等。当然根据不同的制作动画的方式，这些控制动画的参数或者说手段吧，其方法不一样。这里暂且不深入的介绍。这里我们引入一个概念<code>插值</code>。</p>
+<p>所谓插值动画就是在初始状态到终止状态的过程中，<code>通过插值计算的方法插入在关键帧之间，将状态较为平滑的过度。</code>继续看图说话：<br><img src="https://www.w3cplus.com/sites/default/files/blogs/2017/1706/pwa-3.png" alt="动画2"><br>上图就在说明怎么进行插值计算的。下面就是一个通过在关键帧之间进行插值计算的图：<br><img src="https://www.w3cplus.com/sites/default/files/blogs/2017/1705/understanding-interpolation-2.png" alt="动画3"></p>
+<h4 id="怎么操作动画"><a href="#怎么操作动画" class="headerlink" title="怎么操作动画"></a>怎么操作动画</h4><p>目前前端操作动画的技术有以下几种：</p>
+<ul>
+<li><p>1.CSS Animation</p>
 </li>
+<li><p>2.SVG Animation</p>
+</li>
+<li><p>3.JavaScript-Driven Animation</p>
+</li>
+</ul>
+<p>对于这种制作动画的方式不做过多的评介。但随着CSS技术的发展，使用纯CSS就可以很好的实现Animation。在CSS中主要是使用<code>@keyframes</code>和<code>animation-*</code>属性来控制动画。CSS Animation虽然实现一个动效较为容易，成本也较低，但对于一些复杂的动画场景，他就变得非常的鸡肋。除此之外,SVG Animation也越来越多在实际场景中使用。关于SVG动画资源点这个：<a href="http://www.zhangxinxu.com/wordpress/2014/08/so-powerful-svg-smil-animation/" target="_blank" rel="external">SVG动画</a><br>JavaScript驱动动画。最简单的就是W3C规范提供的Web Animation API。其原理非常类似于CSS Animation，具有@keyframes的概念，也具有类似于animation-*属性样的方法，用于控制动画。同时还提供了对应的Timeline的概念，而Timeline又是动画中一个至关重要的一个概念。<br>除了上述制作动画之外，我们还可以采用Canvas和WebGL。现在活动页面比较酷炫的大多采用canvas和webGL。</p>
+<h4 id="如何管理动画"><a href="#如何管理动画" class="headerlink" title="如何管理动画"></a>如何管理动画</h4><p>制作出来动画，我们可以将整体的动画细分出来，那么怎么管理动画变得就很重要了。我们可以把整个动画当作一个舞台剧（一个故事），故事中有很多个片段（也就是我们的动画分场景），而串起整个动画是由时间轴来控制，常常称之为Timeline。<br>这里提出两种形式的动画：</p>
+<ul>
+<li><ol>
+<li>流式动画</li>
 </ol>
-<h3 id="ES6模块的循环加载"><a href="#ES6模块的循环加载" class="headerlink" title="ES6模块的循环加载"></a>ES6模块的循环加载</h3><p>ES6处理“循环加载”与CommonJS有本质的不同。ES6模块是动态引用，如果使用import从一个模块加载变量（即import foo from ‘foo’），那些变量不会被缓存，而是成为一个指向被加载模块的引用，需要开发者自己保证，真正取值的时候能够取到值。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// a.js</span></div><div class="line"><span class="keyword">import</span> &#123;bar&#125; <span class="keyword">from</span> <span class="string">'./b.js'</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'a.js'</span>);</div><div class="line"><span class="built_in">console</span>.log(bar);</div><div class="line"><span class="keyword">export</span> <span class="keyword">let</span> foo = <span class="string">'foo'</span>;</div><div class="line"></div><div class="line"><span class="comment">// b.js</span></div><div class="line"><span class="keyword">import</span> &#123;foo&#125; <span class="keyword">from</span> <span class="string">'./a.js'</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">'b.js'</span>);</div><div class="line"><span class="built_in">console</span>.log(foo);</div><div class="line"><span class="keyword">export</span> <span class="keyword">let</span> bar = <span class="string">'bar'</span>;</div></pre></td></tr></table></figure></p>
-<p>上面代码中，由于a.js的第一行是加载b.js，所以先执行的是b.js。而b.js的第一行又是加载a.js，这时由于a.js已经开始执行了，所以不会重复执行，而是继续往下执行b.js，所以第一行输出的是b.js。<br>接着，b.js要打印变量foo，这时a.js还没执行完，取不到foo的值，导致打印出来是undefined。b.js执行完，开始执行a.js，这时就一切正常了。</p>
-<p>以上就是关于循环加载的处理方法。ES6保证了取值的实时性，而CommonJS只是取值的拷贝.</p>
+</li>
+<li><ol>
+<li>交互式动画</li>
+</ol>
+</li>
+</ul>
+<p>所谓流式动画：就是像电影那样按既定顺序一直播放，不会停，也不会发生改变的动画。你在电视上看到的所有动画片都可以说是流式动画。流式动画最显著的特点就是你无法对流式动画施加影响，比如你无法期待单击流式动画中的某个器物（动画元素）而指望因此而发生什么事情。其中纯css的动画基本上属于流式的范畴。</p>
+<p>所谓交互式动画：就是通过命令或者事件驱动的动画表现。</p>
+<p>对于javascript来说，通过JS驱动的方式来控制动画,相对容易一些，主要是管理动画的时间就OK了。只要我们记录好动画开始时间，持续时间，结束时间。以及什么时间点怎么开启相关动画。</p>
+<h4 id="如何制作动画"><a href="#如何制作动画" class="headerlink" title="如何制作动画"></a>如何制作动画</h4><p>先说说我司开发过程，可能大部分公司都是这样的，设计稿PSD出了，然后设计师会口头给你说动画的描述，你就开始联想，好像是这个样子，然后就是前端开发了，接着就是无数次的调时间，调效果，最后花了好多时间都在纠结这个时间点，这个效果。可能这是最痛苦的事了。</p>
+<p>最近看到一个分享关于动画相关的制作，这也是airbnb采用的一个制作方式，就是我们使用After Effects CC 制作动画，然后利用bodymovin将动画转出来。bodymovin有相关的动画监听事件，我们可以通过监听执行相关操作。具体参考<a href="https://github.com/bodymovin/bodymovin" target="_blank" rel="external">bodymovin</a></p>
 
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/06/16/pwa/" data-toggle="tooltip" data-placement="top"
-                           title="Progressive Web Animation">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2017/05/12/mywork/" data-toggle="tooltip" data-placement="top"
-                           title="浅谈worker">Next Post &rarr;</a>
+                        <a href="/2017/05/19/loopload/" data-toggle="tooltip" data-placement="top"
+                           title="浅谈ES6--循环加载">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -219,9 +231,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2017/05/19/loopload/"
-                         data-title="浅谈ES6--循环加载"
-                         data-url="http://Johansen_lbw.github.io/2017/05/19/loopload/">
+                         data-thread-key="2017/06/16/pwa/"
+                         data-title="Progressive Web Animation"
+                         data-url="http://Johansen_lbw.github.io/2017/06/16/pwa/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -233,7 +245,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#循环加载的表象"><span class="toc-text">循环加载的表象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CommonJS模块的加载原理"><span class="toc-text">CommonJS模块的加载原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CommonJS模块的循环加载"><span class="toc-text">CommonJS模块的循环加载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ES6模块的循环加载"><span class="toc-text">ES6模块的循环加载</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#认识动画"><span class="toc-text">认识动画</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#怎么操作动画"><span class="toc-text">怎么操作动画</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何管理动画"><span class="toc-text">如何管理动画</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#如何制作动画"><span class="toc-text">如何制作动画</span></a></li></ol>
                 </div>
             </div>
         </div>
