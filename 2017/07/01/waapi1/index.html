@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        WAAPI｜Golden Snitch
+        WAAPI 与 CSS Animation的对比｜Golden Snitch
         
     </title>
 
-    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/06/23/waapi/">
+    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/07/01/waapi1/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -145,12 +145,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>WAAPI</h1>
+                    <h1>WAAPI 与 CSS Animation的对比</h1>
                     
                     <span class="meta">
                          作者 johansen
                         <span>
-                          日期 2017-06-23
+                          日期 2017-07-01
                          </span>
                     </span>
                     <div class="tags text-center">
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            WAAPI
+            WAAPI 与 CSS Animation的对比
         </span>
     </div>
 </header>
@@ -176,30 +176,37 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p><a href="https://johansenlbw.github.io/2017/06/16/pwa/" target="_blank" rel="external">上篇博客</a>提到了WAAPI(Web Animation API)。今天我们就来说一下关于WAAPI相关的概念。WAAPI提出主要将动画的控制交由原生的浏览器去实现。并添加了许多css不具备的变量，控制与调试选项。</p>
-<p>我们先上一张图关于CSS3动画相关的。因为从waapi中会找到很多关于css3动画相关的新特性的影子。<br><img src="http://www.w3cplus.com/sites/default/files/animation-2.png" alt="动画"></p>
-<h4 id="WAAPI入门"><a href="#WAAPI入门" class="headerlink" title="WAAPI入门"></a>WAAPI入门</h4><p>在CSS3动画和过渡特性还没出来之前，在网站页面中实现一些简单的动效，大家用得比较多的应该是jQuery的的.animate()或者JavaScript的的中setTimeout和setInterval来实现一些动效。WAAPI其实类似JQ的<code>.animate()</code>一样的一个API:</p>
-<blockquote>
-<p>element.animate(effect,option)<br>其中element是指需要有动作的元素，比如上例中的.anime元素，effect是一个KeyframeEffects数组，对应的也就CSS3动画中的@keyframs anime，另外options是一个AnimationEffectTimingProperties参数，对应的是animation-*属性。<br>来一个栗子：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"js-anim"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure></p>
-</blockquote>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> eleanim = <span class="built_in">document</span>.querySelector(<span class="string">'.js-anim'</span>),</div><div class="line">    animKeyFrames = [],</div><div class="line">    animOption = &#123;&#125;;</div><div class="line"></div><div class="line">animKeyFrames=[</div><div class="line">    &#123; <span class="attr">offset</span>: <span class="number">0</span>, <span class="attr">transform</span>: <span class="string">'none'</span> &#125;,</div><div class="line">    &#123; <span class="attr">offset</span>: <span class="number">0.25</span>, <span class="attr">transform</span>: <span class="string">'translate(200px, 0)'</span> &#125;, </div><div class="line">    &#123; <span class="attr">offset</span>: <span class="number">0.5</span>, <span class="attr">transform</span>: <span class="string">'translate(200px, 200px)'</span> &#125;, </div><div class="line">    &#123; <span class="attr">offset</span>: <span class="number">0.75</span>, <span class="attr">transform</span>: <span class="string">'translate(0, 200px)'</span> &#125;, </div><div class="line">    &#123; <span class="attr">offset</span>: <span class="number">1</span>, <span class="attr">transform</span>: <span class="string">'none'</span> &#125;</div><div class="line">    ];</div><div class="line">animOption = &#123;</div><div class="line">    <span class="attr">delay</span>: <span class="number">500</span>, </div><div class="line">    <span class="attr">endDelay</span>: <span class="number">0</span>,</div><div class="line">    <span class="attr">fill</span>: <span class="string">'both'</span>,</div><div class="line">    <span class="attr">iterationStart</span>: <span class="number">0</span>,</div><div class="line">    <span class="attr">iterations</span>: <span class="number">50</span>,</div><div class="line">    <span class="attr">duration</span>: <span class="number">1000</span>,</div><div class="line">    <span class="attr">direction</span>: <span class="string">'normal'</span>,</div><div class="line">    <span class="attr">easing</span>: <span class="string">'cubic-bezier(.6, 0, 1, .6)'</span></div><div class="line">&#125;;</div><div class="line">eleanim.animate(animKeyFrames,animOption);</div></pre></td></tr></table></figure>
-<p>由上面的代码可以看出，关键帧由offset ,以及css相关属性构成。而动画表现形式相关定义在animOption中。<br>以上写法还有一种方式,由于浏览器支持不多，需要引入插件进行兼容<code>&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/web-animations/2.2.1/web-animations-next.min.js&quot;&gt;&lt;/script&gt;</code>：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> effect = <span class="keyword">new</span> KeyframeEffect(eleAnime, animeKeyframes, animeOptions);</div><div class="line"><span class="keyword">var</span> animation = <span class="keyword">new</span> Animation(effect, eleAnime.ownerDocument.timeline);</div><div class="line">animation.play();</div></pre></td></tr></table></figure></p>
-<p>关于WAAPI具体就是这些内容，还需实践噻。周六愉快了，最近读书少了，感觉反应都差了，看着大家都挤时间干事，大BOSS每天3个小时的阅读。我惭愧啊。周末还是轻松点，这周约会都没有，还是拉几个基友打球去了。</p>
+                <p>接着上一篇博客我们继续相关的讨论。关于web Animation API 和CSS Animation 实现有何区别，这里我们来讲讲。首先会过上一节，当<code>elem.animate()</code>返回一个AnimationPlayer对象，然后动画开始播放。<br>那么动画对象是怎样的：<br><img src="http://ogodoej04.bkt.clouddn.com/animation02.png" alt="动画对象"><br><img src="http://ogodoej04.bkt.clouddn.com/animation02.png" alt="动画对象effect"><br><img src="http://ogodoej04.bkt.clouddn.com/animation03.png" alt="动画对象effect.timeing"></p>
+<hr>
+<p>下面谈谈相关的API</p>
+<ul>
+<li>1.Animation.currentTime可以获取和重置动画pause()和play()的时间。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;iframe id=&quot;GqZxRm&quot; src=&quot;//codepen.io/airen/embed/GqZxRm?height=400&amp;amp;theme-id=0&amp;amp;slug-hash=GqZxRm&amp;amp;default-tab=result&amp;amp;user=airen&quot; scrolling=&quot;no&quot; frameborder=&quot;0&quot; height=&quot;400&quot; allowtransparency=&quot;true&quot; allowfullscreen=&quot;true&quot; class=&quot;cp_embed_iframe undefined&quot; style=&quot;width: 100%; overflow: hidden;&quot;&gt;&lt;/iframe&gt;</div></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li><p>2.Animation.effect可以获取和重置动画<code>effect</code>。如示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">effect = player.effect;</div><div class="line"><span class="comment">/*或者通过下面方法*/</span></div><div class="line"><span class="keyword">var</span> effect = <span class="keyword">new</span> KeyframeEffect( eleAnime, [ &#123;<span class="attr">opacity</span>:<span class="number">0</span>&#125;, &#123;<span class="attr">opacity</span>:<span class="number">1</span>&#125; ], <span class="number">300</span> );</div></pre></td></tr></table></figure>
+</li>
+<li><p>3.Animation.playbackRate获取或设置一个动画的播放速度。动画提供了一个比例因子，将会改变动画timeline和currentTime的变化比率。其初始值为1。<br>另外，当playbackRate的值越大，速度越快；反之速度越缓存。</p>
+</li>
+<li><p>4.Animation.startTime返回或设置动画回放的开始时间。</p>
+</li>
+<li><p>5.Animation.playState是一个只读属性，会返回动画的状态。返回的值有五个idle、pending、running、paused和finished。</p>
+</li>
+<li>6.Animation.finished是一个仅读属性，允许你返回动画完成状态。</li>
+<li>7.Animation.ready将返回动画当前的Ready Promise对象。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">player.pause(); </div><div class="line">player.ready.then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">    <span class="built_in">console</span>.log(player.playState); <span class="comment">// =&gt; running </span></div><div class="line">    &#125;);</div><div class="line">player.play();</div></pre></td></tr></table></figure></li>
+</ul>
 
                 <hr>
                 
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/07/01/waapi1/" data-toggle="tooltip" data-placement="top"
-                           title="WAAPI 与 CSS Animation的对比">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2017/06/16/pwa/" data-toggle="tooltip" data-placement="top"
-                           title="Progressive Web Animation">Next Post &rarr;</a>
+                        <a href="/2017/06/23/waapi/" data-toggle="tooltip" data-placement="top"
+                           title="WAAPI">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -208,9 +215,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2017/06/23/waapi/"
-                         data-title="WAAPI"
-                         data-url="http://Johansen_lbw.github.io/2017/06/23/waapi/">
+                         data-thread-key="2017/07/01/waapi1/"
+                         data-title="WAAPI 与 CSS Animation的对比"
+                         data-url="http://Johansen_lbw.github.io/2017/07/01/waapi1/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -222,7 +229,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#WAAPI入门"><span class="toc-text">WAAPI入门</span></a></li></ol>
+                    
                 </div>
             </div>
         </div>
