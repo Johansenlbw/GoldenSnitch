@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="null">
+    <meta name="keyword" content="undefined">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="http://tva1.sinaimg.cn/crop.0.0.199.199.180/005AsuCnjw1eiw60g34h1j305k05kjrm.jpg">
+    <link rel="alternate" type="application/atom+xml" title="Golden Snitch" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        videojs 的学习｜Golden Snitch
+        
+    </title>
+
+    <link rel="canonical" href="http://Johansen_lbw.github.io/2017/07/05/videojs/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('http://ogodoej04.bkt.clouddn.com/blog/image/countryside.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    Golden Snitch
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://ogodoej04.bkt.clouddn.com/blog/image/countryside.jpg">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ogodoej04.bkt.clouddn.com/blog/image/countryside.jpg')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>videojs 的学习</h1>
+                    
+                    <span class="meta">
+                         作者 johansen
+                        <span>
+                          日期 2017-07-05
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#技术小记"
+                           title="技术小记">技术小记</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            videojs 的学习
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>最近在看直播相关的H5的技术实现，目前有些原生不支持hls直播协议，所以就得使用一些插件，今天我来介绍一个videojs的插件。主要介绍相关插件的HSL部分。</p>
+<h3 id="安装与初始化"><a href="#安装与初始化" class="headerlink" title="安装与初始化"></a>安装与初始化</h3><ol>
+<li>videojs-contrib-hsl.js 需要依赖于 video.js 因此在页面引用的过程中需要先加载videojs。</li>
+<li>初始化插件，我们需要<code>videojs(videoElem)</code>,返回一个player。</li>
+</ol>
+<h3 id="videojs相关的API"><a href="#videojs相关的API" class="headerlink" title="videojs相关的API"></a>videojs相关的API</h3><p>首先先看一下栗子：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">    <span class="tag">&lt;<span class="name">video</span> <span class="attr">id</span>=<span class="string">"example-video"</span> <span class="attr">width</span>=<span class="string">600</span> <span class="attr">height</span>=<span class="string">300</span> <span class="attr">class</span>=<span class="string">"video-js vjs-default-skin"</span> <span class="attr">controls</span> <span class="attr">data-setup</span>=<span class="string">"&#123;&#125;"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">"https://example.com/index.m3u8"</span><span class="attr">type</span>=<span class="string">"application/x-mpegURL"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">video</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"video.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"videojs-contrib-hls.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></div><div class="line">        <span class="keyword">var</span> player = videojs(<span class="string">'example-video'</span>);</div><div class="line">        player.play();</div><div class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span> </div><div class="line">``` </div><div class="line">使用：</div><div class="line">* 1.通过html的类名和 data-setup初始化视频播放器。</div><div class="line">* 2.使用 h5 播放视频,你只需嵌入 video 标签，videojs 会让视频在所有浏览器中兼容播放。</div><div class="line">    除了 video 标签，你还需要设置：data-setup, videojs会根据data－setup中的json参数来初始化视频播放器</div><div class="line">    每个video 标签都应该id属性，且 id 属性在整个页面中是唯一的</div><div class="line">注意：</div><div class="line">    1)video-js类名字是必须的，因为videoj用这个类名做功能性操作，比如控制视频播放器皮肤的样式</div><div class="line">    2）默认皮肤：vjs-default-skin</div><div class="line">* 3.动态载入html设置视频播放器</div><div class="line">```javascript</div><div class="line">    //eleId的地方可以放置dom元素或者是 eleId 的选择器</div><div class="line">    videojs('eleId',&#123;</div><div class="line">        //像data-setup那样设置的参数</div><div class="line">    &#125;,function()&#123;</div><div class="line">    //视频播放器初始化完毕，就会调用这个回调函数</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>Option参数:<br>直接嵌入一个video标签就可以构造一个videojs 的视频播放器。videojs 在设置参数上做了一些操作，使得你能够用h5 的video标准标签属性来设置初始化videojs播放器的初始化选项(options).<br>比如你这样初始化视频播放器选项：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">controls</span> <span class="attr">autoplay</span> <span class="attr">preload</span>=<span class="string">"auto"</span> <span class="attr">...</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>等价于：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">data-setup</span>=<span class="string">'&#123; "controls": true, "autoplay": false, "preload": "auto" &#125;'</span><span class="attr">...</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<ul>
+<li>1.preload:<br>  auto: 立即加载视频的文件（如果浏览器允许），在ios设备上，会阻止自动加载。<br>  metadata：Load only the meta data of the video<br>  none：等待用户交互了才回加载视频文件</li>
+<li>2.常见的基础API<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//获取到返回回来到视频播放器</span></div><div class="line"><span class="keyword">var</span> videoPlayer = videojs(<span class="string">'eleId'</span>,&#123;&#125;,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="comment">//手动设置视频播放器的视频源</span></div><div class="line">    player.src(<span class="string">''</span>)；</div><div class="line">&#125;);</div><div class="line"><span class="comment">//播放与暂停播放</span></div><div class="line">videoPlayer.play();</div><div class="line">videoPlayer.pause();</div><div class="line"><span class="comment">//设置／获取视频的当前播放时间</span></div><div class="line">videoPlayer.currentTime();</div><div class="line">videoPlayer.currentTime(<span class="number">120</span>);</div><div class="line"><span class="comment">//视频总的时常，只有在加载完视频时</span></div><div class="line">videoPlayer.duration();</div><div class="line"></div><div class="line"><span class="comment">//获取或设置播放器的视频源</span></div><div class="line">videoPlayer.src();</div><div class="line">videoPlayer.src(<span class="string">'www.baidu.mp4'</span>)</div><div class="line"></div><div class="line"><span class="comment">//获取或者设置视频播放器的poster 图片</span></div><div class="line">videoPlayer.poster();</div><div class="line">videoPlater.poster(<span class="string">'xxx.jpg'</span>);</div><div class="line"><span class="comment">//缓冲</span></div><div class="line">myPlayer.buffered();</div><div class="line"><span class="comment">//百分比的缓冲</span></div><div class="line">myPlayer.bufferedPercent();</div><div class="line"><span class="comment">//声音大小</span></div><div class="line">myPlayer.volume(<span class="number">0.5</span>);</div><div class="line"><span class="comment">//设置视频容器大小</span></div><div class="line">myPlayer.size(<span class="number">640</span>,<span class="number">480</span>);</div><div class="line"><span class="comment">//进入视频全屏</span></div><div class="line">myPlayer.enterFullScreen();</div><div class="line"><span class="comment">//</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="videojs基本事件"><a href="#videojs基本事件" class="headerlink" title="videojs基本事件"></a>videojs基本事件</h3><ul>
+<li>durationchange：视频时长改变了（只有视频加载后，时长会由“NaN”变成音频/视频的实际时长）</li>
+<li>ended：视频播放结束（currentTime == duration）</li>
+<li>error:视频加载期间出错</li>
+<li>fullscreenchange：进入/退出全屏状态</li>
+<li>loadeddata：当浏览器已加载视频的当前帧时</li>
+<li>loadedmetadata：当浏览器已加载视频的元数据时</li>
+<li>loadstart：当浏览器开始查找视频时，开始加载</li>
+<li>pause：视频暂停</li>
+<li>play：视频播放</li>
+<li>progress：下载视频</li>
+<li>timeupdate：播放位置更改时</li>
+<li>volumechange：音量已经更改</li>
+</ul>
+<h3 id="关于videojs自定义样式问题的研究"><a href="#关于videojs自定义样式问题的研究" class="headerlink" title="关于videojs自定义样式问题的研究"></a>关于videojs自定义样式问题的研究</h3><p>例如：大的播放按钮是被定为在左上角的，这样就不会覆盖视频内容。如果你想让这个播放按钮居中，你可以给你的 video 标签添加额外的 vjs-big-play-centered 样式：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">id</span>=<span class="string">"example_video_1"</span> <span class="attr">class</span>=<span class="string">"video-js vjs-default-skin vjs-big-play-centered"</span></span></div><div class="line">  <span class="attr">controls</span> <span class="attr">preload</span>=<span class="string">"auto"</span> <span class="attr">width</span>=<span class="string">"640"</span> <span class="attr">height</span>=<span class="string">"264"</span></div><div class="line">  <span class="attr">poster</span>=<span class="string">"http://video-js.zencoder.com/oceans-clip.png"</span></div><div class="line">  <span class="attr">data-setup</span>=<span class="string">'&#123;"example_option":true&#125;'</span>&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>也可以重写样式 .video-js .vjs-big-play-button{/<em>这里的样式重写</em>/}。</p>
+<p>对于动态加载的HTML元素设置Video.js<br>如果你的 web 页面或者应用是动态加载 video 标签的（ajax，appendChild，等等）,这样在页面加载后这个元素是不存在的，那么你会想要手动设置播放器而不是依靠 data-setup 属性。要做到这一点，首先将 data-setup 属性从 video 标签中移除掉，这样在播放器初始化的时候就不会混乱了。接下来，运行下面的 javascript ，有时在 Video.js 加载后，有时是在 video 标签被加载进 DOM 后。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">videojs(<span class="string">"example_video_1"</span>, &#123;&#125;, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line"><span class="comment">// Player (this) is initialized and ready.</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>videojs 方法中的第一个参数是你的 video 标签的 ID，用你自己的代替。第二个参数是一个选项对象。它允许你像设置 data-setup 属性一样设置额外的选项。第三个参数是一个 ‘ready’ 回调。一旦 Video.js 初始化完成后，就会触发这个回调。你也可以传入一个元素本身的引用来代替元素ID:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">videojs(<span class="built_in">document</span>.getElementById(<span class="string">'example_video_1'</span>), &#123;&#125;, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line"><span class="comment">// This is functionally the same as the previous example.</span></div><div class="line">&#125;);</div><div class="line">videojs(<span class="built_in">document</span>.getElementsByClassName(<span class="string">'awesome_video_class'</span>)[<span class="number">0</span>], &#123;&#125;, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line"><span class="comment">// You can grab an element by class if you'd like, just make sure</span></div><div class="line"><span class="comment">// if it's an array that you pick one (here we chose the first).</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h3 id="事件绑定"><a href="#事件绑定" class="headerlink" title="事件绑定"></a>事件绑定</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">myPlayer.on(<span class="string">"ended"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"end"</span>, <span class="keyword">this</span>.currentTime());</div><div class="line">&#125;);</div><div class="line">myPlayer.off(<span class="string">"pause"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"pause"</span>)</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2017/07/01/waapi1/" data-toggle="tooltip" data-placement="top"
+                           title="WAAPI 与 CSS Animation的对比">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2017/07/05/videojs/"
+                         data-title="videojs 的学习"
+                         data-url="http://Johansen_lbw.github.io/2017/07/05/videojs/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装与初始化"><span class="toc-text">安装与初始化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#videojs相关的API"><span class="toc-text">videojs相关的API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#videojs基本事件"><span class="toc-text">videojs基本事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于videojs自定义样式问题的研究"><span class="toc-text">关于videojs自定义样式问题的研究</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#事件绑定"><span class="toc-text">事件绑定</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#技术小记"
+                           title="技术小记">技术小记</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'johansenlbw';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+                    <li>
+                        <a target="_blank" href="http://weibo.com/5119403139">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Golden Snitch 2017
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://Johansen_lbw.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="http://ogodoej04.bkt.clouddn.com/timg.jpeg">
+</body>
+
+</html>
